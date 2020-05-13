@@ -14,6 +14,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/main">Messages</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user/">Users</a>
+            </li>
 
         </ul>
 

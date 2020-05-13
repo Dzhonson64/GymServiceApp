@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -38,5 +39,9 @@ public class UserService implements UserDetailsService {
 
     public boolean isEmptyRegisterationFroms(){
         return false;
+    }
+
+    public List<User> findAll(){
+        return  userRepo.findAll();
     }
 }
