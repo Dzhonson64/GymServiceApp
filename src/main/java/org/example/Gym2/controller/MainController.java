@@ -19,11 +19,6 @@ public class MainController {
     @Autowired
     private MessageRepo messageRepo;
 
-    @GetMapping("/")
-    public String greeting(Map<String, Object> model) {
-        return "greeting";
-    }
-
     @GetMapping("/main")
     public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
         Iterable<Message> messages = messageRepo.findAll();
