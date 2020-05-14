@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -47,13 +49,15 @@ public class UserController {
     public String getProfile(Model model, @AuthenticationPrincipal User user){
         model.addAttribute("username", user.getUsername());
         model.addAttribute("password", user.getPassword());
+        model.addAttribute("filename", user.getFilename());
 
         return "profile";
     }
 
     @PostMapping("profile")
-    public String updateProfile(@AuthenticationPrincipal User user, @RequestParam String password){
-        userService.updateProfile(user, password);
+    public String updateProfile(@AuthenticationPrincipal User user, @RequestParam(required = false) String password, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+
+        userService.updateProfile(user, password, file);
         return "redirect:/user/profile";
     }
 

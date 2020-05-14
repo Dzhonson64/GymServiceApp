@@ -7,40 +7,55 @@
 
     <div class="profile">
         <div class="row">
-            <div class="col-lg-4 align-items-stretch">
+            <div class="col-lg-4 align-items-stretch mt-5">
                 <div class="settings content">
                     <h5>Настройки</h5>
                     <p>${username}</p>
-                    <img src="/img/account_user.png" alt="user">
-                    <p class="change-img">сменить аватарку</p>
-                </div>
-            </div>
-            <div class="col-lg-8 align-items-stretch">
-                <div class="personal-data content d-flex flex-column">
-                    <h5>Личный данные</h5>
-                    <form method="post">
-                        <div class="personal-data-content ">
-                            <div class="col-md-12">
-                                <div class="personal-data-block">
-                                    <label>Username</label>
-                                    <input type="text" name = "username" value="${username}">
-                                </div>
-                                <div class="personal-data-block">
-                                    <label>Password</label>
-                                    <input type="text" name = "password" value="${password}">
-                                </div>
-                            </div>
+                    <img src="/uploads/profile/${filename}" alt="user">
+                <p class="change-img" id="change-avatar">сменить аватарку</p>
+                <form method="post" enctype="multipart/form-data" class="change-avatar-form" id="change-avatar-form">
 
-                            <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                            <button type="submit" class="save">Save</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="field__wrapper">
 
+                        <input name="file" type="file" name="file" id="field__file-2" class="field field__file" multiple>
+
+                        <label class="field__file-wrapper" for="field__file-2">
+                            <div class="field__file-fake">Файл не выбран</div>
+                            <div class="field__file-button">Выбрать</div>
+                        </label>
+
+                    </div>
+                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                    <button type="submit" class="save">Save</button>
+                </form>
             </div>
         </div>
+        <div class="col-lg-8 align-items-stretch mt-5">
+            <div class="personal-data content d-flex flex-column">
+                <h5>Личный данные</h5>
+                <form method="post">
+                    <div class="personal-data-content ">
+                        <div class="col-md-12">
+                            <div class="personal-data-block">
+                                <label>Username</label>
+                                <input type="text" name = "username" value="${username}">
+                            </div>
+                            <div class="personal-data-block">
+                                <label>Password</label>
+                                <input type="text" name = "password" value="${password}">
+                            </div>
+                        </div>
 
+                        <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                        <button type="submit" class="save">Save</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
     </div>
+
+</div>
 
 </div>
 
