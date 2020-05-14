@@ -1,0 +1,70 @@
+.profile .settings img{
+    width: 150px;
+    margin: 0 auto;
+    display: block;
+}
+
+.profile .settings .change-img{
+    text-align: center;
+    color: #004b8d;
+    cursor: pointer;
+}
+
+.profile .settings p{
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.profile  h5{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile .content {
+    padding: 20px 40px;
+    height: 100%;
+    background-color: #dadada;
+    border-radius: 6px;
+    margin-top: 50px;
+}
+.profile .personal-data-block {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.profile .personal-data-content input{
+    outline: none;
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 6px;
+    padding: 8px 5px;
+}
+
+.profile .personal-data-content label{
+    font-weight: 600;
+}
+
+.profile .save{
+    font-family: Poppins-Medium, sans-serif;
+    border-radius: 6px;
+    font-size: 15px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+    background: #9c4900;
+    border: none;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 300px;
+    height: 50px;
+}
+
+
+
