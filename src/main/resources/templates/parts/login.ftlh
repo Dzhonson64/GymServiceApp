@@ -1,11 +1,17 @@
 <#macro login path isRegister>
 <form action="${path}" method="post">
-    <div class="logo-input">
-        <input type="text" name="username"/>
+    <div class="logo-input validate-input">
+        <span class="btn-show-pass">
+            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+        </span>
+        <input type="text" class="input-login" name="username"/>
         <span class="focus-input" data-placeholder="Username"></span>
     </div>
-    <div class="logo-input">
-        <input type="password" name="password"/>
+    <div class="logo-input validate-input">
+        <span class="btn-show-pass">
+            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+        </span>
+        <input type="password" class="input-login" name="password"/>
         <span class="focus-input" data-placeholder="Password"></span>
     </div>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
@@ -13,7 +19,11 @@
         <div class="wrap-login-btn">
             <div class="login-form-bgbtn"></div>
             <button class="login-form-btn">
-                Login
+                <#if !isRegister>
+                    Login
+                    <#else>
+                Registration
+                </#if>
             </button>
         </div>
     </div>

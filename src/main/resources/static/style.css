@@ -17,7 +17,9 @@
     font-family: Poppins-SemiBold;
     src: url('../fonts/poppins/Poppins-SemiBold.ttf');
 }
-
+body{
+    background: #f2f2f2;
+}
 
 .mynavbar{
     background-color: #3e444e;
@@ -60,10 +62,10 @@
 }
 
 .login-block{
-    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 100px 0;
     background: #f2f2f2;
 }
 .login-block .wrap-logo{
@@ -116,6 +118,10 @@
     pointer-events: none;
 }
 
+.focus-input:focus{
+    width: 100%;
+}
+
 .login-block .logo-input .focus-input::before {
     content: "";
     display: block;
@@ -157,13 +163,6 @@
     transition: all 0.4s;
 }
 
-.login-block .logo-input input + .login-block .logo-input .focus-input::after {
-    top: -15px;
-}
-
-.login-block .logo-input input + .login-block .logo-input .focus-input::before {
-    width: 100%;
-}
 
 
 
@@ -250,3 +249,72 @@
     margin-top: 26px;
     margin-bottom: 48px;
 }
+
+
+.input-login:focus + .focus-input::after {
+    top: -15px;
+}
+
+.input-login:focus + .focus-input::before {
+    width: 100%;
+}
+
+.has-val.input-login + .focus-input::after {
+    top: -15px;
+}
+
+.has-val.input-login + .focus-input::before {
+    width: 100%;
+}
+
+.logo-input .btn-show-pass {
+    font-size: 15px;
+    color: #999999;
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: 0;
+    padding-right: 5px;
+    cursor: pointer;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+.logo-input .btn-show-pass:hover {
+    color: #6a7dfe;
+    color: -webkit-linear-gradient(left, #21d4fd, #b721ff);
+    color: -o-linear-gradient(left, #21d4fd, #b721ff);
+    color: -moz-linear-gradient(left, #21d4fd, #b721ff);
+    color: linear-gradient(left, #21d4fd, #b721ff);
+}
+
+.logo-input .btn-show-pass.active {
+    color: #6a7dfe;
+    color: -webkit-linear-gradient(left, #21d4fd, #b721ff);
+    color: -o-linear-gradient(left, #21d4fd, #b721ff);
+    color: -moz-linear-gradient(left, #21d4fd, #b721ff);
+    color: linear-gradient(left, #21d4fd, #b721ff);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
