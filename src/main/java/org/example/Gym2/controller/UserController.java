@@ -55,9 +55,23 @@ public class UserController {
     }
 
     @PostMapping("profile")
-    public String updateProfile(@AuthenticationPrincipal User user, @RequestParam(required = false) String password, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+    public String updateProfile(@AuthenticationPrincipal User user,
+                                @RequestParam(required = false) String password,
+                                @RequestParam(value = "file", required = false) MultipartFile file,
+                                Model model
+                                ) {
 
-        userService.updateProfile(user, password, file);
+        /*try {
+            boolean result = userService.updateProfile(user, password, file);
+            if (!result){
+                model.addAttribute("inform", "Ошибка");
+            }else {
+                model.addAttribute("inform", "Успешно изменён файл");
+            }
+        } catch (IOException e) {
+            model.addAttribute("inform", "Ошибка");
+        }*/
+
         return "redirect:/user/profile";
     }
 

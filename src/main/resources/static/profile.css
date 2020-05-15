@@ -1,5 +1,6 @@
 .profile .settings img{
-    width: 150px;
+    width: 100%;
+    max-height: 150px;
     margin: 0 auto;
     display: block;
 }
@@ -8,7 +9,9 @@
     text-align: center;
     color: #004b8d;
     cursor: pointer;
+    display: block;
 }
+
 
 .profile .settings p{
     text-align: center;
@@ -33,20 +36,6 @@
     flex-direction: column;
     margin-bottom: 20px;
 }
-.profile .personal-data-content input{
-    outline: none;
-    background: transparent;
-    border: 1px solid white;
-    border-radius: 6px;
-    padding: 8px 5px;
-}
-
-.profile .personal-data-content label{
-    font-weight: 600;
-}
-.profile .change-avatar-form{
-    display: none;
-}
 
 .profile .save{
     font-family: Poppins-Medium, sans-serif;
@@ -55,7 +44,7 @@
     color: #fff;
     line-height: 1.2;
     text-transform: uppercase;
-    background: #9c4900;
+    background: #4466fb;
     border: none;
     display: -webkit-box;
     display: -webkit-flex;
@@ -67,8 +56,22 @@
     align-items: center;
     padding: 0 20px;
     width: 300px;
+    margin-top: 30px;
     height: 50px;
 }
+.profile .personal-data-content input{
+    outline: none;
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 6px;
+    padding: 8px 5px;
+}
+
+.profile .personal-data-content label{
+    font-weight: 600;
+}
+
+
 
 
 .field__wrapper {
@@ -117,7 +120,7 @@
 .field__file-button {
     width: 130px;
     height: 60px;
-    background: #1bbc9b;
+    background: #6bb5fb;
     color: #fff;
     font-size: 1.125rem;
     font-weight: 700;
@@ -135,4 +138,147 @@
 }
 
 
+
+
+
+/* свойства модального окна по умолчанию */
+.modal-from {
+    position: fixed; /* фиксированное положение */
+    justify-content: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    background: rgba(0,0,0,0.5); /* цвет фона */
+    z-index: 1050;
+    opacity: 0; /* по умолчанию модальное окно прозрачно */
+    -webkit-transition: opacity 200ms ease-in;
+    -moz-transition: opacity 200ms ease-in;
+    transition: opacity 200ms ease-in; /* анимация перехода */
+    pointer-events: none; /* элемент невидим для событий мыши */
+    margin: 0;
+    padding: 0;
+}
+/* при отображении модального окно */
+.modal-from:target {
+    opacity: 1; /* делаем окно видимым */
+    pointer-events: auto; /* элемент видим для событий мыши */
+    overflow-y: auto; /* добавляем прокрутку по y, когда элемент не помещается на страницу */
+}
+/* ширина модального окна и его отступы от экрана */
+.modal-from .modal-dialog-from {
+    position: relative;
+    margin: 10px;
+    width: 900px;
+    overflow: hidden;
+}
+
+/* свойства для блока, содержащего контент модального окна */
+.modal-from .modal-content-from {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+}
+
+.modal-from .title-img{
+    width: 150%;
+    left: -100px;
+    position: relative;
+    transform: rotate(10deg);
+}
+
+    /* свойства для заголовка модального окна */
+.modal-from .modal-header-form {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #eceeef;
+}
+.modal-from .modal-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.5;
+    font-weight: 500;
+}
+/* свойства для кнопки "Закрыть" */
+.modal-from .close {
+    float: right;
+    font-family: sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    text-decoration: none;
+}
+/* свойства для кнопки "Закрыть" при нахождении её в фокусе или наведении */
+.modal-from .close:focus, .modal-from .close:hover {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: .75;
+}
+/* свойства для блока, содержащего основное содержимое окна */
+.modal-from .modal-body {
+    position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 15px;
+    margin: 50px;
+}
+
+.modal-body .save{
+    font-family: Poppins-Medium, sans-serif;
+    border-radius: 6px;
+    font-size: 15px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+    background: #4466fb;
+    border: none;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 200px;
+    margin-top: 30px;
+    height: 50px;
+}
+
+.modal-dialog-from .img{
+    position: relative;
+}
 

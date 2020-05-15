@@ -26,6 +26,10 @@ public class UserService implements UserDetailsService {
     @Value("${upload.path}")
     private String uploadPath;
 
+    private List<String> extensionsAvatar = Arrays.asList("jpg", "png");
+
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepo.findByUsername(username);
@@ -64,13 +68,16 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
     }
 
-    public void updateProfile(User user, String password, MultipartFile file) throws IOException {
+    public boolean updateProfile(User user, String password, MultipartFile file) throws IOException {
 
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
 
             if (!uploadDir.exists()) {
                 Files.createDirectories(Paths.get(uploadPath));
+            }
+            if (!extensionsAvatar.contains(getFileExtension(file.getOriginalFilename()))){
+                return false;
             }
 
             String uuidFile = UUID.randomUUID().toString();
@@ -79,11 +86,24 @@ public class UserService implements UserDetailsService {
             file.transferTo(new File(uploadPath + "/" + resultFilename));
 
             user.setFilename(resultFilename);
+        }else {
+            return false;
         }
         if (password != null){
             user.setPassword(password);
         }
 
         userRepo.save(user);
+        return true;
+    }
+
+    //метод определения расширения файла
+    private String getFileExtension(String fileName) {
+        // если в имени файла есть точка и она не является первым символом в названии файла
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+            // то вырезаем все знаки после последней точки в названии файла, то есть ХХХХХ.txt -> txt
+            return fileName.substring(fileName.lastIndexOf(".")+1);
+            // в противном случае возвращаем заглушку, то есть расширение не найдено
+        else return "";
     }
 }
