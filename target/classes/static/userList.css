@@ -1,0 +1,38 @@
+.userList th{
+    background-color: #4466fb;
+}
+
+.userList {
+    width: 100%;
+    text-align: center;
+    border-bottom: 2px solid #dfdfdf;
+    border-radius: 6px; border-collapse: separate;
+    border-spacing: 0;
+}
+.userList thead tr {color: #ffffff; font-weight: bold; background: #6bb5fb;}
+.userList tr td {border-right: 1px solid #dfdfdf;}
+.userList tr td:last-child {border-right: 0;}
+.userList tbody tr:nth-child(1n) {background: #f6f6f6;}
+.userList tbody tr:nth-child(2n) {background: #e6e6e6;}
+.userList tbody tr:hover {background: #ffe8e8; transition-duration: 0.6s;}
+.userList tbody td:first-child {font-weight: 600; font-style: italic}
+.userList .edit-btn {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #4466fb;
+    box-shadow: 2px 2px 2px 0px #1d47ff;
+    position: relative;
+    margin: 10px 0;
+    color: #ffffff;
+}
+
+
+.userList .role{
+    color: #4466fb;
+    font-weight: 500;
+}
+
+.userList .admin{
+    color: #fea700;
+    font-weight: 900;
+}

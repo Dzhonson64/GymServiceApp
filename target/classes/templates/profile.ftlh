@@ -11,14 +11,14 @@
                 <div class="settings content">
                     <h5>Настройки</h5>
                     <p>${username}</p>
-                    <img src="/uploads/profile/${filename}" alt="user">
+                    <img src="/uploads/profile/${filename}" alt="user" id="avatar-img">
                     <a class="change-img" id="change-avatar" href="#openModal">сменить аватарку</a>
                 </div>
             </div>
             <div class="col-lg-8 align-items-stretch mt-5">
                 <div class="personal-data content d-flex flex-column">
                     <h5>Личный данные</h5>
-                    <form method="post">
+                    <form method="post" id="personalData">
                         <div class="personal-data-content ">
                             <div class="col-md-12">
                                 <div class="personal-data-block">
@@ -32,7 +32,8 @@
                             </div>
 
                             <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                            <button type="submit" class="save">Save</button>
+                            <button type="submit" class="save" id="saveData">Save</button>
+                            <p id="success"></p>
                         </div>
                     </form>
                 </div>
@@ -46,7 +47,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="img">
-                                    <img src="/img/tranferToServer.svg" alt="" class="title-img">
+                                    <img src="/img/tranferToServer.svg" alt="" class="title-img" >
                                 </div>
 
                             </div>
@@ -70,7 +71,7 @@
                                         </div>
                                         <input type="hidden" name="_csrf" value="${_csrf.token}" />
                                         <button type="submit" class="save" id="save-avatar">Save</button>
-                                        <span class="message">${inform?ifExists}</span>
+                                        <span class="message" id="suc">${inform?ifExists}</span>
                                     </form>
                                 </div>
                             </div>
