@@ -54,25 +54,38 @@ public class UserController {
         return "profile";
     }
 
-    @PostMapping("profile")
-    public String updateProfile(@AuthenticationPrincipal User user,
-                                @RequestParam(required = false) String password,
-                                @RequestParam(value = "file", required = false) MultipartFile file,
-                                Model model
+    @PostMapping("profile/saveData")
+    @ResponseBody
+    public String updatePersonalData(@AuthenticationPrincipal User user,
+                                @RequestParam String password
                                 ) {
+        System.out.println("sdf");
+        try {
+            boolean result = userService.updatePersonalData(user, password);
 
-        /*try {
-            boolean result = userService.updateProfile(user, password, file);
-            if (!result){
-                model.addAttribute("inform", "Ошибка");
-            }else {
-                model.addAttribute("inform", "Успешно изменён файл");
-            }
         } catch (IOException e) {
-            model.addAttribute("inform", "Ошибка");
-        }*/
+
+        }
 
         return "redirect:/user/profile";
+    }
+
+
+    @PostMapping("profile/saveAvatar")
+    @ResponseBody
+    public String updateAvatar(@AuthenticationPrincipal User user,
+                                @RequestParam("file") MultipartFile file
+    ) {
+        String result = null;
+        System.out.println("sdf");
+        try {
+            result = userService.updateUserAvatar(user, file);
+
+        } catch (IOException e) {
+
+        }
+
+        return result;
     }
 
 

@@ -68,8 +68,20 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
     }
 
-    public boolean updateProfile(User user, String password, MultipartFile file) throws IOException {
+    public boolean updatePersonalData(User user, String password) throws IOException {
 
+        if (password != null){
+            user.setPassword(password);
+        }else {
+            return false;
+        }
+
+        userRepo.save(user);
+        return true;
+    }
+
+    public String updateUserAvatar(User user, MultipartFile file) throws IOException {
+        String resultFilename = null;
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
 
@@ -77,24 +89,19 @@ public class UserService implements UserDetailsService {
                 Files.createDirectories(Paths.get(uploadPath));
             }
             if (!extensionsAvatar.contains(getFileExtension(file.getOriginalFilename()))){
-                return false;
+                return null;
             }
 
             String uuidFile = UUID.randomUUID().toString();
-            String resultFilename = uuidFile + "." + file.getOriginalFilename();
+            resultFilename = uuidFile + "." + file.getOriginalFilename();
 
             file.transferTo(new File(uploadPath + "/" + resultFilename));
 
             user.setFilename(resultFilename);
-        }else {
-            return false;
-        }
-        if (password != null){
-            user.setPassword(password);
         }
 
         userRepo.save(user);
-        return true;
+        return resultFilename;
     }
 
     //метод определения расширения файла
