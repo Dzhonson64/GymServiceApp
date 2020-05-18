@@ -1,3 +1,51 @@
+function showPopUpSuccessful(){
+    $("#successfulPopUp").removeClass("closePopUp");
+    $("#successfulPopUp").addClass("activePopUp");
+}
+
+$("#closeSuccessfulPopUp").click(function () {
+    $("#successfulPopUp").removeClass("activePopUp");
+    $("#successfulPopUp").addClass("closePopUp");
+})
+
+
+function showPopUpError(textError){
+    $("#errorPopUp").removeClass("closePopUp");
+    $("#errorPopUp").addClass("activePopUp");
+    $("#resultResponsePopUpError").html(textError);
+}
+
+$("#closeErrorPopUp").click(function () {
+    $("#errorPopUp").removeClass("activePopUp");
+    $("#errorPopUp").addClass("closePopUp");
+    $("#resultResponsePopUpError").html("");
+})
+
+
+
+
+
+function showModal(){
+    $("#openModal").removeClass("closeModal");
+    $("#openModal").addClass("activeModal");
+}
+
+function hiddenModal() {
+    $("#openModal").removeClass("activeModal");
+    $("#openModal").addClass("closeModal");
+}
+
+$("#change-avatar").click(function () {
+    showModal();
+})
+
+$("#closeModal").click(function () {
+    hiddenModal();
+})
+
+
+
+
 
 let fields = document.querySelectorAll('.field__file');
 Array.prototype.forEach.call(fields, function (input) {

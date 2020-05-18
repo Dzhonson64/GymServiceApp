@@ -47,9 +47,6 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public boolean isEmptyRegisterationFroms(){
-        return false;
-    }
 
     public List<User> findAll(){
         return  userRepo.findAll();
