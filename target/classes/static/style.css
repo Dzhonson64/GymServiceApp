@@ -30,10 +30,7 @@ body{
     color: #c3b9b0;
 }
 .mynavbar .nav-content{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    align-items: center;
+    flex: auto;
 }
 .mynavbar ul {
     margin: 0;

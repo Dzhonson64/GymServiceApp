@@ -1,7 +1,10 @@
 <#import "parts/common.ftlh" as c>
 <#import "parts/login.ftlh" as l>
+<#import "parts/popUp.ftlh" as p>
 
 <@c.page>
+<@p.popUpSuccessful />
+<@p.popUpError />
 <div class="container">
 
 
@@ -12,7 +15,7 @@
                     <h5>Настройки</h5>
                     <p>${username}</p>
                     <img src="/uploads/profile/${filename}" alt="user" id="avatar-img">
-                    <a class="change-img" id="change-avatar" href="#openModal">сменить аватарку</a>
+                    <a class="change-img" id="change-avatar" >сменить аватарку</a>
                 </div>
             </div>
             <div class="col-lg-8 align-items-stretch mt-5">
@@ -40,7 +43,7 @@
 
             </div>
         </div>
-        <div id="openModal" class="modal-from">
+        <div id="openModal" class="modal-from closeModal">
             <div class="modal-dialog-from">
                 <div class="modal-content-from">
                     <div class="container-fluid">
@@ -54,7 +57,7 @@
                             <div class="col-lg-8">
                                 <div class="modal-header-form" >
                                     <h3 class="modal-title">Загрузите файл<i class="fa fa-cloud-download pl-2" aria-hidden="true"></i></h3>
-                                    <a href="#close" title="Close" class="close">×</a>
+                                    <a title="Close" class="close" id="closeModal">×</a>
                                 </div>
                                 <div class="modal-body">
                                     <form method="post" enctype="multipart/form-data" class="change-avatar-form" id="change-avatar-form">

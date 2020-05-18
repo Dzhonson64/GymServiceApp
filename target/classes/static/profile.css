@@ -65,7 +65,14 @@
     border: 1px solid white;
     border-radius: 6px;
     padding: 8px 5px;
+    transition: all 0.4s ease;
 }
+
+
+.profile .personal-data-content input:focus{
+    box-shadow: 0 0 5px 2px white;
+}
+
 
 .profile .personal-data-content label{
     font-weight: 600;
@@ -153,20 +160,13 @@
     align-items: center;
     background: rgba(0,0,0,0.5); /* цвет фона */
     z-index: 1050;
-    opacity: 0; /* по умолчанию модальное окно прозрачно */
     -webkit-transition: opacity 200ms ease-in;
     -moz-transition: opacity 200ms ease-in;
     transition: opacity 200ms ease-in; /* анимация перехода */
-    pointer-events: none; /* элемент невидим для событий мыши */
     margin: 0;
     padding: 0;
 }
-/* при отображении модального окно */
-.modal-from:target {
-    opacity: 1; /* делаем окно видимым */
-    pointer-events: auto; /* элемент видим для событий мыши */
-    overflow-y: auto; /* добавляем прокрутку по y, когда элемент не помещается на страницу */
-}
+
 /* ширина модального окна и его отступы от экрана */
 .modal-from .modal-dialog-from {
     position: relative;
@@ -175,6 +175,17 @@
     overflow: hidden;
 }
 
+.modal-from.closeModal {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0s linear 0.3s;
+}
+
+.modal-from.activeModal{
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+}
 /* свойства для блока, содержащего контент модального окна */
 .modal-from .modal-content-from {
     position: relative;

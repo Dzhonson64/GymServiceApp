@@ -1,25 +1,34 @@
 <#import "parts/common.ftlh" as c>
-
+<#include "parts/security.ftlh">
+<#import "parts/popUp.ftlh" as p>
 <@c.page>
-
+<@p.popUpSuccessful />
 <div class="container mt-5">
     <table class="userList">
         <thead>
-            <tr>
-                <td>Name</td>
-                <td>Role</td>
-                <td></td>
-            </tr>
+        <tr>
+            <td>Name</td>
+            <td>Role</td>
+            <td></td>
+        </tr>
         </thead>
 
-        <#list users as user>
+        <#list users as u>
         <tr>
 
-            <td >${user.username}</td>
+            <td >
+
+                ${u.username}
+                <#if idActiveUser == u.id>
+                <span class="you">(You)</span>
+                </#if>
+            </td>
+
+
             <td>
-                <#list user.roles as role>
+                <#list u.roles as role>
                 <#if role == "ADMIN">
-                    <span class="admin">${role}<span><#sep> ,
+                <span class="admin">${role}<span><#sep> ,
                         <#else>
                         <span class="role">${role}</span><#sep> ,
                 </#if>
@@ -27,10 +36,10 @@
             </td>
             <td>
 
-                    <a href="/user/${user.id}">
-                        <div class="edit-btn">edit
-                        </div>
-                    </a>
+                <a href="/user/${u.id}">
+                    <div class="edit-btn">edit
+                    </div>
+                </a>
 
             </td>
         </tr>

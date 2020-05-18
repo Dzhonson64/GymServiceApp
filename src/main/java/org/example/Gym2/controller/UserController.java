@@ -40,6 +40,7 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
+    @ResponseBody
     public String save(@RequestParam("userId") User user, @RequestParam String username, @RequestParam Map<String, String> form){
         userService.saveUser(user, username, form);
         return "redirect:/user";
@@ -77,7 +78,6 @@ public class UserController {
                                 @RequestParam("file") MultipartFile file
     ) {
         String result = null;
-        System.out.println("sdf");
         try {
             result = userService.updateUserAvatar(user, file);
 

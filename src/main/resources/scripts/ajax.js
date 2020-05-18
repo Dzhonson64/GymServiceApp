@@ -6,34 +6,37 @@ $(document).ready(function() {
         event.preventDefault();
 
         // Call Ajax Submit.
-        console.log("work")
 
-        ajaxSubmitForm();
+        requestSavePersonalData();
 
     });
 
     $("#save-avatar").click(function(event) {
 
-        // Stop default form Submit.
         event.preventDefault();
 
-        // Call Ajax Submit.
-        console.log("work")
+        requestSaveAvatar();
 
-        ajaxSubmitForm2();
+    });
+
+    $("#saveEditUser").click(function(event) {
+
+        // Stop default form Submit.
+        event.preventDefault();
+        // let s = document.location.pathname;
+        // console.log(s);
+        requestSaveEditUser();
 
     });
 
 });
 
-function ajaxSubmitForm() {
+function requestSavePersonalData() {
 
     // Get form
     var form = $('#personalData')[0];
 
     var data = new FormData(form);
-    console.log(form);
-    console.log(data);
 
     $("#saveData").prop("disabled", true);
 
@@ -49,17 +52,19 @@ function ajaxSubmitForm() {
         cache: false,
         timeout: 1000000,
         success: function(data, textStatus, jqXHR) {
-
-            // $("#result").html(data);
             console.log("SUCCESS : ", data);
             $("#saveData").prop("disabled", false);
-            $("#success").html("YES!!");
+            showPopUpSuccessful();
+            $("#resultResponsePopUp").text("Ваши личные данные были успешно обновлены!");
+
             // $('#personalData')[0].reset();
         },
         error: function(jqXHR, textStatus, errorThrown) {
-
+                showPopUpError();
             // $("#result").html(jqXHR.responseText);
-            console.log("ERROR : ", jqXHR.responseText);
+            // console.log("ERROR : ", jqXHR.responseText);
+            console.log(textStatus);
+            console.log(errorThrown);
             $("#saveData").prop("disabled", false);
 
         }
@@ -67,16 +72,12 @@ function ajaxSubmitForm() {
 
 }
 
-
-function ajaxSubmitForm2() {
+function requestSaveAvatar() {
 
     // Get form
-    console.log($('#avatar-img')[0]);
     let form = $('#change-avatar-form')[0];
 
     let data = new FormData(form);
-    console.log(form);
-    console.log( data);
 
     $("#save-avatar").prop("disabled", true);
 
@@ -92,17 +93,70 @@ function ajaxSubmitForm2() {
         cache: false,
         timeout: 1000000,
         success: function(data, textStatus, jqXHR) {
-
-            // $("#result").html(data);
             console.log("SUCCESS : ", data);
-            // $("#save-avatar").prop("disabled", false);
-            $("#suc").html("YES!!");
+            $("#save-avatar").prop("disabled", false);
             $("#avatar-img").attr('src', '/uploads/profile/' + data);
+            showPopUpSuccessful();
+            $("#resultResponsePopUp").text("Ваш аватар был успешно обновлен!");
             //$('#avatar-img')[0].reset();
         },
         error: function(jqXHR, textStatus, errorThrown) {
 
             // $("#result").html(jqXHR.responseText);
+            if (jqXHR.status === 403 || jqXHR.status === 0){
+                showPopUpError("<h5>Неправильный формат</h5>" +
+                    "<p>Пожалуйста, выберите правильный формат фото для аватара: <i>jpg, png</i>" +
+                    "<br>Размер файла не должен превышать 5МБ!</p>"
+
+                );
+            }
+            console.log(jqXHR.status);
+            console.log(textStatus);
+            console.log(errorThrown);
+            $("#save-avatar").prop("disabled", false);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
+}
+
+function requestSaveEditUser() {
+
+    // Get form
+    let form = $('#userEditFrom')[0];
+
+    let data = new FormData(form);
+
+    $("#saveEditUser").prop("disabled", true);
+
+    $.ajax({
+        type: "POST",
+        url: "/user/",
+        data: data,
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        // complete: function(xmlHttp) {
+        //     // xmlHttp is a XMLHttpRquest object
+        //     alert(xmlHttp.status);
+        // },
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+            if (textStatus === "success"){
+                window.location.href="/user";
+               // showPopUp();
+            }
+            $("#saveEditUser").prop("disabled", false);
+
+            $("#resultResponsePopUp").text("Ваш аватар был успешно обновлен!");
+            //$('#avatar-img')[0].reset();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+
             console.log("ERROR : ", jqXHR.responseText);
             $("#suc").prop("disabled", false);
 
