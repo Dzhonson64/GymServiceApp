@@ -14,11 +14,11 @@
         </thead>
 
         <#list users as u>
-        <tr>
+        <tr class="c">
 
             <td >
-
-                ${u.username}
+                <span class="id" hidden="hidden">${u.id}</span>
+                <span>${u.username}</span>
                 <#if idActiveUser == u.id>
                 <span class="you">(You)</span>
                 </#if>
@@ -40,8 +40,17 @@
                     <div class="edit-btn">edit
                     </div>
                 </a>
+                <form method="POST" action="/user/${u.id}/deleteFromList">
+                    <button type="submit">
+                        <i class="fa fa-times-circle deleteUserFromList" aria-hidden="true"></i>
+                    </button>
+
+                    <input type="hidden" value = "${_csrf.token}" name = "_csrf">
+                </form>
+
 
             </td>
+
         </tr>
     </#list>
     </table>

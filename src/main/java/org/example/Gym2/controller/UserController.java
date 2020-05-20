@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -86,6 +87,12 @@ public class UserController {
         }
 
         return result;
+    }
+    @PostMapping("/{user}/deleteFromList")
+    @ResponseBody
+    public String deleteUserFromList(@PathVariable User user){
+        System.out.println("delete");
+        return "df";
     }
 
 
