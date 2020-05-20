@@ -21,6 +21,11 @@ $("#closeErrorPopUp").click(function () {
     $("#resultResponsePopUpError").html("");
 })
 
+$(".deleteUserFromList").on("click", function () {
+    let rowTableData = $(this).closest("tr.c");
+    //deleteUserFromList(rowTableData)
+})
+
 
 
 

@@ -35,7 +35,7 @@ function requestSavePersonalData() {
 
     // Get form
     var form = $('#personalData')[0];
-
+    console.log(form);
     var data = new FormData(form);
 
     $("#saveData").prop("disabled", true);
@@ -125,6 +125,7 @@ function requestSaveEditUser() {
     // Get form
     let form = $('#userEditFrom')[0];
 
+
     let data = new FormData(form);
 
     $("#saveEditUser").prop("disabled", true);
@@ -163,4 +164,45 @@ function requestSaveEditUser() {
         }
     });
 
+
+
+}
+
+function deleteUserFromList(data) {
+
+    // $("#saveEditUser").prop("disabled", true);
+    let id = data.children().find(".userId").text();
+    console.log(id);
+    $.ajax({
+        type: "POST",
+        url: "/user/4/deleteFromList",
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        // complete: function(xmlHttp) {
+        //     // xmlHttp is a XMLHttpRquest object
+        //     alert(xmlHttp.status);
+        // },
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+            if (textStatus === "success"){
+                window.location.href="/user";
+                // showPopUp();
+            }
+            $("#saveEditUser").prop("disabled", false);
+
+            $("#resultResponsePopUp").text("Ваш аватар был успешно обновлен!");
+            //$('#avatar-img')[0].reset();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+
+            console.log("ERROR : ", jqXHR.responseText);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
 }
