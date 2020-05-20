@@ -52,7 +52,6 @@ public class UserController {
 
     @GetMapping("profile")
     public String getProfile(Model model, @AuthenticationPrincipal User user){
-        System.out.println(user.getFilename());
         model.addAttribute("username", user.getUsername());
         model.addAttribute("password", user.getPassword());
         model.addAttribute("filename", user.getFilename());
@@ -65,7 +64,6 @@ public class UserController {
     public String updatePersonalData(@AuthenticationPrincipal User user,
                                 @RequestParam String password
                                 ) {
-        System.out.println("sdf");
         try {
             boolean result = userService.updatePersonalData(user, password);
 

@@ -22,7 +22,26 @@ $("#closeErrorPopUp").click(function () {
 })
 
 $(".deleteUserFromList").on("click", function (e) {
-    deleteUserFromList($(this))
+    let form = $(this);
+    form.closest("tr.c").fadeOut(1000);
+    setTimeout(function (){
+        deleteUserFromList(form)
+    }, 1000);
+})
+
+
+$(".password-input").click( function(){
+    let inputPassword = $(this).siblings( 'input' );
+
+    if (inputPassword.attr('type') === 'password'){
+        $(this).addClass('fa-eye');
+        $(this).removeClass('fa-eye-slash');
+        inputPassword.attr('type', 'text');
+    } else {
+        $(this).removeClass('fa-eye');
+        $(this).addClass('fa-eye-slash');
+        inputPassword.attr('type', 'password');
+    }
 })
 
 

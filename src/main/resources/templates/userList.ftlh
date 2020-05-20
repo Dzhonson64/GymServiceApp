@@ -10,6 +10,7 @@
         <tr>
             <td>Id</td>
             <td>Name</td>
+            <td>Password</td>
             <td>Role</td>
             <td></td>
         </tr>
@@ -23,6 +24,13 @@
                 <#if idActiveUser == u.id>
                 <span class="you">(You)</span>
                 </#if>
+            </td>
+            <td>
+                <div class="password">
+                    <input type="password" value="${u.password}" disabled>
+                    <i class="fa fa-eye-slash password-input" aria-hidden="true" ></i>
+                </div>
+
             </td>
 
 

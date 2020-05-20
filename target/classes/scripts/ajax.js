@@ -196,12 +196,12 @@ function deleteUserFromList(dataForm) {
         success: function(data, textStatus, jqXHR) {
             console.log("SUCCESS : ", data);
             if (textStatus === "success"){
-                console.log(data);
-                // showPopUp();
+                rowTableDataForm.remove();
+                showPopUpSuccessful();
             }
             $("#saveEditUser").prop("disabled", false);
 
-            $("#resultResponsePopUp").text("Ваш аватар был успешно обновлен!");
+            $("#resultResponsePopUp").text("Пользователь был успешно удалён!");
             //$('#avatar-img')[0].reset();
         },
         error: function(jqXHR, textStatus, errorThrown) {
