@@ -4,6 +4,8 @@ import org.example.Gym2.domain.Role;
 import org.example.Gym2.domain.User;
 import org.example.Gym2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.function.EntityResponse;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,6 +52,7 @@ public class UserController {
 
     @GetMapping("profile")
     public String getProfile(Model model, @AuthenticationPrincipal User user){
+        System.out.println(user.getFilename());
         model.addAttribute("username", user.getUsername());
         model.addAttribute("password", user.getPassword());
         model.addAttribute("filename", user.getFilename());
@@ -88,11 +92,10 @@ public class UserController {
 
         return result;
     }
-    @PostMapping("/{user}/deleteFromList")
+    @DeleteMapping("/{user}/deleteFromList")
     @ResponseBody
-    public String deleteUserFromList(@PathVariable User user){
-        System.out.println("delete");
-        return "df";
+    public ResponseEntity<String> deleteUserFromList(@PathVariable User user){
+        return userService.deleteUserFromList(user.getId());
     }
 
 

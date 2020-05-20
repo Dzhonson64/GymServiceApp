@@ -168,19 +168,27 @@ function requestSaveEditUser() {
 
 }
 
-function deleteUserFromList(data) {
+function deleteUserFromList(dataForm) {
 
     // $("#saveEditUser").prop("disabled", true);
-    let id = data.children().find(".userId").text();
-    console.log(id);
+    let rowTableDataForm = dataForm.closest("tr.c");
+    let id = rowTableDataForm.children(":first").text();
+    let csrfToken = $("#csrfUserList").attr("content");
+
+    let data = new FormData();
+
+    data.append("id", id);
+    data.append("_csrf", csrfToken);
+
     $.ajax({
-        type: "POST",
-        url: "/user/4/deleteFromList",
+        type: "DELETE",
+        url: "/user/"+id+"/deleteFromList",
         // prevent jQuery from automatically transforming the data into a query string
         processData: false,
         contentType: false,
         cache: false,
         timeout: 1000000,
+        data: data,
         // complete: function(xmlHttp) {
         //     // xmlHttp is a XMLHttpRquest object
         //     alert(xmlHttp.status);
@@ -188,7 +196,7 @@ function deleteUserFromList(data) {
         success: function(data, textStatus, jqXHR) {
             console.log("SUCCESS : ", data);
             if (textStatus === "success"){
-                window.location.href="/user";
+                console.log(data);
                 // showPopUp();
             }
             $("#saveEditUser").prop("disabled", false);

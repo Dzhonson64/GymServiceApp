@@ -5,6 +5,8 @@ import org.example.Gym2.domain.User;
 import org.example.Gym2.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -42,6 +44,7 @@ public class UserService implements UserDetailsService {
         }
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
+        user.setFilename("account_user.png");
         userRepo.save(user);
 
         return true;
@@ -109,5 +112,16 @@ public class UserService implements UserDetailsService {
             return fileName.substring(fileName.lastIndexOf(".")+1);
             // в противном случае возвращаем заглушку, то есть расширение не найдено
         else return "";
+    }
+
+    public ResponseEntity<String> deleteUserFromList(Long userId){
+        Optional<User> user = userRepo.findById(userId);
+        if (user.isPresent()) {
+            userRepo.delete(user.get());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
