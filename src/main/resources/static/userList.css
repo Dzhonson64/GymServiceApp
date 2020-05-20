@@ -9,6 +9,16 @@
     border-radius: 6px; border-collapse: separate;
     border-spacing: 0;
 }
+
+.userList .deleteUserFromList {
+    font-size: 25px;
+    color: #4466fb;
+    margin-left: 10px;
+    cursor: pointer;
+    position: relative;
+    top: 5px;
+
+}
 .userList thead tr {color: #ffffff; font-weight: bold; background: #6bb5fb;}
 .userList tr td {border-right: 1px solid #dfdfdf;}
 .userList tr td:last-child {border-right: 0;}
@@ -16,6 +26,7 @@
 .userList tbody tr:nth-child(2n) {background: #e6e6e6;}
 .userList tbody tr:hover {background: #ffe8e8; transition-duration: 0.6s;}
 .userList tbody td:first-child {font-weight: 600; font-style: italic}
+.userList tbody td:nth-child(2) {font-weight: 600;}
 .userList .edit-btn {
     display: inline-block;
     padding: 5px 10px;
@@ -35,4 +46,24 @@
 .userList .admin{
     color: #fea700;
     font-weight: 900;
+}
+.userList .password i{
+    position: relative;
+    left: -30px;
+    cursor: pointer;
+}
+.userList .password input {
+    font-family: Poppins-Regular, sans-serif;
+    color: #555555;
+    background: #0000000d;
+    outline: none;
+    border: none;
+    padding-right: 35px;
+    border-radius: 10px;
+    text-align: center;
+
+}
+
+.userList .password {
+    position: relative;
 }
