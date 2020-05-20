@@ -3,10 +3,12 @@
 <#import "parts/popUp.ftlh" as p>
 <@c.page>
 <@p.popUpSuccessful />
+<meta name="_csrf" content="${_csrf.token}" id="csrfUserList">
 <div class="container mt-5">
     <table class="userList">
         <thead>
         <tr>
+            <td>Id</td>
             <td>Name</td>
             <td>Role</td>
             <td></td>
@@ -15,9 +17,8 @@
 
         <#list users as u>
         <tr class="c">
-
-            <td >
-                <span class="id" hidden="hidden">${u.id}</span>
+            <td class = "userId">${u.id}</td>
+            <td>
                 <span>${u.username}</span>
                 <#if idActiveUser == u.id>
                 <span class="you">(You)</span>
@@ -40,13 +41,7 @@
                     <div class="edit-btn">edit
                     </div>
                 </a>
-                <form method="POST" action="/user/${u.id}/deleteFromList">
-                    <button type="submit">
-                        <i class="fa fa-times-circle deleteUserFromList" aria-hidden="true"></i>
-                    </button>
-
-                    <input type="hidden" value = "${_csrf.token}" name = "_csrf">
-                </form>
+                <i class="fa fa-times-circle deleteUserFromList" aria-hidden="true"></i>
 
 
             </td>
