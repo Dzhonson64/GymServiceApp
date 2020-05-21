@@ -247,6 +247,13 @@ body{
     margin-bottom: 48px;
 }
 
+.logo-form .password-input{
+    position: absolute;
+    right: 27px;
+    font-size: 18px;
+    top: 13px;
+    color: #999999;
+}
 
 .input-login:focus + .focus-input::after {
     top: -15px;

@@ -1,3 +1,6 @@
+/*==================================================================
+    [ Show & Hidden a successful popup info ]*/
+
 function showPopUpSuccessful(){
     $("#successfulPopUp").removeClass("closePopUp");
     $("#successfulPopUp").addClass("activePopUp");
@@ -7,7 +10,14 @@ $("#closeSuccessfulPopUp").click(function () {
     $("#successfulPopUp").removeClass("activePopUp");
     $("#successfulPopUp").addClass("closePopUp");
 })
+/*==================================================================*/
 
+
+
+
+
+/*==================================================================
+    [ Show & Hidden a error popup info ]*/
 
 function showPopUpError(textError){
     $("#errorPopUp").removeClass("closePopUp");
@@ -20,6 +30,14 @@ $("#closeErrorPopUp").click(function () {
     $("#errorPopUp").addClass("closePopUp");
     $("#resultResponsePopUpError").html("");
 })
+/*==================================================================*/
+
+
+
+
+
+/*==================================================================
+    [ Show & Hidden a error popup info (AJAX)]*/
 
 $(".deleteUserFromList").on("click", function (e) {
     let form = $(this);
@@ -28,10 +46,18 @@ $(".deleteUserFromList").on("click", function (e) {
         deleteUserFromList(form)
     }, 1000);
 })
+/*==================================================================*/
 
+
+
+
+
+/*==================================================================
+    [ Show & Hidden password symbols ]*/
 
 $(".password-input").click( function(){
     let inputPassword = $(this).siblings( 'input' );
+    console.log(inputPassword);
 
     if (inputPassword.attr('type') === 'password'){
         $(this).addClass('fa-eye');
@@ -43,10 +69,15 @@ $(".password-input").click( function(){
         inputPassword.attr('type', 'password');
     }
 })
+/*==================================================================*/
 
 
 
 
+
+
+/*==================================================================
+    [ Show & Hidden from to select avatar img ]*/
 
 function showModal(){
     $("#openModal").removeClass("closeModal");
@@ -65,10 +96,14 @@ $("#change-avatar").click(function () {
 $("#closeModal").click(function () {
     hiddenModal();
 })
+/*==================================================================*/
 
 
 
 
+
+/*==================================================================
+    [ The changed field to select avatar img ]*/
 
 let fields = document.querySelectorAll('.field__file');
 Array.prototype.forEach.call(fields, function (input) {
@@ -86,6 +121,7 @@ Array.prototype.forEach.call(fields, function (input) {
             label.querySelector('.field__file-fake').innerText = labelVal;
     });
 });
+/*==================================================================*/
 
 
 // document.addEventListener("DOMContentLoaded", function(){
@@ -100,6 +136,9 @@ Array.prototype.forEach.call(fields, function (input) {
 //         document.querySelector('#openModal').style.marginLeft = '0px';
 //     });
 // });
+
+
+
 
 
 /*==================================================================
@@ -117,13 +156,15 @@ $('.input-login').each(function(){
         }
     })
 })
-
-
 /*==================================================================*/
+
+
+
 
 
 /*==================================================================
     [ Validate ]*/
+
 var input = $('.validate-input .input');
 
 $('.validate-form').on('submit',function(){
@@ -170,10 +211,15 @@ function hideValidate(input) {
 
     $(thisAlert).removeClass('alert-validate');
 }
+/*==================================================================*/
+
+
+
 
 
 /*==================================================================
     [ Show pass ]*/
+
 var showPass = 0;
 $('.btn-show-pass').on('click', function(){
     if(showPass === 0) {
@@ -188,5 +234,5 @@ $('.btn-show-pass').on('click', function(){
         $(this).find('i').removeClass('fa-exclamation-circle');
         showPass = 0;
     }
-
 });
+/*==================================================================*/
