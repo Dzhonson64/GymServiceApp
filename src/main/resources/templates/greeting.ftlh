@@ -1,7 +1,8 @@
 <#import "parts/common.ftlh" as c>
-
+<#import "parts/popUp.ftlh" as p>
 <@c.page>
-
+<@p.popUpSuccessful />
+<#include "parts/recording.ftlh">
 <div id="fullpage" class="greeting">
     <div class="section main-img" data-anchor="block1">
         <div class="header">
@@ -14,7 +15,7 @@
                         <div class="container-login-btn">
                             <div class="wrap-login-btn">
                                 <div class="login-form-bgbtn"></div>
-                                <button class="login-form-btn">
+                                <button class="login-form-btn" id="sendRecording">
                                     Записаться
                                 </button>
                             </div>

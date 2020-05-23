@@ -35,6 +35,26 @@ $("#closeErrorPopUp").click(function () {
 
 
 
+/*==================================================================
+    [ Show & Hidden a recording form ]*/
+
+
+$("#sendRecording").click(function () {
+    console.log("f");
+    $("#recording").removeClass("closeRecording");
+    $("#recording").addClass("activeRecording");
+
+})
+
+$("#closeRecording").click(function () {
+    $("#recording").removeClass("activeRecording");
+    $("#recording").addClass("closeRecording");
+
+})
+/*==================================================================*/
+
+
+
 
 /*==================================================================
     [ Show & Hidden a error popup info (AJAX)]*/
@@ -46,6 +66,18 @@ $(".deleteUserFromList").on("click", function (e) {
         deleteUserFromList(form)
     }, 1000);
 })
+/*==================================================================*/
+
+
+
+
+/*==================================================================
+    [ Show & Hidden a error popup info (AJAX)]*/
+
+function hiddenRecording(){
+    $("#recording").removeClass("activeRecording ");
+    $("#recording").addClass("closeRecording ");
+}
 /*==================================================================*/
 
 

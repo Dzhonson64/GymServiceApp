@@ -29,7 +29,57 @@ $(document).ready(function() {
 
     });
 
+
+    $("#btnSendRecording").click(function(event) {
+        event.preventDefault();
+        sendRecording();
+
+    });
+
 });
+
+
+function sendRecording() {
+
+    var form = $("#formRecording")[0];
+    var data = new FormData(form);
+    $("#btnSendRecording").prop("disabled", false);
+    $.ajax({
+        type: "POST",
+        url: "/recording",
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        data: data,
+        // complete: function(xmlHttp) {
+        //     // xmlHttp is a XMLHttpRquest object
+        //     alert(xmlHttp.status);
+        // },
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+            if (textStatus === "success"){
+                hiddenRecording();
+                showPopUpSuccessful();
+                showPopUpSuccessful();
+            }
+            $("#btnSendRecording").prop("disabled", false);
+            //
+            $("#resultResponsePopUp").text("Заявка отправлена");
+            //$('#avatar-img')[0].reset();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+            hiddenRecording();
+            showPopUpError("<h5>Ошибка запроса</h5>");
+            console.log("ERROR : ", jqXHR.responseText);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
+}
 
 function requestSavePersonalData() {
 

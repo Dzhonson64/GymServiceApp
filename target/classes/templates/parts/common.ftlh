@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="/static/userList.css">
     <link rel="stylesheet" href="/static/popUp.css">
     <link rel="stylesheet" href="/static/userEdit.css">
+    <link rel="stylesheet" href="/static/recording.css">
+
     <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/static/jquery.fullPage.css">
 
