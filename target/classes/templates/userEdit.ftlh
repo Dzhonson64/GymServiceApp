@@ -1,7 +1,7 @@
 <#import "parts/common.ftlh" as c>
 
 <@c.page>
-
+<#include "parts/navbar.ftlh">
 <div class="container">
     <div class="row d-flex justify-content-center">
         <form action="/user" method="post" class="user-edit-form mt-5" id="userEditFrom">

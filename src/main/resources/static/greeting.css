@@ -1,0 +1,229 @@
+.greeting {
+    z-index: 10;
+}
+
+.header {
+    width: 100%;
+}
+.header .main-img {
+    background-color: #ffffff;
+    background-image: url("/img/Фитнес клуб.jpg");
+    background-size: cover;
+    position: relative;
+    height: 100vh;
+}
+
+.header .wrap{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(19, 6, 0, 0.55);
+}
+
+.header .main-img .content{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header .main-img .content h1 {
+    color: #ffffff;
+}
+
+
+.header .container-login-btn {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 13px;
+}
+
+.header .wrap-login-btn {
+    width: 100%;
+    display: block;
+    position: relative;
+    z-index: 1;
+    border-radius: 25px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.header .login-form-bgbtn {
+    position: absolute;
+    z-index: -1;
+    width: 300%;
+    height: 100%;
+    background: #9c4900;
+    background: -webkit-linear-gradient(right, #9c4900, #fea700, #9c4900, #fea700);
+    background: -o-linear-gradient(right, #9c4900, #fea700, #9c4900, #fea700);
+    background: -moz-linear-gradient(right, #9c4900, #fea700, #9c4900, #fea700);
+    background: linear-gradient(right, #9c4900, #fea700, #9c4900, #fea700);
+    top: 0;
+    left: -100%;
+
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+.header .login-form-btn {
+    font-family: Poppins-Medium;
+    font-size: 15px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+    background: transparent;
+    border: none;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 100%;
+    height: 50px;
+}
+
+.greeting h2 {
+    display: block;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+.greeting .trainingHall h2 {
+    color: #623720;
+}
+
+.greeting .trainingHall {
+    background-color: #e6e6e6;
+}
+
+.greeting .trainingHall p{
+    font-size: 20px;
+    color: #120a05;
+}
+
+.greeting .prices {
+    margin-top: 50px;
+    font-size: 20px;
+}
+
+.greeting .prices .title img {
+    width: 100px;
+    display: block;
+    margin: 0 auto;
+}
+.greeting .prices .title, .greeting .prices .contentBlock {
+    display: block;
+    margin: 0 auto;
+}
+
+.greeting .prices .title p{
+    color: #623720;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+
+.greeting .prices .contentBlock p {
+    margin-bottom: 0;
+    text-align: center;
+    font-size: 18px;
+}
+.greeting .fitness h2 {
+
+}
+
+.greeting .fitness {
+    font-size: 20px;
+    color: #120a05;
+}
+
+.greeting .fitness h2 {
+    color: #623720;
+}
+.greeting .fitness .topic p{
+    margin-bottom: 50px;
+}
+
+.greeting .fitness img, .greeting .sportsSection img{
+    max-height: 500px;
+}
+
+.greeting .fitness .contentBlock {
+
+}
+.greeting .fitness ul li{
+    list-style-type: none;
+}
+.greeting .sportsSection {
+    font-size: 20px;
+    background-color: #e6e6e6;
+}
+.greeting .sportsSection .contentBlock img {
+    width: 100px;
+}
+
+.greeting .sportsSection p {
+    margin-bottom: 0;
+}
+
+.greeting .otherActivities {
+    background-color: #150d08;
+}
+.greeting .otherActivities h2 {
+    margin-bottom: 80px;
+    color: white;
+}
+
+.greeting .otherActivities img {
+    width: 180px;
+    display: block;
+    margin: 0 auto;
+
+}
+
+.greeting .otherActivities p{
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+    color: #c1c1c1;
+}
+
+.greeting .contacts {
+    font-size: 20px;
+    background-color: #150d08;
+    color: white;
+}
+
+.greeting .contacts h2{
+    margin-top: 50px;
+}
+
+.greeting .contacts p {
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+
+}
+
+.greeting .contacts .phone {
+    font-size: 62px;
+    font-weight: 900;
+    letter-spacing: 0.6px;
+}
+
+.greeting .contacts .address {
+    display: block;
+    margin: 0 auto;
+}
+

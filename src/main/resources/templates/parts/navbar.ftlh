@@ -1,6 +1,6 @@
 <#import "login.ftlh" as l>
 <#include "security.ftlh">
-<nav class="container-fluid mynavbar pt-1 pb-1">
+<nav class="container-fluid mynavbar">
 
     <a class="navbar-brand col-lg-2" href="/">Спортивный клуб</a>
     <div class="nav-content col-lg-10" id="navbarSupportedContent">

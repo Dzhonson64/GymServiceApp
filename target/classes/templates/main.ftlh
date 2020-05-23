@@ -2,6 +2,7 @@
 <#import "parts/login.ftlh" as l>
 
 <@c.page>
+<#include "parts/navbar.ftlh">
 <div>
     <@l.logout />
 </div>

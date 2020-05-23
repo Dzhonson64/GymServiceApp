@@ -8,13 +8,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
-    @Value("${upload.path}")
-    private String uploadPath;
 
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/").setViewName("greeting");
-    }
+
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -33,5 +28,13 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/uploads/profile/**")
                 .addResourceLocations("file:/" + uploadPath + "/");
 
+    }
+
+
+    @Value("${upload.path}")
+    private String uploadPath;
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/").setViewName("greeting");
     }
 }

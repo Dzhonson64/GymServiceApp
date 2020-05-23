@@ -12,7 +12,10 @@
             <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
         </span>
         <input type="password" class="input-login" name="password"/>
+
+
         <span class="focus-input" data-placeholder="Password"></span>
+        <i class="fa fa-eye-slash password-input" aria-hidden="true" ></i>
     </div>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
     <div class="container-login-btn">

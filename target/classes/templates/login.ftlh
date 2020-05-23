@@ -2,7 +2,7 @@
 <#import "parts/login.ftlh" as l>
 
 <@c.page>
-
+<#include "parts/navbar.ftlh">
 <div class="container-fluid p-0">
     <div class="login-block">
         <div class="wrap-logo">

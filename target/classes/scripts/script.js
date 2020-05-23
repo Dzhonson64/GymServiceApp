@@ -57,7 +57,6 @@ $(".deleteUserFromList").on("click", function (e) {
 
 $(".password-input").click( function(){
     let inputPassword = $(this).siblings( 'input' );
-    console.log(inputPassword);
 
     if (inputPassword.attr('type') === 'password'){
         $(this).addClass('fa-eye');
@@ -137,9 +136,15 @@ Array.prototype.forEach.call(fields, function (input) {
 //     });
 // });
 
-
-
-
+$(document).ready(function() {
+    $('#fullpage').fullpage({
+        anchors: ['block1', 'block2', 'block3', 'block4', 'block5', 'block6', 'block7'],
+        css3: true,
+        scrollingSpeed: 1000,
+        scrollOverflow: true,
+        navigation: true
+    });
+});
 
 /*==================================================================
     [ Focus input ]*/

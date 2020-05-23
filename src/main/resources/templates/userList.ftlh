@@ -2,6 +2,7 @@
 <#include "parts/security.ftlh">
 <#import "parts/popUp.ftlh" as p>
 <@c.page>
+<#include "parts/navbar.ftlh">
 <@p.popUpSuccessful />
 <meta name="_csrf" content="${_csrf.token}" id="csrfUserList">
 <div class="container mt-5">
