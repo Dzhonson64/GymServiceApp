@@ -55,7 +55,7 @@
 
                             </div>
                             <div class="col-lg-8">
-                                <div class="modal-header-form" >
+                                <div class="modal-header-form">
                                     <h3 class="modal-title">Загрузите файл<i class="fa fa-cloud-download pl-2" aria-hidden="true"></i></h3>
                                     <a title="Close" class="close" id="closeModal">×</a>
                                 </div>

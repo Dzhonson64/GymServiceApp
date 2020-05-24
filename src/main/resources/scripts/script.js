@@ -72,12 +72,74 @@ $(".deleteUserFromList").on("click", function (e) {
 
 
 /*==================================================================
-    [ Show & Hidden a error popup info (AJAX)]*/
+    [ Delete recording card (AJAX)]*/
+
+$(".deleteRecording").on("click", function (e) {
+    let btnDelete = $(this);
+    let removeBlock =  btnDelete.closest(".recordingCardBlock");
+    removeBlock.fadeOut(800);
+    setTimeout(function (){
+        deleteRecordingCard(btnDelete);
+    }, 800);
+})
+/*==================================================================*/
+
+
+
+
+/*==================================================================
+    [ Add comments in recording card (AJAX)]*/
+
+$(".addCommentRecording").on("click", function (e) {
+    let btnComment = $(this);
+    console.log(btnComment);
+    let resultComment =  btnComment.siblings(".comment-post");
+    let blockTextComment =  resultComment.children(".comment-text");
+    let fieldComment =  resultComment.siblings(".textAreaComment");
+    if (fieldComment.hasClass("dNone")){
+        fieldComment.removeClass("dNone");
+        resultComment.addClass("dNone");
+        fieldComment.val(blockTextComment.text());
+        btnComment.text("Сохранить комментарий");
+    }else {
+        /*Вставить Ajax*/
+        btnComment.text("Добавить комментарий");
+        fieldComment.addClass("dNone");
+        blockTextComment.text(fieldComment.val());
+        if (fieldComment.val().length !== 0){
+            resultComment.removeClass("dNone");
+        }
+    }
+
+
+    // removeBlock.fadeOut(800);
+    // setTimeout(function (){
+    //     deleteRecordingCard(btnDelete);
+    // }, 800);
+})
+/*==================================================================*/
+
+
+
+/*==================================================================
+    [ Show & Hidden a error popup info ]*/
 
 function hiddenRecording(){
     $("#recording").removeClass("activeRecording ");
     $("#recording").addClass("closeRecording ");
 }
+/*==================================================================*/
+
+
+
+
+
+/*==================================================================
+    [ Show & Hidden a menu-list profile]*/
+
+$("#profileMenu").click(function () {
+    $("#profileMenuList").toggle("fast");
+})
 /*==================================================================*/
 
 

@@ -38,6 +38,49 @@ $(document).ready(function() {
 
 });
 
+function deleteRecordingCard(btnDeleteCard, removeBlock) {
+
+    let id = btnDeleteCard.siblings(".idRecording").val();
+    let csrfToken = $("#csrfUserList").attr("content");
+    console.log(id)
+    console.log(csrfToken)
+
+    let data = new FormData();
+
+    data.append("id", id);
+    data.append("_csrf", csrfToken);
+    console.log(data.get("id"))
+    // $("#btnSendRecording").prop("disabled", false);
+    $.ajax({
+        type: "DELETE",
+        url: "/recording/delete",
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        data: data,
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+            if (textStatus === "success"){
+                removeBlock.remove();
+            }
+            $("#btnSendRecording").prop("disabled", false);
+            //
+            $("#resultResponsePopUp").text("Заявка отправлена");
+            //$('#avatar-img')[0].reset();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+            hiddenRecording();
+            showPopUpError("<h5>Ошибка запроса</h5>");
+            console.log("ERROR : ", jqXHR.responseText);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
+}
 
 function sendRecording() {
 

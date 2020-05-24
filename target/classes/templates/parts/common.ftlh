@@ -16,9 +16,10 @@
     <link rel="stylesheet" href="/static/popUp.css">
     <link rel="stylesheet" href="/static/userEdit.css">
     <link rel="stylesheet" href="/static/recording.css">
+    <link rel="stylesheet" href="/static/listRecording.css">
 
     <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/jquery.fullPage.css">
+
 
 
 
@@ -32,9 +33,7 @@
 <script src="/scripts/jquery-3.2.1.min.js"></script>
 <script src="/scripts/script.js"></script>
 <script src="/scripts/ajax.js"></script>
-<script src="/scripts/jquery.fullPage.min.js"></script>
-<script src="/scripts/jquery.easings.min.js"></script>
-<script src="/scripts/jquery.slimscroll.min.js"></script>
+
 </body>
 </html>
 </#macro>

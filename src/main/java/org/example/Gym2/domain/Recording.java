@@ -20,6 +20,24 @@ public class Recording {
     private String dateSend;
     private String timeSend;
     private String phone;
+    private String comment;
+    private String gender;
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
     public Long getId() {
         return id;

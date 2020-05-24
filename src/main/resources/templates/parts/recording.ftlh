@@ -22,6 +22,12 @@
                                 <div class="row mb-3">
                                     <input type="text" placeholder="Ваш телефон" name="phone">
                                 </div>
+                                <div class="row mb-3">
+                                    <select name="gender" class="selectGender">
+                                        <option>Мужской</option>
+                                        <option>Женский</option>
+                                    </select>
+                                </div>
                                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
                                 <div class="row">
                                     <button type="submit" id="btnSendRecording">Отправить</button>

@@ -1,6 +1,8 @@
 <#import "parts/common.ftlh" as c>
 <#import "parts/popUp.ftlh" as p>
+
 <@c.page>
+<link rel="stylesheet" type="text/css" href="/static/jquery.fullPage.css">
 <@p.popUpSuccessful />
 <#include "parts/recording.ftlh">
 <div id="fullpage" class="greeting">
@@ -230,3 +232,6 @@
 </div>
 
 </@c.page>
+<script src="/scripts/jquery.fullPage.min.js"></script>
+<script src="/scripts/jquery.easings.min.js"></script>
+<script src="/scripts/jquery.slimscroll.min.js"></script>

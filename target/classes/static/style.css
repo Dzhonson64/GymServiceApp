@@ -44,7 +44,16 @@ body{
     border-bottom: 2px solid #150d08;
 
 }
-
+.mynavbar .profileMenu {
+    position: relative;
+}
+.mynavbar .profileMenu img{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    background-color: white;
+}
 
 .mynavbar .nav-content{
     flex: auto;
@@ -73,6 +82,47 @@ body{
     text-decoration: none;
     letter-spacing: 1px;
     transition: all 0.3s ease-out;
+}
+
+
+.mynavbar .menu-list {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 150px;
+    bottom: -85px;
+    box-shadow: 0 0 3px 0px black;
+    border-radius: 10px;
+}
+
+.mynavbar .menu-list a {
+    color: #000000;
+    padding: 0;
+    text-decoration: none;
+    border: none;
+}
+
+.mynavbar .menu-list ul {
+    padding: 0;
+}
+
+.mynavbar .menu-list ul li:first-child{
+    border-radius: 10px 10px 0 0;
+}
+
+.mynavbar .menu-list ul li:last-child{
+    border-radius: 0 0 10px 10px;
+}
+
+.mynavbar .menu-list ul li {
+    list-style-type: none;
+    transition: all 0.5s ease;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+.mynavbar .menu-list ul li:hover {
+    background-color: #fea700;
 }
 
 .login-block{

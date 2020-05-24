@@ -1,3 +1,4 @@
+
 .recording{
     position: fixed;
     justify-content: center;
@@ -24,6 +25,7 @@
     border-radius: 30px;
 
 }
+
 
 .recording .recording-form .close {
     position: absolute;
@@ -104,6 +106,20 @@
 
 .recording .recording-form .recording-body {
     padding: 15px 20px;
+}
+
+.recording .recording-form .recording-body .selectGender{
+    background: transparent;
+    width: 200px;
+    padding: 5px 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    color: white;
+}
+.recording .recording-form .recording-body .selectGender option{
+    background: #4a4a4a;
+    color: white;
+    padding: 10px 15px;
 }
 
 .recording.closeRecording {
