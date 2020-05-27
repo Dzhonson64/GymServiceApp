@@ -39,10 +39,17 @@ public class RecordingController {
         return "recording";
     }
 
-    @DeleteMapping("/recording/delete")
+    @DeleteMapping("/listRecording/delete")
     @ResponseBody
     private ResponseEntity<String> deleteRecording(@RequestParam Long id)
     {
         return recordingService.deleteRecordingCard(id);
+    }
+
+    @PutMapping("/listRecording/addComment")
+    @ResponseBody
+    private ResponseEntity<String> addRecordingComment(@RequestParam Long id, @RequestParam String comment)
+    {
+        return recordingService.addRecordingComment(id, comment);
     }
 }

@@ -1,3 +1,6 @@
+let idDiscount;
+
+
 /*==================================================================
     [ Show & Hidden a successful popup info ]*/
 
@@ -55,6 +58,125 @@ $("#closeRecording").click(function () {
 
 
 
+/*==================================================================
+    [ save changes discount (AJAX)]*/
+
+
+$(".save").click(function (e) {
+    e.preventDefault();
+    let nameDiscount = $(this).siblings("ol").children("li").children("p");
+    let idDiscount = $(this).siblings(".idDiscount");
+    let pricesDiscount = nameDiscount.siblings("ol").children("li").children("p").children(".prices-duration");
+    let pricesPrices = nameDiscount.siblings("ol").children("li").children("p").children(".prices-price");
+    let pricesId = nameDiscount.siblings("ol").children("li").children(".idPrice");
+console.log("ID ", pricesId);
+
+    let dataMapFiled = new Map();
+
+    dataMapFiled.set("discountName", nameDiscount.text().replace(/\s+/g, ' '));
+    dataMapFiled.set("discountId", parseInt(idDiscount.val()));
+    let discountPrices = [];
+    let discountDurations = [];
+    let discountPricesId = [];
+    for (let i = 0; i < pricesId.length; i++){
+        discountDurations.push(pricesDiscount.eq(i).text().trim());
+        discountPrices.push(parseInt(pricesPrices.eq(i).text().trim()));
+        discountPricesId.push(parseInt(pricesId.eq(i).val()));
+    }
+    dataMapFiled.set("pricesPrice", discountPrices);
+    dataMapFiled.set("pricesDuration", discountDurations);
+    dataMapFiled.set("pricesId", discountPricesId);
+
+    dataMapFiled.set("_csrf", $("#csrfUserList").attr("content"));
+    // console.log(dataMapFiled);
+    requestSaveDiscount(dataMapFiled)
+
+
+})
+/*==================================================================*/
+
+
+
+
+/*==================================================================
+    [ handler brul ]*/
+
+
+$( ".discounts .textArea" ).blur(function(){ // задаем функцию при потери фокуса элементом <input>
+    let changeFieldP = $(this).siblings("p")
+    let changeField = $(this).siblings("p").find("span");
+    if (changeFieldP.hasClass("dNone")) {
+        changeFieldP.removeClass("dNone");
+        $(this).addClass("dNone");
+        let price = $(this).val().split("-");
+        changeField.eq(0).text(price[0].trim());
+        changeField.eq(1).text(price[1].trim());
+    }
+
+
+});
+/*==================================================================*/
+
+
+
+
+/*==================================================================
+    [ Show & Hidden input for edit discount text ]*/
+
+
+$(".rounded p").click(function () {
+    let changeField = $(this).siblings(".textArea");
+    if (changeField.hasClass("dNone")){
+        changeField.removeClass("dNone");
+        $(this).addClass("dNone");
+        changeField.val($(this).text())
+
+    }else {
+        changeField.addClass("dNone");
+        $(this).removeClass("dNone");
+    }
+
+})
+/*==================================================================*/
+
+
+
+
+/*==================================================================
+    [ Show & Hidden a discount list edit ]*/
+
+
+$(".slideToggle").click(function () {
+    let nestedList = $(this).siblings(
+        ".rounded");
+    nestedList.slideToggle();
+
+})
+/*==================================================================*/
+
+
+
+
+/*==================================================================
+    [ Show & Hidden a recording form ]*/
+
+
+$(".buy").click(function () {
+    let checkedDiscount = $(this).siblings(".card__price").children('.inputGroup').children('input[name="radio"]:checked');
+    // $("#recording").removeClass("closeRecording");
+    // $("#recording").addClass("activeRecording");
+
+})
+//
+// $("buy").click(function () {
+//     $("#recording").removeClass("activeRecording");
+//     $("#recording").addClass("closeRecording");
+//
+// })
+/*==================================================================*/
+
+
+
 
 /*==================================================================
     [ Show & Hidden a error popup info (AJAX)]*/
@@ -92,7 +214,6 @@ $(".deleteRecording").on("click", function (e) {
 
 $(".addCommentRecording").on("click", function (e) {
     let btnComment = $(this);
-    console.log(btnComment);
     let resultComment =  btnComment.siblings(".comment-post");
     let blockTextComment =  resultComment.children(".comment-text");
     let fieldComment =  resultComment.siblings(".textAreaComment");
@@ -102,7 +223,7 @@ $(".addCommentRecording").on("click", function (e) {
         fieldComment.val(blockTextComment.text());
         btnComment.text("Сохранить комментарий");
     }else {
-        /*Вставить Ajax*/
+        addCommentRecordingCard(fieldComment.val(), btnComment);
         btnComment.text("Добавить комментарий");
         fieldComment.addClass("dNone");
         blockTextComment.text(fieldComment.val());
@@ -183,6 +304,33 @@ function hiddenModal() {
 }
 
 $("#change-avatar").click(function () {
+    showModal();
+})
+
+$("#closeModal").click(function () {
+    hiddenModal();
+})
+/*==================================================================*/
+
+
+
+
+
+/*==================================================================
+    [ Show & Hidden from to select bg img discount]*/
+
+function showModal(){
+    $("#openModalDiscountBg").removeClass("closeModal");
+    $("#openModalDiscountBg").addClass("activeModal");
+}
+
+function hiddenModal() {
+    $("#openModalDiscountBg").removeClass("activeModal");
+    $("#openModalDiscountBg").addClass("closeModal");
+}
+
+$(".change-bg").click(function () {
+    idDiscount = $(this).siblings(".idDiscount");
     showModal();
 })
 

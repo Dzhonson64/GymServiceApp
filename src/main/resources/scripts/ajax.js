@@ -11,11 +11,19 @@ $(document).ready(function() {
 
     });
 
-    $("#save-avatar").click(function(event) {
+    $(".profile #save-avatar").click(function(event) {
 
         event.preventDefault();
 
         requestSaveAvatar();
+
+    });
+
+    $(".discounts #save-bgImg").click(function(event) {
+
+        event.preventDefault();
+
+        requestSaveBgImgDiscount(parseInt(idDiscount.val()));
 
     });
 
@@ -53,7 +61,7 @@ function deleteRecordingCard(btnDeleteCard, removeBlock) {
     // $("#btnSendRecording").prop("disabled", false);
     $.ajax({
         type: "DELETE",
-        url: "/recording/delete",
+        url: "/listRecording/delete",
         // prevent jQuery from automatically transforming the data into a query string
         processData: false,
         contentType: false,
@@ -77,6 +85,83 @@ function deleteRecordingCard(btnDeleteCard, removeBlock) {
             showPopUpError("<h5>Ошибка запроса</h5>");
             console.log("ERROR : ", jqXHR.responseText);
             $("#suc").prop("disabled", false);
+
+        }
+    });
+}
+
+function addCommentRecordingCard(text, btnAddComment){
+    let data = new FormData();
+    let id = btnAddComment.siblings(".idRecording").val();
+    let csrfToken = $("#csrfUserList").attr("content");
+    data.append("comment", text);
+    data.append("id", id);
+    data.append("_csrf", csrfToken);
+
+    // $.ajax({
+    //     type: "PUT",
+    //     url: "/listRecording/addComment",
+    //     // prevent jQuery from automatically transforming the data into a query string
+    //     processData: false,
+    //     contentType: false,
+    //     cache: false,
+    //     timeout: 1000000,
+    //     data: data,
+    //     // complete: function(xmlHttp) {
+    //     //     // xmlHttp is a XMLHttpRquest object
+    //     //     alert(xmlHttp.status);
+    //     // },
+    //     success: function(data, textStatus, jqXHR) {
+    //         console.log("SUCCESS : ", data);
+    //         if (textStatus === "success"){
+    //             // rowTableDataForm.remove();
+    //             // showPopUpSuccessful();
+    //         }
+    //         $("#saveEditUser").prop("disabled", false);
+    //
+    //         $("#resultResponsePopUp").text("Пользователь был успешно удалён!");
+    //         //$('#avatar-img')[0].reset();
+    //     },
+    //     error: function(jqXHR, textStatus, errorThrown) {
+    //
+    //         // $("#result").html(jqXHR.responseText);
+    //
+    //         console.log("ERROR : ", jqXHR.responseText);
+    //         $("#suc").prop("disabled", false);
+    //
+    //     }
+    // });
+}
+
+function requestSaveDiscount(dataMapField) {
+    let data = new FormData();
+    // console.log(dataMapField);
+    let prices = [];
+    for (let pair of dataMapField.entries()) {
+        data.append(pair[0], pair[1])
+        console.log(pair[0], pair[1])
+
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/editDiscounts/change",
+        data: data,
+
+
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            console.log(jqXHR.status);
+            console.log(textStatus);
+            console.log(errorThrown);
 
         }
     });
@@ -165,6 +250,57 @@ function requestSavePersonalData() {
 
 }
 
+function requestSaveBgImgDiscount(idDiscount) {
+
+    // Get form
+    let form = $('#change-avatar-form')[0];
+console.log(idDiscount);
+    let data = new FormData(form);
+    data.append("discountId", idDiscount);
+    $("#save-avatar").prop("disabled", true);
+    console.log(data.get("discountId"));
+    $.ajax({
+        type: "POST",
+        url: "editDiscounts/changeBgImgDiscount",
+        data: data,
+
+
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+            $("#save-avatar").prop("disabled", false);
+            // $("#avatar-img").attr('src', '/uploads/profile/' + data);
+            // showPopUpSuccessful();
+            // $("#resultResponsePopUp").text("Ваш аватар был успешно обновлен!");
+            // console.log($('#miniAvatarUserMenu'));
+            // $('#miniAvatarUserMenu').attr('src', '/uploads/profile/' + data);
+            //$('#avatar-img')[0].reset();
+            $("#suc").prop("disabled", false);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+            if (jqXHR.status === 403 || jqXHR.status === 0){
+                showPopUpError("<h5>Неправильный формат</h5>" +
+                    "<p>Пожалуйста, выберите правильный формат фото для аватара: <i>jpg, png</i>" +
+                    "<br>Размер файла не должен превышать 5МБ!</p>"
+
+                );
+            }
+            console.log(jqXHR.status);
+            console.log(textStatus);
+            console.log(errorThrown);
+            $("#save-avatar").prop("disabled", false);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
+}
+
 function requestSaveAvatar() {
 
     // Get form
@@ -191,6 +327,8 @@ function requestSaveAvatar() {
             $("#avatar-img").attr('src', '/uploads/profile/' + data);
             showPopUpSuccessful();
             $("#resultResponsePopUp").text("Ваш аватар был успешно обновлен!");
+            console.log($('#miniAvatarUserMenu'));
+            $('#miniAvatarUserMenu').attr('src', '/uploads/profile/' + data);
             //$('#avatar-img')[0].reset();
         },
         error: function(jqXHR, textStatus, errorThrown) {

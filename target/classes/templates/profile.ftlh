@@ -3,6 +3,7 @@
 <#import "parts/popUp.ftlh" as p>
 
 <@c.page>
+<#include "parts/navbar.ftlh">
 <@p.popUpSuccessful />
 <@p.popUpError />
 <div class="container">
@@ -13,9 +14,12 @@
             <div class="col-lg-4 align-items-stretch mt-5">
                 <div class="settings content">
                     <h5>Настройки</h5>
-                    <p>${username}</p>
+                    <p class="userName">${username}</p>
                     <img src="/uploads/profile/${filename}" alt="user" id="avatar-img">
-                    <a class="change-img" id="change-avatar" >сменить аватарку</a>
+                    <div class="btn draw-border changeAvatar" id="change-avatar">
+                        <a class="change-img">сменить аватарку</a>
+                    </div>
+
                 </div>
             </div>
             <div class="col-lg-8 align-items-stretch mt-5">
@@ -30,12 +34,16 @@
                                 </div>
                                 <div class="personal-data-block">
                                     <label>Password</label>
-                                    <input type="text" name = "password" value="${password}">
+                                    <div class="passwordBlock">
+                                        <input type="password" name = "password" value="${password}">
+                                        <i class="fa fa-eye-slash password-input" aria-hidden="true" ></i>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                            <button type="submit" class="save" id="saveData">Save</button>
+                            <button type="submit" class="save btn draw-border" id="saveData">Save</button>
                             <p id="success"></p>
                         </div>
                     </form>

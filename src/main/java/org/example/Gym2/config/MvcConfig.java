@@ -28,13 +28,19 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/uploads/profile/**")
                 .addResourceLocations("file:/" + uploadPath + "/");
 
+        registry.addResourceHandler("/uploads/bgDiscounts/**")
+                .addResourceLocations("file:/" + uploadPathBgDiscounts + "/");
+
     }
 
 
     @Value("${upload.path}")
     private String uploadPath;
+
+    @Value("${upload.pathBgDiscounts}")
+    private String uploadPathBgDiscounts;
+
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/").setViewName("greeting");
     }
 }

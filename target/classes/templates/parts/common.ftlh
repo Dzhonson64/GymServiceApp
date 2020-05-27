@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sweater</title>
+    <title>Спорт-клуб</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/static/userEdit.css">
     <link rel="stylesheet" href="/static/recording.css">
     <link rel="stylesheet" href="/static/listRecording.css">
+    <link rel="stylesheet" href="/static/editDiscounts.css">
 
     <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 

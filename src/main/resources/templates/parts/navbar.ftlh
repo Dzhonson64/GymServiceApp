@@ -12,9 +12,6 @@
                 <li class="col-auto p-0">
                     <a class="nav-link" href="/main">Messages</a>
                 </li>
-                <li class="col-auto p-0">
-                    <a class="nav-link" href="/test">test</a>
-                </li>
                 <#if isAdmin>
                 <li class="col-auto p-0">
                     <a class="nav-link" href="/user/">Users</a>
@@ -33,23 +30,29 @@
                     <div class="profileMenu d-flex align-items-center" >
                         <div class="userBlock d-flex justify-content-center align-items-center" id="profileMenu">
                             <#if userActive??>
-                            <img src="/uploads/profile/${userActive.filename}" alt="">
-                            <span class="userNameMenu">${name}</span>
+                            <img src="/uploads/profile/${userActive.filename}" alt="" id="miniAvatarUserMenu">
+                            <span class="userNameMenu" id="userNameMenu">${name}</span>
 
                             <div class="menu-list" id="profileMenuList">
                                 <ul>
                                     <li>
                                         <a href="/user/profile">Настройки</a>
                                     </li>
+                                    <#if isAdmin>
                                     <li>
                                         <a href="/listRecording">Записи в клуб</a>
                                     </li>
+                                    <li>
+                                        <a href="/editDiscounts">Список абонементов</a>
+                                    </li>
+                                </#if>
+
                                 </ul>
                             </div>
 
                             <#else>
-                            <img src="/uploads/profile/account_user.png" alt="">
-                            <span class="userNameMenu">The Guest</span>
+                            <img src="/uploads/profile/account_user.png" alt="" >
+                            <span class="userNameMenu" >The Guest</span>
                         </#if>
                     </div>
 

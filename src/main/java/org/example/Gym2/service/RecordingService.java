@@ -59,4 +59,18 @@ public class RecordingService {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+
+    public ResponseEntity<String> addRecordingComment(Long id, String text) {
+        Optional<Recording> recording = recordingRepo.findById(id);
+        if (recording.isPresent()) {
+            recording.get().setComment(text);
+            recordingRepo.save(recording.get());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+
 }

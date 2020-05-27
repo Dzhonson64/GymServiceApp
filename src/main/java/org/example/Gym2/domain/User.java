@@ -17,6 +17,7 @@ public class User implements UserDetails {
     private String password;
     private boolean active;
     private String filename;
+    private String discount;
 
     public String getFilename() {
         return filename;
