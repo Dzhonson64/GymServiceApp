@@ -90,9 +90,27 @@ body{
     position: absolute;
     background-color: white;
     min-width: 150px;
-    bottom: -85px;
+    margin-top: 10px;
     box-shadow: 0 0 3px 0px black;
     border-radius: 10px;
+}
+
+.mynavbar .menu-list::after {
+    content: '';
+    width: 0;
+    height: 0;
+    display: block;
+    position: absolute;
+    z-index: 10;
+    border: 0;
+}
+.mynavbar .menu-list::after {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    margin-left: -10px;
+    left: 50%;
+    border-bottom: 10px solid #ffffff;
+    top: -10px;
 }
 
 .mynavbar .menu-list a {

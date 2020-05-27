@@ -33,22 +33,7 @@
                             <img src="/uploads/profile/${userActive.filename}" alt="" id="miniAvatarUserMenu">
                             <span class="userNameMenu" id="userNameMenu">${name}</span>
 
-                            <div class="menu-list" id="profileMenuList">
-                                <ul>
-                                    <li>
-                                        <a href="/user/profile">Настройки</a>
-                                    </li>
-                                    <#if isAdmin>
-                                    <li>
-                                        <a href="/listRecording">Записи в клуб</a>
-                                    </li>
-                                    <li>
-                                        <a href="/editDiscounts">Список абонементов</a>
-                                    </li>
-                                </#if>
 
-                                </ul>
-                            </div>
 
                             <#else>
                             <img src="/uploads/profile/account_user.png" alt="" >
@@ -56,8 +41,26 @@
                         </#if>
                     </div>
 
-
                 </div>
+                <#if userActive??>
+                <div class="menu-list" id="profileMenuList">
+                    <ul>
+
+                        <li>
+                            <a href="/user/profile">Настройки</a>
+                        </li>
+                        <#if isAdmin>
+                        <li>
+                            <a href="/listRecording">Записи в клуб</a>
+                        </li>
+                        <li>
+                            <a href="/editDiscounts">Список абонементов</a>
+                        </li>
+                    </#if>
+
+                    </ul>
+                </div>
+            </#if>
             </div>
             <div class="col-lg-6">
                 <@l.logout />

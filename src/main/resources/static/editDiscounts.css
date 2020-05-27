@@ -6,7 +6,7 @@
     position: relative;
 }
 
-.discounts ol li i {
+.discounts ol li .slideToggle {
     position: absolute;
     left: -40px;
     padding: 5px;
@@ -19,6 +19,22 @@
     background-color: #150d08;
     border-radius: 10px;
     padding: 10px 15px;
+}
+
+.discounts .roundedBlock .title {
+    color: #ffffff;
+    letter-spacing: 0.3;
+}
+
+.discounts .addPrice {
+    font-size: 30px;
+    color: #fff;
+    cursor: pointer;
+}
+.discounts .addDiscount {
+    font-size: 60px;
+    color: #150d08;
+    cursor: pointer;
 }
 
 .discounts input {
@@ -55,24 +71,24 @@
     transition: .3s ease-out;
 }
 .discounts .rounded p:hover {background: #E9E4E0;}
-.discounts .rounded li:before {
-    content: counter(li);
-    counter-increment: li;
-    position: absolute;
-    left: -1.3em;
-    top: 63%;
-    margin-top: -1.3em;
-    background: #8FD4C1;
-    height: 2em;
-    width: 2em;
-    z-index: 1;
-    line-height: 2em;
-    border: .3em solid white;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 2em;
-    transition: all .3s ease-out;
-}
+/*.discounts .rounded li:before {*/
+/*    content: counter(li);*/
+/*    counter-increment: li;*/
+/*    position: absolute;*/
+/*    left: -1.3em;*/
+/*    top: 63%;*/
+/*    margin-top: -1.3em;*/
+/*    background: #8FD4C1;*/
+/*    height: 2em;*/
+/*    width: 2em;*/
+/*    z-index: 1;*/
+/*    line-height: 2em;*/
+/*    border: .3em solid white;*/
+/*    text-align: center;*/
+/*    font-weight: bold;*/
+/*    border-radius: 2em;*/
+/*    transition: all .3s ease-out;*/
+/*}*/
 
 
 .discounts .draw-border {

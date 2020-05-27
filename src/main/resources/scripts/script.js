@@ -69,7 +69,7 @@ $(".save").click(function (e) {
     let pricesDiscount = nameDiscount.siblings("ol").children("li").children("p").children(".prices-duration");
     let pricesPrices = nameDiscount.siblings("ol").children("li").children("p").children(".prices-price");
     let pricesId = nameDiscount.siblings("ol").children("li").children(".idPrice");
-console.log("ID ", pricesId);
+    console.log("ID ", pricesId);
 
     let dataMapFiled = new Map();
 
@@ -115,6 +115,23 @@ $( ".discounts .textArea" ).blur(function(){ // задаем функцию пр
 
 
 });
+
+function changeFieldEditDiscountAfterBlur(){
+
+    $( ".discounts .textArea" ).blur(function(){ // задаем функцию при потери фокуса элементом <input>
+        let changeFieldP = $(this).siblings("p")
+        let changeField = $(this).siblings("p").find("span");
+        if (changeFieldP.hasClass("dNone")) {
+            changeFieldP.removeClass("dNone");
+            $(this).addClass("dNone");
+            let price = $(this).val().split("-");
+            changeField.eq(0).text(price[0].trim());
+            changeField.eq(1).text(price[1].trim());
+        }
+
+
+    });
+}
 /*==================================================================*/
 
 
@@ -129,7 +146,7 @@ $(".rounded p").click(function () {
     if (changeField.hasClass("dNone")){
         changeField.removeClass("dNone");
         $(this).addClass("dNone");
-        changeField.val($(this).text())
+        changeField.val($(this).text().trim())
 
     }else {
         changeField.addClass("dNone");
@@ -137,6 +154,22 @@ $(".rounded p").click(function () {
     }
 
 })
+
+function changeFieldEditDiscountFieldBeforeBlur() {
+    $(".rounded p").click(function () {
+        let changeField = $(this).siblings(".textArea");
+        if (changeField.hasClass("dNone")){
+            changeField.removeClass("dNone");
+            $(this).addClass("dNone");
+            changeField.val($(this).text().trim())
+
+        }else {
+            changeField.addClass("dNone");
+            $(this).removeClass("dNone");
+        }
+
+    })
+}
 /*==================================================================*/
 
 
@@ -259,7 +292,7 @@ function hiddenRecording(){
     [ Show & Hidden a menu-list profile]*/
 
 $("#profileMenu").click(function () {
-    $("#profileMenuList").toggle("fast");
+    $("#profileMenuList").slideToggle("fast");
 })
 /*==================================================================*/
 
@@ -338,6 +371,52 @@ $("#closeModal").click(function () {
     hiddenModal();
 })
 /*==================================================================*/
+
+
+
+
+
+
+/*==================================================================
+    [ Add new price in discount ]*/
+$(".discounts .addDiscount").on("click", function () {
+    let p = $(this).parent();
+    $('<div class="col-lg-4">')
+        .append('<div class="roundedBlock">\n' +
+            '                    <ol class="rounded">\n' +
+            '                        <li>\n' +
+            '                            <i class="fa fa-caret-down slideToggle" aria-hidden="true"></i>\n' +
+            '                            <span class="title">Название абонемента</span>\n' +
+            '                            <p>-</p>\n' +
+            '                            <input type="text" value="" class="dNone textArea" />\n' +
+            '                            <ol class="rounded dNone">\n' +
+            '                                <span class="title">Цены</span>\n' +
+            '                                <#list discount.pricies as price>\n' +
+            '                                <li>\n' +
+            '                                    <p>\n' +
+            '                                        <span class="prices-duration"></span> - <span class="prices-price"></span>\n' +
+            '                                    </p>\n' +
+            '                                    <input type="text" value="" class="dNone textArea" />\n' +
+            '                                    <input type="text" hidden value="" class="idPrice">\n' +
+            '                                </li>\n' +
+            '                            </#list>\n' +
+            '                            <i class="fa fa-plus-square-o addPrice" aria-hidden="true"></i>\n' +
+            '                            </ol>\n' +
+            '                        </li>\n' +
+            '                    </ol>\n' +
+            '                    <div class="btn draw-border changeAvatar change-bg" >\n' +
+            '                        <a class="change-img">сменить фоновую картинку</a>\n' +
+            '                    </div>\n' +
+            '                    <input type="text" hidden value="" class="idDiscount">\n' +
+            '                    <button type="submit" class="save btn draw-border">Save</button>\n' +
+            '                </div>')
+        .insertBefore($(this).parent());
+
+    $(p)[0].reset()
+});
+
+
+/*================================================================*/
 
 
 
@@ -483,3 +562,29 @@ $('.btn-show-pass').on('click', function(){
     }
 });
 /*==================================================================*/
+
+
+
+/*==================================================================
+    [ Add new price in discount ]*/
+$(".discounts .addPrice").on("click", function () {
+    let p = $(this).parent();
+    $('<li>')
+        .append('<p>\n' +
+            '<span class="prices-duration">0</span> - <span class="prices-price">0</span>\n' +
+            '</p>\n' +
+            '<input type="text" value="" class="dNone textArea" />\n' +
+            '<input type="text" hidden value="" class="idPrice">')
+        .insertBefore($(this));
+    let newPriceField = $(this).siblings("li").last();
+    newPriceField.find("p").on("click", changeFieldEditDiscountFieldBeforeBlur())
+    newPriceField.find(".textArea").on("click", changeFieldEditDiscountAfterBlur())
+
+    let discountId = newPriceField.closest(".roundedBlock").find(".idDiscount");
+    let pricesId = newPriceField.find(".idPrice");
+
+    requestAddPrice(parseInt(discountId.val()), pricesId);
+});
+
+
+/*================================================================*/

@@ -91,4 +91,17 @@ public class DiscountService {
             // в противном случае возвращаем заглушку, то есть расширение не найдено
         else return "";
     }
+
+
+    public Long addPrice(Discount discount){
+        Pricies pricies = new Pricies();
+        pricies.setDiscount(discount);
+        pricies.setPrice(0);
+        pricies.setDuration("0");
+        pricesRepo.save(pricies);
+        discount.getPricies().add(pricies);
+        discountRepo.save(discount);
+
+        return pricies.getId();
+    }
 }

@@ -14,27 +14,35 @@
                     <ol class="rounded">
                         <li>
                             <i class="fa fa-caret-down slideToggle" aria-hidden="true"></i>
+                            <span class="title">Название абонемента</span>
                             <p>${discount.name}</p>
                             <input type="text" value="" class="dNone textArea" />
                             <ol class="rounded dNone">
+                                <span class="title">Цены</span>
                                 <#list discount.pricies as price>
                                 <li>
-                                    <p><span class="prices-duration">${price.duration}</span> - <span class="prices-price">${price.price?c}</span></p>
+                                    <p>
+                                        <span class="prices-duration">${price.duration}</span> - <span class="prices-price">${price.price?c}</span>
+                                    </p>
                                     <input type="text" value="" class="dNone textArea" />
                                     <input type="text" hidden value="${price.id?c}" class="idPrice">
                                 </li>
                             </#list>
-                    </ol>
-                    </li>
+                            <i class="fa fa-plus-square-o addPrice" aria-hidden="true"></i>
+                            </ol>
+                        </li>
                     </ol>
                     <div class="btn draw-border changeAvatar change-bg" >
-                        <a class="change-img">сменить аватарку</a>
+                        <a class="change-img">сменить фоновую картинку</a>
                     </div>
                     <input type="text" hidden value="${discount.id}" class="idDiscount">
                     <button type="submit" class="save btn draw-border">Save</button>
                 </div>
             </div>
         </#list>
+        <div class="col-lg-4 d-flex align-items-center">
+            <i class="fa fa-plus-square-o addDiscount" aria-hidden="true"></i>
+        </div>
 
     </div>
     <div id="openModalDiscountBg" class="modal-from closeModal">

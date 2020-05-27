@@ -14,6 +14,14 @@ public class Pricies {
     @JoinColumn(name = "discount_id")
     private Discount discount;
 
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
+    }
+
     public Long getId() {
         return id;
     }

@@ -9,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -48,9 +45,16 @@ public class DiscountController {
 
     @PostMapping("editDiscounts/changeBgImgDiscount")
     @ResponseBody
-    public ResponseEntity<String> updateAvatar(@RequestParam(name = "discountId") Discount discount,
+    public ResponseEntity<String> updateBgDiscount(@RequestParam(name = "discountId") Discount discount,
                                @RequestParam("file") MultipartFile file
     ) throws IOException {
         return  discountService.updateBgDiscount(discount, file);
+    }
+
+    @PostMapping("editDiscounts/addPrice")
+    @ResponseBody
+    public Long addPrice(@RequestParam(name = "discountId") Discount discount
+    )  {
+        return  discountService.addPrice(discount);
     }
 }

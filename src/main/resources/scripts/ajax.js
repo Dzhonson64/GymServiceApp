@@ -46,6 +46,45 @@ $(document).ready(function() {
 
 });
 
+function requestAddPrice(idDiscount, fieldPriceId) {
+
+    let csrfToken = $("#csrfUserList").attr("content");
+
+    let data = new FormData();
+
+    data.append("discountId", idDiscount);
+    data.append("_csrf", csrfToken);
+    console.log(data.get("discountId"));
+    // $("#btnSendRecording").prop("disabled", false);
+    $.ajax({
+        type: "POST",
+        url: "editDiscounts/addPrice",
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        data: data,
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+
+            if (textStatus === "success"){
+                fieldPriceId.val(data);
+            }
+            $("#btnSendRecording").prop("disabled", false);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+            hiddenRecording();
+            showPopUpError("<h5>Ошибка запроса</h5>");
+            console.log("ERROR : ", jqXHR.responseText);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
+}
+
 function deleteRecordingCard(btnDeleteCard, removeBlock) {
 
     let id = btnDeleteCard.siblings(".idRecording").val();
@@ -98,39 +137,39 @@ function addCommentRecordingCard(text, btnAddComment){
     data.append("id", id);
     data.append("_csrf", csrfToken);
 
-    // $.ajax({
-    //     type: "PUT",
-    //     url: "/listRecording/addComment",
-    //     // prevent jQuery from automatically transforming the data into a query string
-    //     processData: false,
-    //     contentType: false,
-    //     cache: false,
-    //     timeout: 1000000,
-    //     data: data,
-    //     // complete: function(xmlHttp) {
-    //     //     // xmlHttp is a XMLHttpRquest object
-    //     //     alert(xmlHttp.status);
-    //     // },
-    //     success: function(data, textStatus, jqXHR) {
-    //         console.log("SUCCESS : ", data);
-    //         if (textStatus === "success"){
-    //             // rowTableDataForm.remove();
-    //             // showPopUpSuccessful();
-    //         }
-    //         $("#saveEditUser").prop("disabled", false);
-    //
-    //         $("#resultResponsePopUp").text("Пользователь был успешно удалён!");
-    //         //$('#avatar-img')[0].reset();
-    //     },
-    //     error: function(jqXHR, textStatus, errorThrown) {
-    //
-    //         // $("#result").html(jqXHR.responseText);
-    //
-    //         console.log("ERROR : ", jqXHR.responseText);
-    //         $("#suc").prop("disabled", false);
-    //
-    //     }
-    // });
+    $.ajax({
+        type: "PUT",
+        url: "/listRecording/addComment",
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        data: data,
+        // complete: function(xmlHttp) {
+        //     // xmlHttp is a XMLHttpRquest object
+        //     alert(xmlHttp.status);
+        // },
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+            if (textStatus === "success"){
+                // rowTableDataForm.remove();
+                // showPopUpSuccessful();
+            }
+            $("#saveEditUser").prop("disabled", false);
+
+            $("#resultResponsePopUp").text("Пользователь был успешно удалён!");
+            //$('#avatar-img')[0].reset();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+
+            console.log("ERROR : ", jqXHR.responseText);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
 }
 
 function requestSaveDiscount(dataMapField) {
