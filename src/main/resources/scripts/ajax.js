@@ -69,7 +69,7 @@ function requestAddDiscount(idDiscountField) {
             console.log("SUCCESS : ", data);
 
             if (textStatus === "success"){
-                idDiscountField.val(data);
+                idDiscountField.attr("value", data);
                 console.log(idDiscountField);
                 console.log(idDiscountField.val());
             }

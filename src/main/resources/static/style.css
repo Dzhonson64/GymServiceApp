@@ -96,6 +96,10 @@ body{
     z-index: 10;
 }
 
+#profileMenu {
+    cursor: pointer;
+}
+
 .mynavbar .menu-list::after {
     content: '';
     width: 0;

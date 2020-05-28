@@ -91,8 +91,40 @@ $(".save").click(function (e) {
     // console.log(dataMapFiled);
     requestSaveDiscount(dataMapFiled)
 
-
 })
+
+function saveDiscountData(){
+    $(".save").click(function (e) {
+        e.preventDefault();
+        let nameDiscount = $(this).siblings("ol").children("li").children("p");
+        let idDiscount = $(this).siblings(".idDiscount");
+        let pricesDiscount = nameDiscount.siblings("ol").children("li").children("p").children(".prices-duration");
+        let pricesPrices = nameDiscount.siblings("ol").children("li").children("p").children(".prices-price");
+        let pricesId = nameDiscount.siblings("ol").children("li").children(".idPrice");
+        let currency = nameDiscount.siblings("ol").children("li").children(".idPrice");
+
+        let dataMapFiled = new Map();
+
+        dataMapFiled.set("discountName", nameDiscount.text().replace(/\s+/g, ' '));
+        dataMapFiled.set("discountId", parseInt(idDiscount.val()));
+        let discountPrices = [];
+        let discountDurations = [];
+        let discountPricesId = [];
+        for (let i = 0; i < pricesId.length; i++){
+            discountDurations.push(pricesDiscount.eq(i).text().trim());
+            discountPrices.push(pricesPrices.eq(i).text().toString().match(/^\d+/));
+            discountPricesId.push(parseInt(pricesId.eq(i).val()));
+        }
+        dataMapFiled.set("pricesPrice", discountPrices);
+        dataMapFiled.set("pricesDuration", discountDurations);
+        dataMapFiled.set("pricesId", discountPricesId);
+
+        dataMapFiled.set("_csrf", $("#csrfUserList").attr("content"));
+        // console.log(dataMapFiled);
+        requestSaveDiscount(dataMapFiled)
+
+    })
+}
 /*==================================================================*/
 
 
@@ -117,7 +149,7 @@ $( ".discounts .textArea" ).on("keydown", function (e) {
                 let price = $(this).val().replace(/\s+/g, " ").split(" - ");
                 changeField.eq(0).text(price[0].trim());
                 changeField.eq(1).text(price[1]);
-               // console.log(price[1].match(/^\d+/))
+                // console.log(price[1].match(/^\d+/))
             }
 
 
@@ -136,7 +168,7 @@ function changeFieldEditDiscountAfterBlur(){
                 $(this).addClass("dNone");
 
                 console.log(changeField.length);
-                if (changeField.length === 0){
+                if (changeField.length === 1){
                     changeFieldP.text($(this).val().trim());
                 }
                 else if(changeField.length === 2){
@@ -181,9 +213,9 @@ $(".rounded p").on("click", function () {
 function changeFieldEditDiscountFieldBeforeBlur() {
     $(".rounded p").on("click", function () {
         let changeField = $(this).siblings(".textArea");
-            changeField.eq(0).removeClass("dNone");
-            $(this).addClass("dNone");
-            changeField.val($(this).text().trim())
+        changeField.eq(0).removeClass("dNone");
+        $(this).addClass("dNone");
+        changeField.val($(this).text().trim())
     })
 }
 /*==================================================================*/
@@ -201,6 +233,16 @@ $(".slideToggle").click(function () {
     nestedList.slideToggle();
 
 })
+
+function slideToggleDataDiscount(){
+
+    $(".slideToggle").click(function () {
+        let nestedList = $(this).siblings(
+            ".rounded");
+        nestedList.slideToggle();
+
+    })
+}
 /*==================================================================*/
 
 
@@ -368,24 +410,32 @@ $("#closeModal").click(function () {
 /*==================================================================
     [ Show & Hidden from to select bg img discount]*/
 
-function showModal(){
+function showModalDiscountBg(){
     $("#openModalDiscountBg").removeClass("closeModal");
     $("#openModalDiscountBg").addClass("activeModal");
 }
 
-function hiddenModal() {
+function hiddenModalDiscountBg() {
     $("#openModalDiscountBg").removeClass("activeModal");
     $("#openModalDiscountBg").addClass("closeModal");
 }
 
 $(".change-bg").click(function () {
     idDiscount = $(this).siblings(".idDiscount");
-    showModal();
+    showModalDiscountBg();
 })
 
 $("#closeModal").click(function () {
-    hiddenModal();
+    hiddenModalDiscountBg();
 })
+
+function сhangeBg(){
+    $(".change-bg").click(function () {
+        idDiscount = $(this).siblings(".idDiscount");
+        showModal();
+    })
+
+}
 /*==================================================================*/
 
 
@@ -396,29 +446,19 @@ $("#closeModal").click(function () {
 /*==================================================================
     [ Add new price in discount ]*/
 $(".discounts .addDiscount").on("click", function () {
-    let p = $(this).parent();
     $('<div class="col-lg-4">')
         .append('<div class="roundedBlock">\n' +
             '                    <ol class="rounded">\n' +
             '                        <li>\n' +
             '                            <i class="fa fa-caret-down slideToggle" aria-hidden="true"></i>\n' +
             '                            <span class="title">Название абонемента</span>\n' +
-            '                            <p>-</p>\n' +
+            '                            <p class="titleDiscount"><span></span></p>\n' +
             '                            <input type="text" value="" class="dNone textArea" />\n' +
             '                            <ol class="rounded dNone">\n' +
             '                                <span class="title">Цены</span>\n' +
-            '                                <#list discount.pricies as price>\n' +
-            '                                <li>\n' +
-            '                                    <p>\n' +
-            '                                        <span class="prices-duration"></span> - <span class="prices-price"></span>\n' +
-            '                                    </p>\n' +
-            '                                    <input type="text" value="" class="dNone textArea" />\n' +
-            '                                    <input type="text" hidden value="" class="idPrice">\n' +
-            '                                </li>\n' +
-            '                            </#list>\n' +
             '                            <i class="fa fa-plus-square-o addPrice" aria-hidden="true"></i>\n' +
-            '                            </ol>\n' +
-            '                        </li>\n' +
+            '                    </ol>\n' +
+            '                    </li>\n' +
             '                    </ol>\n' +
             '                    <div class="btn draw-border changeAvatar change-bg" >\n' +
             '                        <a class="change-img">сменить фоновую картинку</a>\n' +
@@ -427,8 +467,21 @@ $(".discounts .addDiscount").on("click", function () {
             '                    <button type="submit" class="save btn draw-border">Save</button>\n' +
             '                </div>')
         .insertBefore($(this).parent());
+    let newDiscountBlock = $(this).parent().closest(".discounts").find(".roundedBlock").last();
+    let idDiscountField = $(this).parent().siblings().last().find(".idDiscount");
+    let newPriceField = $(this).siblings("li").last();
 
-    $(p)[0].reset()
+    newPriceField.find("p").on("click", changeFieldEditDiscountFieldBeforeBlur())
+    newPriceField.find(".textArea").on("click", changeFieldEditDiscountAfterBlur())
+
+    newDiscountBlock.find("p").on("click", changeFieldEditDiscountFieldBeforeBlur())
+    newDiscountBlock.find(".textArea").on("click", changeFieldEditDiscountAfterBlur())
+    newDiscountBlock.find(".slideToggle").on("click", slideToggleDataDiscount());
+    newDiscountBlock.find(".addPrice").on("click", addPriceDiscount());
+    newDiscountBlock.find(".changeAvatar").on("click", сhangeBg());
+    newDiscountBlock.find(".save").on("click", saveDiscountData());
+    console.log(newDiscountBlock);
+    requestAddDiscount(idDiscountField);
 });
 
 
@@ -604,5 +657,26 @@ $(".discounts .addPrice").on("click", function () {
     requestAddPrice(parseInt(discountId.val()), pricesId);
 });
 
+function addPriceDiscount() {
+    $(".discounts .addPrice").on("click", function () {
+        let p = $(this).parent();
+        $('<li>')
+            .append('<p>\n' +
+                '<span class="prices-duration">0</span> - <span class="prices-price">0</span>\n' +
+                '</p>\n' +
+                '<input type="text" value="" class="dNone textArea" />\n' +
+                '<input type="text" hidden value="" class="idPrice">')
+            .insertBefore($(this));
+        let newPriceField = $(this).siblings("li").last();
+        console.log(newPriceField.find("p"));
+        console.log(newPriceField.find(".textArea"));
+        newPriceField.find("p").on("click", changeFieldEditDiscountFieldBeforeBlur())
+        newPriceField.find(".textArea").on("click", changeFieldEditDiscountAfterBlur())
 
+        let discountId = newPriceField.closest(".roundedBlock").find(".idDiscount");
+        let pricesId = newPriceField.find(".idPrice");
+
+        requestAddPrice(parseInt(discountId.val()), pricesId);
+    });
+}
 /*================================================================*/
