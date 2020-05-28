@@ -1,7 +1,7 @@
 package org.example.Gym2.domain;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+
+
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,8 +17,12 @@ public class Discount {
     private String description;
     private String fileImageBg;
 
-    @OneToMany(mappedBy = "discount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "discount", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Pricies> pricies;
+
+
+
     public String getFileImageBg() {
         return fileImageBg;
     }
@@ -28,6 +32,10 @@ public class Discount {
     }
     public String getDescription() {
         return description;
+    }
+
+    public void setPricies(List<Pricies> pricies) {
+        this.pricies = pricies;
     }
 
     public void setDescription(String description) {
@@ -52,9 +60,5 @@ public class Discount {
 
     public List<Pricies> getPricies() {
         return pricies;
-    }
-
-    public void setPricies(List<Pricies> pricies) {
-        this.pricies = pricies;
     }
 }

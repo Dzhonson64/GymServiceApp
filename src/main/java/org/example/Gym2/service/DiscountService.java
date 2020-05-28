@@ -104,4 +104,16 @@ public class DiscountService {
 
         return pricies.getId();
     }
+
+    public Long addDiscount(){
+        Discount discount = new Discount();
+        discount.setName("");
+        discount.setDescription("");
+        discount.setFileImageBg("");
+        discount.setFileImageBg("");
+        discount.setPricies(new ArrayList<Pricies>());
+        discountRepo.save(discount);
+
+        return discount.getId();
+    }
 }

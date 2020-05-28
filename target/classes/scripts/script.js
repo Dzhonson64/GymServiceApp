@@ -69,7 +69,7 @@ $(".save").click(function (e) {
     let pricesDiscount = nameDiscount.siblings("ol").children("li").children("p").children(".prices-duration");
     let pricesPrices = nameDiscount.siblings("ol").children("li").children("p").children(".prices-price");
     let pricesId = nameDiscount.siblings("ol").children("li").children(".idPrice");
-    console.log("ID ", pricesId);
+    let currency = nameDiscount.siblings("ol").children("li").children(".idPrice");
 
     let dataMapFiled = new Map();
 
@@ -80,7 +80,7 @@ $(".save").click(function (e) {
     let discountPricesId = [];
     for (let i = 0; i < pricesId.length; i++){
         discountDurations.push(pricesDiscount.eq(i).text().trim());
-        discountPrices.push(parseInt(pricesPrices.eq(i).text().trim()));
+        discountPrices.push(pricesPrices.eq(i).text().toString().match(/^\d+/));
         discountPricesId.push(parseInt(pricesId.eq(i).val()));
     }
     dataMapFiled.set("pricesPrice", discountPrices);
@@ -99,38 +99,58 @@ $(".save").click(function (e) {
 
 
 /*==================================================================
-    [ handler brul ]*/
+    [ handler Enter ]*/
 
 
-$( ".discounts .textArea" ).blur(function(){ // задаем функцию при потери фокуса элементом <input>
-    let changeFieldP = $(this).siblings("p")
-    let changeField = $(this).siblings("p").find("span");
-    if (changeFieldP.hasClass("dNone")) {
-        changeFieldP.removeClass("dNone");
-        $(this).addClass("dNone");
-        let price = $(this).val().split("-");
-        changeField.eq(0).text(price[0].trim());
-        changeField.eq(1).text(price[1].trim());
-    }
-
-
-});
-
-function changeFieldEditDiscountAfterBlur(){
-
-    $( ".discounts .textArea" ).blur(function(){ // задаем функцию при потери фокуса элементом <input>
+$( ".discounts .textArea" ).on("keydown", function (e) {
+    if (e.keyCode === 13) {
         let changeFieldP = $(this).siblings("p")
         let changeField = $(this).siblings("p").find("span");
         if (changeFieldP.hasClass("dNone")) {
             changeFieldP.removeClass("dNone");
             $(this).addClass("dNone");
-            let price = $(this).val().split("-");
-            changeField.eq(0).text(price[0].trim());
-            changeField.eq(1).text(price[1].trim());
+            console.log(changeField.length);
+            if (changeField.length === 1){
+                changeFieldP.text($(this).val().trim());
+            }
+            else if(changeField.length === 2){
+                let price = $(this).val().replace(/\s+/g, " ").split(" - ");
+                changeField.eq(0).text(price[0].trim());
+                changeField.eq(1).text(price[1]);
+               // console.log(price[1].match(/^\d+/))
+            }
+
+
         }
+    }
+})
+
+function changeFieldEditDiscountAfterBlur(){
+
+    $( ".discounts .textArea" ).on("keydown", function (e) {
+        if (e.keyCode === 13) {
+            let changeFieldP = $(this).siblings("p")
+            let changeField = $(this).siblings("p").find("span");
+            if (changeFieldP.hasClass("dNone")) {
+                changeFieldP.removeClass("dNone");
+                $(this).addClass("dNone");
+
+                console.log(changeField.length);
+                if (changeField.length === 0){
+                    changeFieldP.text($(this).val().trim());
+                }
+                else if(changeField.length === 2){
+                    let price = $(this).val().split("-");
+                    changeField.eq(0).text(price[0].trim());
+                    changeField.eq(1).text(price[1].trim());
+                }else {
+                    console.log("Полей слишком много");
+                }
 
 
-    });
+            }
+        }
+    })
 }
 /*==================================================================*/
 
@@ -141,33 +161,29 @@ function changeFieldEditDiscountAfterBlur(){
     [ Show & Hidden input for edit discount text ]*/
 
 
-$(".rounded p").click(function () {
+$(".rounded p").on("click", function () {
     let changeField = $(this).siblings(".textArea");
+
     if (changeField.hasClass("dNone")){
-        changeField.removeClass("dNone");
+        changeField.eq(0).removeClass("dNone");
+
         $(this).addClass("dNone");
+        console.log($(this).text().trim());
         changeField.val($(this).text().trim())
 
     }else {
+        console.log(changeField.attr("class"));
         changeField.addClass("dNone");
         $(this).removeClass("dNone");
     }
-
 })
 
 function changeFieldEditDiscountFieldBeforeBlur() {
-    $(".rounded p").click(function () {
+    $(".rounded p").on("click", function () {
         let changeField = $(this).siblings(".textArea");
-        if (changeField.hasClass("dNone")){
-            changeField.removeClass("dNone");
+            changeField.eq(0).removeClass("dNone");
             $(this).addClass("dNone");
             changeField.val($(this).text().trim())
-
-        }else {
-            changeField.addClass("dNone");
-            $(this).removeClass("dNone");
-        }
-
     })
 }
 /*==================================================================*/
@@ -577,6 +593,8 @@ $(".discounts .addPrice").on("click", function () {
             '<input type="text" hidden value="" class="idPrice">')
         .insertBefore($(this));
     let newPriceField = $(this).siblings("li").last();
+    console.log(newPriceField.find("p"));
+    console.log(newPriceField.find(".textArea"));
     newPriceField.find("p").on("click", changeFieldEditDiscountFieldBeforeBlur())
     newPriceField.find(".textArea").on("click", changeFieldEditDiscountAfterBlur())
 

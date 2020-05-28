@@ -1,6 +1,10 @@
 package org.example.Gym2.domain;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+
 
 @Entity
 @Table(name = "prices")
@@ -10,6 +14,8 @@ public class Pricies {
     private Long id;
     private String duration;
     private Integer price;
+
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "discount_id")
     private Discount discount;

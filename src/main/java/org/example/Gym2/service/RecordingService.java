@@ -38,6 +38,7 @@ public class RecordingService {
         recording.setDateSend(LocalDateTime.now().format(formatterDate));
         recording.setTimeSend(ZonedDateTime.now().format(formatterTime));
         recording.setGender(form.get("gender"));
+        recording.setComment("");
         recordingRepo.save(recording);
 
         return true;

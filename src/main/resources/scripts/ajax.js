@@ -46,6 +46,47 @@ $(document).ready(function() {
 
 });
 
+
+function requestAddDiscount(idDiscountField) {
+
+    let csrfToken = $("#csrfUserList").attr("content");
+
+    let data = new FormData();
+
+    data.append("_csrf", csrfToken);
+    console.log(idDiscountField);
+    // $("#btnSendRecording").prop("disabled", false);
+    $.ajax({
+        type: "PUT",
+        url: "editDiscounts/createDiscount",
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        data: data,
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+
+            if (textStatus === "success"){
+                idDiscountField.val(data);
+                console.log(idDiscountField);
+                console.log(idDiscountField.val());
+            }
+            $("#btnSendRecording").prop("disabled", false);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+            hiddenRecording();
+            showPopUpError("<h5>Ошибка запроса</h5>");
+            console.log("ERROR : ", jqXHR.responseText);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
+}
+
 function requestAddPrice(idDiscount, fieldPriceId) {
 
     let csrfToken = $("#csrfUserList").attr("content");
@@ -54,7 +95,7 @@ function requestAddPrice(idDiscount, fieldPriceId) {
 
     data.append("discountId", idDiscount);
     data.append("_csrf", csrfToken);
-    console.log(data.get("discountId"));
+
     // $("#btnSendRecording").prop("disabled", false);
     $.ajax({
         type: "POST",
@@ -69,9 +110,10 @@ function requestAddPrice(idDiscount, fieldPriceId) {
             console.log("SUCCESS : ", data);
 
             if (textStatus === "success"){
-                fieldPriceId.val(data);
+                console.log(fieldPriceId.attr("value"));
+                fieldPriceId.attr("value", data);
+                console.log(fieldPriceId.attr("value"));
             }
-            $("#btnSendRecording").prop("disabled", false);
         },
         error: function(jqXHR, textStatus, errorThrown) {
 
@@ -181,6 +223,7 @@ function requestSaveDiscount(dataMapField) {
         console.log(pair[0], pair[1])
 
     }
+
 
     $.ajax({
         type: "POST",

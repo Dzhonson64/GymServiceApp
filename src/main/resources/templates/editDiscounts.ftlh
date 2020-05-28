@@ -15,22 +15,22 @@
                         <li>
                             <i class="fa fa-caret-down slideToggle" aria-hidden="true"></i>
                             <span class="title">Название абонемента</span>
-                            <p>${discount.name}</p>
+                            <p class="titleDiscount"><span>${discount.name}</span></p>
                             <input type="text" value="" class="dNone textArea" />
                             <ol class="rounded dNone">
                                 <span class="title">Цены</span>
                                 <#list discount.pricies as price>
                                 <li>
                                     <p>
-                                        <span class="prices-duration">${price.duration}</span> - <span class="prices-price">${price.price?c}</span>
+                                        <span class="prices-duration">${price.duration}</span> - <span class="prices-price">${price.price}</span>
                                     </p>
                                     <input type="text" value="" class="dNone textArea" />
-                                    <input type="text" hidden value="${price.id?c}" class="idPrice">
+                                    <input type="text" hidden value="${price.id}" class="idPrice">
                                 </li>
                             </#list>
                             <i class="fa fa-plus-square-o addPrice" aria-hidden="true"></i>
-                            </ol>
-                        </li>
+                    </ol>
+                    </li>
                     </ol>
                     <div class="btn draw-border changeAvatar change-bg" >
                         <a class="change-img">сменить фоновую картинку</a>

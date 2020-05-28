@@ -57,4 +57,11 @@ public class DiscountController {
     )  {
         return  discountService.addPrice(discount);
     }
+
+
+    @PutMapping("editDiscounts/createDiscount")
+    @ResponseBody
+    public Long createDiscount() {
+        return  discountService.addDiscount();
+    }
 }
