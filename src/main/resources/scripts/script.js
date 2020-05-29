@@ -446,15 +446,16 @@ function сhangeBg(){
 /*==================================================================
     [ Add new price in discount ]*/
 $(".discounts .addDiscount").on("click", function () {
-    $('<div class="col-lg-4">')
+    $('<div class="col-lg-4 mt-5">')
         .append('<div class="roundedBlock">\n' +
+            '<i class="fa fa-times-circle deleteDiscount" aria-hidden="true"></i>' +
             '                    <ol class="rounded">\n' +
             '                        <li>\n' +
             '                            <i class="fa fa-caret-down slideToggle" aria-hidden="true"></i>\n' +
             '                            <span class="title">Название абонемента</span>\n' +
             '                            <p class="titleDiscount"><span></span></p>\n' +
             '                            <input type="text" value="" class="dNone textArea" />\n' +
-            '                            <ol class="rounded dNone">\n' +
+            '                            <ol class="rounded prices dNone">\n' +
             '                                <span class="title">Цены</span>\n' +
             '                            <i class="fa fa-plus-square-o addPrice" aria-hidden="true"></i>\n' +
             '                    </ol>\n' +
@@ -480,6 +481,7 @@ $(".discounts .addDiscount").on("click", function () {
     newDiscountBlock.find(".addPrice").on("click", addPriceDiscount());
     newDiscountBlock.find(".changeAvatar").on("click", сhangeBg());
     newDiscountBlock.find(".save").on("click", saveDiscountData());
+    newDiscountBlock.find(".deleteDiscount").on("click", deleteDiscount());
     console.log(newDiscountBlock);
     requestAddDiscount(idDiscountField);
 });
@@ -639,17 +641,17 @@ $('.btn-show-pass').on('click', function(){
 $(".discounts .addPrice").on("click", function () {
     let p = $(this).parent();
     $('<li>')
-        .append('<p>\n' +
+        .append('<i class="fa fa-times-circle deletePriceDiscount" aria-hidden="true"></i>' +
+            '<p>\n' +
             '<span class="prices-duration">0</span> - <span class="prices-price">0</span>\n' +
             '</p>\n' +
             '<input type="text" value="" class="dNone textArea" />\n' +
             '<input type="text" hidden value="" class="idPrice">')
         .insertBefore($(this));
     let newPriceField = $(this).siblings("li").last();
-    console.log(newPriceField.find("p"));
-    console.log(newPriceField.find(".textArea"));
     newPriceField.find("p").on("click", changeFieldEditDiscountFieldBeforeBlur())
     newPriceField.find(".textArea").on("click", changeFieldEditDiscountAfterBlur())
+    newPriceField.find(".deletePriceDiscount").on("click", deletePriceDiscount())
 
     let discountId = newPriceField.closest(".roundedBlock").find(".idDiscount");
     let pricesId = newPriceField.find(".idPrice");
@@ -661,17 +663,17 @@ function addPriceDiscount() {
     $(".discounts .addPrice").on("click", function () {
         let p = $(this).parent();
         $('<li>')
-            .append('<p>\n' +
+            .append('<i class="fa fa-times-circle deletePriceDiscount" aria-hidden="true"></i>' +
+                '<p>\n' +
                 '<span class="prices-duration">0</span> - <span class="prices-price">0</span>\n' +
                 '</p>\n' +
                 '<input type="text" value="" class="dNone textArea" />\n' +
                 '<input type="text" hidden value="" class="idPrice">')
             .insertBefore($(this));
         let newPriceField = $(this).siblings("li").last();
-        console.log(newPriceField.find("p"));
-        console.log(newPriceField.find(".textArea"));
-        newPriceField.find("p").on("click", changeFieldEditDiscountFieldBeforeBlur())
-        newPriceField.find(".textArea").on("click", changeFieldEditDiscountAfterBlur())
+        newPriceField.find("p").on("click", changeFieldEditDiscountFieldBeforeBlur());
+        newPriceField.find(".textArea").on("click", changeFieldEditDiscountAfterBlur());
+        newPriceField.find(".deletePriceDiscount").on("click", deletePriceDiscount());
 
         let discountId = newPriceField.closest(".roundedBlock").find(".idDiscount");
         let pricesId = newPriceField.find(".idPrice");
@@ -680,3 +682,60 @@ function addPriceDiscount() {
     });
 }
 /*================================================================*/
+
+
+
+
+/*==================================================================
+    [ Delete discount ]*/
+
+$('.roundedBlock .deleteDiscount').on('click', function(){
+    let discountId = $(this).siblings(".idDiscount");
+    let discountBlock = discountId.closest(".col-lg-4");
+    discountBlock.fadeOut(800);
+    setTimeout(function (){
+        requestDeleteDiscount(discountId.val(), discountBlock)
+    }, 800);
+
+});
+
+function deleteDiscount() {
+    $('.roundedBlock .deleteDiscount').on('click', function(){
+        let discountId = $(this).siblings(".idDiscount");
+        let discountBlock = discountId.closest(".col-lg-4");
+        discountBlock.fadeOut(800);
+        setTimeout(function (){
+            requestDeleteDiscount(discountId.val(), discountBlock)
+        }, 800);
+
+    });
+}
+/*==================================================================*/
+
+
+
+/*==================================================================
+    [ Delete price discount ]*/
+
+$('.roundedBlock .deletePriceDiscount').on('click', function(){
+    let priceDiscountId = $(this).siblings(".idPrice");
+    let priceDiscountBlock = $(this).siblings(".idPrice").parent();
+    priceDiscountBlock.fadeOut(800);
+    setTimeout(function (){
+        requestDeletePriceDiscount(priceDiscountId.val(), priceDiscountBlock)
+    }, 800);
+
+});
+
+function deletePriceDiscount() {
+    $('.roundedBlock .deletePriceDiscount').on('click', function(){
+        let priceDiscountId = $(this).siblings(".idPrice");
+        let priceDiscountBlock = $(this).siblings(".idPrice").parent();
+        priceDiscountBlock.fadeOut(800);
+        setTimeout(function (){
+            requestDeletePriceDiscount(priceDiscountId.val(), priceDiscountBlock)
+        }, 800);
+
+    });
+}
+/*==================================================================*/

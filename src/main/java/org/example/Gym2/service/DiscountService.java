@@ -116,4 +116,20 @@ public class DiscountService {
 
         return discount.getId();
     }
+
+
+    public ResponseEntity<String> deleteDiscount(Discount discount){
+        for (Pricies p: discount.getPricies()) {
+            pricesRepo.delete(p);
+        }
+        discountRepo.delete(discount);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    public ResponseEntity<String> deletePriceDiscount(Pricies pricies){
+        pricesRepo.delete(pricies);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

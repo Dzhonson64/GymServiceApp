@@ -1,6 +1,7 @@
 package org.example.Gym2.controller;
 
 import org.example.Gym2.domain.Discount;
+import org.example.Gym2.domain.Pricies;
 import org.example.Gym2.domain.User;
 import org.example.Gym2.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,19 @@ public class DiscountController {
     @ResponseBody
     public Long createDiscount() {
         return  discountService.addDiscount();
+    }
+
+
+    @DeleteMapping("editDiscounts/deleteDiscount")
+    @ResponseBody
+    public ResponseEntity<String> deleteDiscount(@RequestParam(name = "idDiscount") Discount discount) {
+        return  discountService.deleteDiscount(discount);
+    }
+
+
+    @DeleteMapping("editDiscounts/deletePriceDiscount")
+    @ResponseBody
+    public ResponseEntity<String> deletePriceDiscount(@RequestParam(name = "idPriceDiscount") Pricies pricies) {
+        return  discountService.deletePriceDiscount(pricies);
     }
 }

@@ -45,7 +45,81 @@ $(document).ready(function() {
     });
 
 });
+function requestDeletePriceDiscount(idPriceDiscount, priceDiscountBlock) {
 
+    let csrfToken = $("#csrfUserList").attr("content");
+
+    let data = new FormData();
+
+    data.append("_csrf", csrfToken);
+    data.append("idPriceDiscount", idPriceDiscount);
+    // $("#btnSendRecording").prop("disabled", false);
+    $.ajax({
+        type: "DELETE",
+        url: "editDiscounts/deletePriceDiscount",
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        data: data,
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+
+            if (textStatus === "success"){
+                priceDiscountBlock.remove();
+            }
+            $("#btnSendRecording").prop("disabled", false);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+            hiddenRecording();
+            showPopUpError("<h5>Ошибка запроса</h5>");
+            console.log("ERROR : ", jqXHR.responseText);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
+}
+
+function requestDeleteDiscount(idDiscount, discountBlock) {
+
+    let csrfToken = $("#csrfUserList").attr("content");
+
+    let data = new FormData();
+
+    data.append("_csrf", csrfToken);
+    data.append("idDiscount", idDiscount);
+    // $("#btnSendRecording").prop("disabled", false);
+    $.ajax({
+        type: "DELETE",
+        url: "editDiscounts/deleteDiscount",
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        data: data,
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+
+            if (textStatus === "success"){
+                discountBlock.remove();
+            }
+            $("#btnSendRecording").prop("disabled", false);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+            hiddenRecording();
+            showPopUpError("<h5>Ошибка запроса</h5>");
+            console.log("ERROR : ", jqXHR.responseText);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
+}
 
 function requestAddDiscount(idDiscountField) {
 
