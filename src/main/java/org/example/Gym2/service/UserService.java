@@ -1,7 +1,10 @@
 package org.example.Gym2.service;
 
+import org.example.Gym2.domain.Discount;
+import org.example.Gym2.domain.Pricies;
 import org.example.Gym2.domain.Role;
 import org.example.Gym2.domain.User;
+import org.example.Gym2.repos.DiscountRepo;
 import org.example.Gym2.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -24,6 +28,9 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private DiscountService discountService;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -123,5 +130,9 @@ public class UserService implements UserDetailsService {
 
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    public void buyDiscount(User user, Discount discount, Pricies price){
+
     }
 }

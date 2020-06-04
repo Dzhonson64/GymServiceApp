@@ -44,7 +44,128 @@ $(document).ready(function() {
 
     });
 
+    $(".buyDiscount").click(function() {
+        let discountId = $(this).siblings(".idDiscount");
+        let priceId = $(this).closest(".containerCard").find("input:checked").siblings(".idPrice").val()
+        requestBuyDiscount(discountId.val(), priceId);
+    });
+
+
 });
+function requestBuyDiscount(idDiscount, priceId) {
+
+    let csrfToken = $("#csrfUserList").attr("content");
+
+    let data = new FormData();
+    console.log(idDiscount);
+    data.append("_csrf", csrfToken);
+    data.append("idDiscount", idDiscount);
+    data.append("idPriceDiscount", priceId);
+
+    if ($("#usrActive").attr("content") !== "undefined"){
+        $.ajax({
+            type: "POST",
+            url: "buyDiscount",
+            // prevent jQuery from automatically transforming the data into a query string
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 1000000,
+            data: data,
+            success: function(data, textStatus, jqXHR) {
+                console.log("SUCCESS : ", data);
+                showPopUpSuccessful();
+                $("#resultResponsePopUp").text("Абонемент был успешно приобретён!");
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+
+                // $("#result").html(jqXHR.responseText);
+                showPopUpError("<h5>Ошибка запроса</h5>");
+                console.log("ERROR : ", jqXHR.responseText);
+
+            }
+        });
+    }else {
+        window.location.href='http://localhost:8080/login';
+    }
+
+}
+
+function requestDeletePriceDiscount(idPriceDiscount, priceDiscountBlock) {
+
+    let csrfToken = $("#csrfUserList").attr("content");
+
+    let data = new FormData();
+
+    data.append("_csrf", csrfToken);
+    data.append("idPriceDiscount", idPriceDiscount);
+    // $("#btnSendRecording").prop("disabled", false);
+    $.ajax({
+        type: "DELETE",
+        url: "editDiscounts/deletePriceDiscount",
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        data: data,
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+
+            if (textStatus === "success"){
+                priceDiscountBlock.remove();
+            }
+            $("#btnSendRecording").prop("disabled", false);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+            hiddenRecording();
+            showPopUpError("<h5>Ошибка запроса</h5>");
+            console.log("ERROR : ", jqXHR.responseText);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
+}
+
+function requestDeleteDiscount(idDiscount, discountBlock) {
+
+    let csrfToken = $("#csrfUserList").attr("content");
+
+    let data = new FormData();
+
+    data.append("_csrf", csrfToken);
+    data.append("idDiscount", idDiscount);
+    // $("#btnSendRecording").prop("disabled", false);
+    $.ajax({
+        type: "DELETE",
+        url: "editDiscounts/deleteDiscount",
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        data: data,
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+
+            if (textStatus === "success"){
+                discountBlock.remove();
+            }
+            $("#btnSendRecording").prop("disabled", false);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+            hiddenRecording();
+            showPopUpError("<h5>Ошибка запроса</h5>");
+            console.log("ERROR : ", jqXHR.responseText);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
+}
 
 
 function requestAddDiscount(idDiscountField) {
@@ -220,10 +341,10 @@ function requestSaveDiscount(dataMapField) {
     let prices = [];
     for (let pair of dataMapField.entries()) {
         data.append(pair[0], pair[1])
-        console.log(pair[0], pair[1])
+
 
     }
-
+    console.log("TT")
 
     $.ajax({
         type: "POST",

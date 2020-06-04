@@ -17,7 +17,6 @@ public class User implements UserDetails {
     private String password;
     private boolean active;
     private String filename;
-    private String discount;
 
     public String getFilename() {
         return filename;
@@ -26,6 +25,14 @@ public class User implements UserDetails {
     public void setFilename(String filename) {
         this.filename = filename;
     }
+
+
+
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "discount_id")
+    private Discount discountUser;
+
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))

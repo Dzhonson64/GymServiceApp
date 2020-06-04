@@ -9,21 +9,36 @@
         </div>
         <div class="row">
             <#list discounts as discount>
-            <div class="col-lg-4">
+            <div class="col-lg-4 mt-5">
                 <div class="roundedBlock">
+                    <i class="fa fa-times-circle deleteDiscount" aria-hidden="true"></i>
                     <ol class="rounded">
                         <li>
                             <i class="fa fa-caret-down slideToggle" aria-hidden="true"></i>
                             <span class="title">Название абонемента</span>
                             <p class="titleDiscount"><span>${discount.name}</span></p>
                             <input type="text" value="" class="dNone textArea" />
-                            <ol class="rounded dNone">
+                            <ol class="rounded prices dNone close">
                                 <span class="title">Цены</span>
                                 <#list discount.pricies as price>
                                 <li>
-                                    <p>
-                                        <span class="prices-duration">${price.duration}</span> - <span class="prices-price">${price.price}</span>
-                                    </p>
+                                    <i class="fa fa-times-circle deletePriceDiscount" aria-hidden="true"></i>
+                                    <div class="priceBlock d-flex align-items-end flex-column">
+                                        <label>Число <input type="number" class="prices-duration" value="${price.durationNum?c}"></label>
+                                        <label>
+                                            Период <select class="prices-durationPeriod" content="${price.durationPeriod}">
+                                            <option value="День">День</option>
+                                            <option value="Месяц">Месяц</option>
+                                            <option value="Неделя">Неделя</option>
+                                            <option value="Год">Год</option>
+                                        </select>
+                                        </label>
+                                        <label>
+                                            Стоимость <input type="number" class="prices-price" value="${price.price?c}">
+                                        </label>
+                                    </div>
+
+
                                     <input type="text" value="" class="dNone textArea" />
                                     <input type="text" hidden value="${price.id}" class="idPrice">
                                 </li>
@@ -38,6 +53,7 @@
                     <input type="text" hidden value="${discount.id}" class="idDiscount">
                     <button type="submit" class="save btn draw-border">Save</button>
                 </div>
+
             </div>
         </#list>
         <div class="col-lg-4 d-flex align-items-center">

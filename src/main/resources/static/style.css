@@ -109,6 +109,15 @@ body{
     z-index: 10;
     border: 0;
 }
+
+.mynavbar .sighInText {
+    color: #fff;
+    margin: 0;
+    text-decoration: none;
+    letter-spacing: 1px;
+    padding: 0;
+}
+
 .mynavbar .menu-list::after {
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;

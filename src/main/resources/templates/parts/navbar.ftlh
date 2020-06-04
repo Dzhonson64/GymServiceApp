@@ -5,7 +5,7 @@
     <a class="navbar-brand col-lg-2" href="/">Спортивный клуб</a>
     <div class="nav-content col-lg-10" id="navbarSupportedContent">
         <div class="row">
-            <ul class="nav-links col-lg-9" >
+            <ul class="nav-links col-lg-8" >
                 <li class="col-auto p-0">
                     <a class="nav-link" href="/">Home</a>
                 </li>
@@ -24,9 +24,9 @@
         </#if>
 
         </ul>
-        <div class="col-lg-3 login">
+        <div class="col-lg-4 login">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-5">
                     <div class="profileMenu d-flex align-items-center" >
                         <div class="userBlock d-flex justify-content-center align-items-center" id="profileMenu">
                             <#if userActive??>
@@ -62,7 +62,7 @@
                 </div>
             </#if>
             </div>
-            <div class="col-lg-6">
+            <div class="col">
                 <@l.logout />
             </div>
         </div>

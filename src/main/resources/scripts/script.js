@@ -63,28 +63,30 @@ $("#closeRecording").click(function () {
 
 
 $(".save").click(function (e) {
-    e.preventDefault();
     let nameDiscount = $(this).siblings("ol").children("li").children("p");
     let idDiscount = $(this).siblings(".idDiscount");
-    let pricesDiscount = nameDiscount.siblings("ol").children("li").children("p").children(".prices-duration");
-    let pricesPrices = nameDiscount.siblings("ol").children("li").children("p").children(".prices-price");
+    let pricesDurationNum = nameDiscount.siblings("ol").children("li").find(".prices-duration");
+    let pricesDurationPred = nameDiscount.siblings("ol").children("li").find(".prices-durationPeriod");
+    let pricesPrices = nameDiscount.siblings("ol").children("li").find(".prices-price");
     let pricesId = nameDiscount.siblings("ol").children("li").children(".idPrice");
-    let currency = nameDiscount.siblings("ol").children("li").children(".idPrice");
 
     let dataMapFiled = new Map();
 
     dataMapFiled.set("discountName", nameDiscount.text().replace(/\s+/g, ' '));
     dataMapFiled.set("discountId", parseInt(idDiscount.val()));
     let discountPrices = [];
-    let discountDurations = [];
+    let pricesDurationNums = [];
+    let pricesDurationPreds = [];
     let discountPricesId = [];
     for (let i = 0; i < pricesId.length; i++){
-        discountDurations.push(pricesDiscount.eq(i).text().trim());
-        discountPrices.push(pricesPrices.eq(i).text().toString().match(/^\d+/));
+        discountPrices.push(parseInt(pricesPrices.eq(i).val()));
+        pricesDurationNums.push(parseInt(pricesDurationNum.eq(i).val()));
+        pricesDurationPreds.push(pricesDurationPred.eq(i).val());
         discountPricesId.push(parseInt(pricesId.eq(i).val()));
     }
     dataMapFiled.set("pricesPrice", discountPrices);
-    dataMapFiled.set("pricesDuration", discountDurations);
+    dataMapFiled.set("pricesDurationNum", pricesDurationNums);
+    dataMapFiled.set("pricesDurationPred", pricesDurationPreds);
     dataMapFiled.set("pricesId", discountPricesId);
 
     dataMapFiled.set("_csrf", $("#csrfUserList").attr("content"));
@@ -98,25 +100,28 @@ function saveDiscountData(){
         e.preventDefault();
         let nameDiscount = $(this).siblings("ol").children("li").children("p");
         let idDiscount = $(this).siblings(".idDiscount");
-        let pricesDiscount = nameDiscount.siblings("ol").children("li").children("p").children(".prices-duration");
-        let pricesPrices = nameDiscount.siblings("ol").children("li").children("p").children(".prices-price");
+        let pricesDurationNum = nameDiscount.siblings("ol").children("li").find(".prices-duration");
+        let pricesDurationPred = nameDiscount.siblings("ol").children("li").find(".prices-durationPeriod");
+        let pricesPrices = nameDiscount.siblings("ol").children("li").find(".prices-price");
         let pricesId = nameDiscount.siblings("ol").children("li").children(".idPrice");
-        let currency = nameDiscount.siblings("ol").children("li").children(".idPrice");
 
         let dataMapFiled = new Map();
 
         dataMapFiled.set("discountName", nameDiscount.text().replace(/\s+/g, ' '));
         dataMapFiled.set("discountId", parseInt(idDiscount.val()));
         let discountPrices = [];
-        let discountDurations = [];
+        let pricesDurationNums = [];
+        let pricesDurationPreds = [];
         let discountPricesId = [];
         for (let i = 0; i < pricesId.length; i++){
-            discountDurations.push(pricesDiscount.eq(i).text().trim());
-            discountPrices.push(pricesPrices.eq(i).text().toString().match(/^\d+/));
+            discountPrices.push(parseInt(pricesPrices.eq(i).val()));
+            pricesDurationNums.push(parseInt(pricesDurationNum.eq(i).val()));
+            pricesDurationPreds.push(pricesDurationPred.eq(i).val());
             discountPricesId.push(parseInt(pricesId.eq(i).val()));
         }
         dataMapFiled.set("pricesPrice", discountPrices);
-        dataMapFiled.set("pricesDuration", discountDurations);
+        dataMapFiled.set("pricesDurationNum", pricesDurationNums);
+        dataMapFiled.set("pricesDurationPred", pricesDurationPreds);
         dataMapFiled.set("pricesId", discountPricesId);
 
         dataMapFiled.set("_csrf", $("#csrfUserList").attr("content"));
@@ -227,19 +232,39 @@ function changeFieldEditDiscountFieldBeforeBlur() {
     [ Show & Hidden a discount list edit ]*/
 
 
-$(".slideToggle").click(function () {
+$(".slideToggle").on("click", function () {
     let nestedList = $(this).siblings(
         ".rounded");
-    nestedList.slideToggle();
+    if (nestedList.hasClass("close")){
+        console.log("DEFAULT: close");
+        nestedList.removeClass("close");
+        nestedList.addClass("open");
+        nestedList.fadeIn();
+    }else {
+        console.log("DEFAULT: open");
+        nestedList.removeClass("open");
+        nestedList.addClass("close");
+        nestedList.fadeOut();
+    }
 
 })
 
-function slideToggleDataDiscount(){
-
-    $(".slideToggle").click(function () {
+function slideToggleDataDiscount() {
+    $(".slideToggle").on("click", function () {
         let nestedList = $(this).siblings(
             ".rounded");
-        nestedList.slideToggle();
+        if (nestedList.hasClass("close")) {
+            console.log("NEW: close");
+            nestedList.removeClass("close");
+            nestedList.addClass("open");
+            nestedList.fadeIn();
+        } else {
+            console.log("NEW: open");
+            console.log(nestedList.hasClass("close"));
+            nestedList.removeClass("open");
+            nestedList.addClass("close");
+            nestedList.fadeOut();
+        }
 
     })
 }
@@ -448,25 +473,25 @@ function сhangeBg(){
 $(".discounts .addDiscount").on("click", function () {
     $('<div class="col-lg-4 mt-5">')
         .append('<div class="roundedBlock">\n' +
-            '<i class="fa fa-times-circle deleteDiscount" aria-hidden="true"></i>' +
-            '                    <ol class="rounded">\n' +
-            '                        <li>\n' +
-            '                            <i class="fa fa-caret-down slideToggle" aria-hidden="true"></i>\n' +
-            '                            <span class="title">Название абонемента</span>\n' +
-            '                            <p class="titleDiscount"><span></span></p>\n' +
-            '                            <input type="text" value="" class="dNone textArea" />\n' +
-            '                            <ol class="rounded prices dNone">\n' +
-            '                                <span class="title">Цены</span>\n' +
-            '                            <i class="fa fa-plus-square-o addPrice" aria-hidden="true"></i>\n' +
-            '                    </ol>\n' +
-            '                    </li>\n' +
-            '                    </ol>\n' +
-            '                    <div class="btn draw-border changeAvatar change-bg" >\n' +
-            '                        <a class="change-img">сменить фоновую картинку</a>\n' +
-            '                    </div>\n' +
-            '                    <input type="text" hidden value="" class="idDiscount">\n' +
-            '                    <button type="submit" class="save btn draw-border">Save</button>\n' +
-            '                </div>')
+            '    <i class="fa fa-times-circle deleteDiscount" aria-hidden="true"></i>\n' +
+            '    <ol class="rounded">\n' +
+            '        <li>\n' +
+            '            <i class="fa fa-caret-down slideToggle" aria-hidden="true"></i>\n' +
+            '            <span class="title">Название абонемента</span>\n' +
+            '            <p class="titleDiscount"><span>-</span></p>\n' +
+            '            <input type="text" value="" class="dNone textArea" />\n' +
+            '            <ol class="rounded prices dNone ">\n' +
+            '                <span class="title">Цены</span>\n' +
+            '            <i class="fa fa-plus-square-o addPrice" aria-hidden="true"></i>\n' +
+            '    </ol>\n' +
+            '    </li>\n' +
+            '    </ol>\n' +
+            '    <div class="btn draw-border changeAvatar change-bg" >\n' +
+            '        <a class="change-img">сменить фоновую картинку</a>\n' +
+            '    </div>\n' +
+            '    <input type="text" hidden value="${discount.id}" class="idDiscount">\n' +
+            '    <button type="submit" class="save btn draw-border">Save</button>\n' +
+            '</div>\n')
         .insertBefore($(this).parent());
     let newDiscountBlock = $(this).parent().closest(".discounts").find(".roundedBlock").last();
     let idDiscountField = $(this).parent().siblings().last().find(".idDiscount");
@@ -641,16 +666,29 @@ $('.btn-show-pass').on('click', function(){
 $(".discounts .addPrice").on("click", function () {
     let p = $(this).parent();
     $('<li>')
-        .append('<i class="fa fa-times-circle deletePriceDiscount" aria-hidden="true"></i>' +
-            '<p>\n' +
-            '<span class="prices-duration">0</span> - <span class="prices-price">0</span>\n' +
-            '</p>\n' +
-            '<input type="text" value="" class="dNone textArea" />\n' +
-            '<input type="text" hidden value="" class="idPrice">')
+        .append('<i class="fa fa-times-circle deletePriceDiscount" aria-hidden="true"></i>\n' +
+            '                                    <div class="priceBlock d-flex align-items-end flex-column">\n' +
+            '                                        <label>Число <input type="number" class="prices-duration" value="${price.durationNum?c}"></label>\n' +
+            '                                        <label>\n' +
+            '                                            Период <select class="prices-durationPeriod" content="${price.durationPeriod}">\n' +
+            '                                            <option value="День">День</option>\n' +
+            '                                            <option value="Месяц">Месяц</option>\n' +
+            '                                            <option value="Неделя">Неделя</option>\n' +
+            '                                            <option value="Год">Год</option>\n' +
+            '                                        </select>\n' +
+            '                                        </label>\n' +
+            '                                        <label>\n' +
+            '                                            Стоимость <input type="number" class="prices-price" value="${price.price?c}">\n' +
+            '                                        </label>\n' +
+            '                                    </div>\n' +
+            '\n' +
+            '\n' +
+            '                                    <input type="text" value="" class="dNone textArea" />\n' +
+            '                                    <input type="text" hidden value="${price.id}" class="idPrice">')
         .insertBefore($(this));
     let newPriceField = $(this).siblings("li").last();
-    newPriceField.find("p").on("click", changeFieldEditDiscountFieldBeforeBlur())
-    newPriceField.find(".textArea").on("click", changeFieldEditDiscountAfterBlur())
+    // newPriceField.find("p").on("click", changeFieldEditDiscountFieldBeforeBlur())
+    // newPriceField.find(".textArea").on("click", changeFieldEditDiscountAfterBlur())
     newPriceField.find(".deletePriceDiscount").on("click", deletePriceDiscount())
 
     let discountId = newPriceField.closest(".roundedBlock").find(".idDiscount");
@@ -663,16 +701,27 @@ function addPriceDiscount() {
     $(".discounts .addPrice").on("click", function () {
         let p = $(this).parent();
         $('<li>')
-            .append('<i class="fa fa-times-circle deletePriceDiscount" aria-hidden="true"></i>' +
-                '<p>\n' +
-                '<span class="prices-duration">0</span> - <span class="prices-price">0</span>\n' +
-                '</p>\n' +
-                '<input type="text" value="" class="dNone textArea" />\n' +
-                '<input type="text" hidden value="" class="idPrice">')
+            .append('<i class="fa fa-times-circle deletePriceDiscount" aria-hidden="true"></i>\n' +
+                '                                    <div class="priceBlock d-flex align-items-end flex-column">\n' +
+                '                                        <label>Число <input type="number" class="prices-duration" value=""></label>\n' +
+                '                                        <label>\n' +
+                '                                            Период <select class="prices-durationPeriod" content="">\n' +
+                '                                            <option value="День">День</option>\n' +
+                '                                            <option value="Месяц">Месяц</option>\n' +
+                '                                            <option value="Неделя">Неделя</option>\n' +
+                '                                            <option value="Год">Год</option>\n' +
+                '                                        </select>\n' +
+                '                                        </label>\n' +
+                '                                        <label>\n' +
+                '                                            Стоимость <input type="number" class="prices-price" value="">\n' +
+                '                                        </label>\n' +
+                '                                    </div>\n' +
+                '\n' +
+                '\n' +
+                '                                    <input type="text" value="" class="dNone textArea" />\n' +
+                '                                    <input type="text" hidden value="" class="idPrice">')
             .insertBefore($(this));
         let newPriceField = $(this).siblings("li").last();
-        newPriceField.find("p").on("click", changeFieldEditDiscountFieldBeforeBlur());
-        newPriceField.find(".textArea").on("click", changeFieldEditDiscountAfterBlur());
         newPriceField.find(".deletePriceDiscount").on("click", deletePriceDiscount());
 
         let discountId = newPriceField.closest(".roundedBlock").find(".idDiscount");

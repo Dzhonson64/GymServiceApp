@@ -4,6 +4,12 @@
 <@c.page>
 <link rel="stylesheet" type="text/css" href="/static/jquery.fullPage.css">
 <@p.popUpSuccessful />
+<#if userActive??>
+<meta name="usr" content="${idActiveUser}" id="usrActive">
+<#else>
+<meta name="usr" content="undefined" id="usrActive">
+</#if>
+
 <#include "parts/recording.ftlh">
 <div id="fullpage" class="greeting">
     <div class="section main-img" data-anchor="block1">
@@ -51,7 +57,7 @@
                                             <#list discount.pricies as price>
                                             <div class="inputGroup">
                                                 <input id="radio${count}" name="radio" type="radio"/>
-                                                <label for="radio${count}">${price.duration} - ${price.price}</label>
+                                                <label for="radio${count}">на ${price.durationNum} ${price.durationPeriod} - ${price.price}</label>
                                             </div>
                                             <#assign count = count + 1>
                                         </#list>

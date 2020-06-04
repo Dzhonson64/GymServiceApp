@@ -35,7 +35,13 @@ public class DiscountService {
         return discountRepo.findAll();
     }
 
-    public ResponseEntity<String>  updateDataDiscount(String name, Long idDiscount, String[] pricesDuration, Integer[] pricesPrice, Long[] pricesId){
+
+    public ResponseEntity<String>  updateDataDiscount(String name,
+                                                      Long idDiscount,
+                                                      Integer[] pricesDurationNum,
+                                                      String[] pricesDurationPer,
+                                                      Integer[] pricesPrice,
+                                                      Long[] pricesId){
         Optional<Discount> discountOptional = discountRepo.findById(idDiscount);
 
         if (discountOptional.isPresent()) {
@@ -45,7 +51,8 @@ public class DiscountService {
             for (int i = 0; i < pricesId.length; i++){
                 Optional<Pricies> priciesOptional = pricesRepo.findById(pricesId[i]);
                 priciesOptional.get().setPrice(pricesPrice[i]);
-                priciesOptional.get().setDuration(pricesDuration[i]);
+                priciesOptional.get().setDurationPeriod(pricesDurationPer[i]);
+                priciesOptional.get().setDurationNum(pricesDurationNum[i]);
                 pricesRepo.save(priciesOptional.get());
             }
 
@@ -97,7 +104,9 @@ public class DiscountService {
         Pricies pricies = new Pricies();
         pricies.setDiscount(discount);
         pricies.setPrice(0);
-        pricies.setDuration("0");
+        pricies.setDurationNum(0);
+        pricies.setDurationPeriod("День");
+        pricies.setPrice(0);
         pricesRepo.save(pricies);
         discount.getPricies().add(pricies);
         discountRepo.save(discount);
@@ -107,9 +116,9 @@ public class DiscountService {
 
     public Long addDiscount(){
         Discount discount = new Discount();
-        discount.setName("");
-        discount.setDescription("");
-        discount.setFileImageBg("");
+        discount.setSelectedPrice(null);
+        discount.setName("-");
+        discount.setDescription("-");
         discount.setFileImageBg("");
         discount.setPricies(new ArrayList<Pricies>());
         discountRepo.save(discount);
@@ -119,9 +128,9 @@ public class DiscountService {
 
 
     public ResponseEntity<String> deleteDiscount(Discount discount){
-        for (Pricies p: discount.getPricies()) {
+        /*for (Pricies p: discount.getPricies()) {
             pricesRepo.delete(p);
-        }
+        }*/
         discountRepo.delete(discount);
 
         return new ResponseEntity<>(HttpStatus.OK);

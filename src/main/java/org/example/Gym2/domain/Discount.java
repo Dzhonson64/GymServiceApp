@@ -18,10 +18,22 @@ public class Discount {
     private String fileImageBg;
 
 
+
+
     @OneToMany(mappedBy = "discount", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Pricies> pricies;
 
+    @OneToOne(mappedBy = "discountSelect", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "selectedPrice")
+    private Pricies selectedPrice;
 
+    public Pricies getSelectedPrice() {
+        return selectedPrice;
+    }
+
+    public void setSelectedPrice(Pricies selectedPrice) {
+        this.selectedPrice = selectedPrice;
+    }
 
     public String getFileImageBg() {
         return fileImageBg;

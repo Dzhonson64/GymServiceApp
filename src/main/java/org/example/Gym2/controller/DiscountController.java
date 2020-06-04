@@ -4,6 +4,7 @@ import org.example.Gym2.domain.Discount;
 import org.example.Gym2.domain.Pricies;
 import org.example.Gym2.domain.User;
 import org.example.Gym2.service.DiscountService;
+import org.example.Gym2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ public class DiscountController {
     @Autowired
     DiscountService discountService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping("/editDiscounts")
     private String editDiscounts(Model model){
         model.addAttribute("discounts", discountService.findAll());
@@ -35,12 +39,13 @@ public class DiscountController {
     private ResponseEntity<String> changeDiscounts(
             @RequestParam(name = "discountName") String name,
             @RequestParam(name = "discountId") Long idDiscount,
-            @RequestParam(name = "pricesDuration") String[] pricesDuration,
+            @RequestParam(name = "pricesDurationNum") Integer[] pricesDurationNum,
+            @RequestParam(name = "pricesDurationPred") String[] pricesDurationPer,
             @RequestParam(name = "pricesPrice") Integer[] pricesPrice,
             @RequestParam(name = "pricesId") Long[] pricesId
     ){
 
-        return discountService.updateDataDiscount(name, idDiscount, pricesDuration, pricesPrice, pricesId);
+        return discountService.updateDataDiscount(name, idDiscount, pricesDurationNum, pricesDurationPer, pricesPrice,pricesId);
     }
 
 
@@ -79,4 +84,16 @@ public class DiscountController {
     public ResponseEntity<String> deletePriceDiscount(@RequestParam(name = "idPriceDiscount") Pricies pricies) {
         return  discountService.deletePriceDiscount(pricies);
     }
+
+
+    @PostMapping("/buyDiscount")
+    @ResponseBody
+    public ResponseEntity<String> buyDiscount(@AuthenticationPrincipal User user,
+                                              @RequestParam(name = "idDiscount") Discount discount,
+                                              @RequestParam(name = "idPriceDiscount") Pricies price
+    ) {
+        //userService.buyDiscount(user, discount, price);
+        return null;
+    }
+
 }
