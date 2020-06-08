@@ -1,3 +1,4 @@
+<#include "security.ftlh">
 <#macro login path isRegister>
 <form action="${path}" method="post">
     <div class="logo-input validate-input">
@@ -34,8 +35,20 @@
 </#macro>
 
 <#macro logout>
+<div class="logBlock">
+    <a href="/login">Sign in</a>
+</div>
+
+<#if userActive??>
 <form action="/logout" method="post">
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
     <button type="submit">Sign Out</button>
 </form>
+<#else>
+<div class="regBlock">
+    <a href="/registration">Sign up</a>
+</div>
+
+</#if>
+
 </#macro>

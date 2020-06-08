@@ -1,19 +1,20 @@
 $(document).ready(function() {
 
-    $("#saveData").click(function(event) {
-
-        // Stop default form Submit.
-        event.preventDefault();
-
-        // Call Ajax Submit.
-
-        requestSavePersonalData();
-
-    });
+    // $("#saveData").click(function(event) {
+    //
+    //     // Stop default form Submit.
+    //     event.preventDefault();
+    //
+    //     // Call Ajax Submit.
+    //
+    //     requestSavePersonalData();
+    //
+    // });
 
     $(".profile #save-avatar").click(function(event) {
 
         event.preventDefault();
+        console.log("TT");
 
         requestSaveAvatar();
 
@@ -27,15 +28,15 @@ $(document).ready(function() {
 
     });
 
-    $("#saveEditUser").click(function(event) {
-
-        // Stop default form Submit.
-        event.preventDefault();
-        // let s = document.location.pathname;
-        // console.log(s);
-        requestSaveEditUser();
-
-    });
+    // $("#saveEditUser").click(function(event) {
+    //
+    //     // Stop default form Submit.
+    //     event.preventDefault();
+    //     // let s = document.location.pathname;
+    //     // console.log(s);
+    //     requestSaveEditUser();
+    //
+    // });
 
 
     $("#btnSendRecording").click(function(event) {
@@ -98,39 +99,39 @@ function addCommentRecordingCard(text, btnAddComment){
     data.append("id", id);
     data.append("_csrf", csrfToken);
 
-    // $.ajax({
-    //     type: "PUT",
-    //     url: "/listRecording/addComment",
-    //     // prevent jQuery from automatically transforming the data into a query string
-    //     processData: false,
-    //     contentType: false,
-    //     cache: false,
-    //     timeout: 1000000,
-    //     data: data,
-    //     // complete: function(xmlHttp) {
-    //     //     // xmlHttp is a XMLHttpRquest object
-    //     //     alert(xmlHttp.status);
-    //     // },
-    //     success: function(data, textStatus, jqXHR) {
-    //         console.log("SUCCESS : ", data);
-    //         if (textStatus === "success"){
-    //             // rowTableDataForm.remove();
-    //             // showPopUpSuccessful();
-    //         }
-    //         $("#saveEditUser").prop("disabled", false);
-    //
-    //         $("#resultResponsePopUp").text("Пользователь был успешно удалён!");
-    //         //$('#avatar-img')[0].reset();
-    //     },
-    //     error: function(jqXHR, textStatus, errorThrown) {
-    //
-    //         // $("#result").html(jqXHR.responseText);
-    //
-    //         console.log("ERROR : ", jqXHR.responseText);
-    //         $("#suc").prop("disabled", false);
-    //
-    //     }
-    // });
+    $.ajax({
+        type: "PUT",
+        url: "/listRecording/addComment",
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        data: data,
+        // complete: function(xmlHttp) {
+        //     // xmlHttp is a XMLHttpRquest object
+        //     alert(xmlHttp.status);
+        // },
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+            if (textStatus === "success"){
+                // rowTableDataForm.remove();
+                // showPopUpSuccessful();
+            }
+            $("#saveEditUser").prop("disabled", false);
+
+            $("#resultResponsePopUp").text("Пользователь был успешно удалён!");
+            //$('#avatar-img')[0].reset();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+
+            console.log("ERROR : ", jqXHR.responseText);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
 }
 
 function requestSaveDiscount(dataMapField) {
@@ -142,6 +143,9 @@ function requestSaveDiscount(dataMapField) {
         console.log(pair[0], pair[1])
 
     }
+    let csrfToken = $("#csrfUserList").attr("content");
+    data.append("_csrf", csrfToken);
+    data.append("id", id);
 
     $.ajax({
         type: "POST",
@@ -215,6 +219,9 @@ function requestSavePersonalData() {
     var form = $('#personalData')[0];
     console.log(form);
     var data = new FormData(form);
+
+    let csrfToken = $("#csrfUserList").attr("content");
+    data.append("_csrf", csrfToken);
 
     $("#saveData").prop("disabled", true);
 

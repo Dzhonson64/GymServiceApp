@@ -40,7 +40,9 @@
                                 <#if recording.timeSend??>
                                 <div class="comment-post">
                                     <span>Комментарий:</span>
+                                    <#if recording.comment??>
                                     <p class="comment-text">${recording.comment}</p>
+                                    </#if>
                                 </div>
                             </#if>
                             <textarea cols="30" rows="10" class="textAreaComment dNone"></textarea>

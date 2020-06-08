@@ -36,22 +36,28 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("{user}")
-    public String changeUser(@PathVariable User user, Model model){
-        model.addAttribute("user", user);
+    public String changeUser(@PathVariable User user, @AuthenticationPrincipal User u, Model model){
+        System.out.println(u);
+        model.addAttribute("users", u);
         model.addAttribute("roles", Role.values());
         return "userEdit";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping
-    @ResponseBody
-    public String save(@RequestParam("userId") User user, @RequestParam String username, @RequestParam Map<String, String> form){
+    @PostMapping("{user}")
+    public String save(@RequestParam String username, @RequestParam Map<String, String> form, @PathVariable User user, @AuthenticationPrincipal User u){
+        System.out.println(user == u);
+        System.out.println(u);
         userService.saveUser(user, username, form);
+        userService.saveUser(u, username, form);
+        System.out.println(u);
+        u = user;
         return "redirect:/user";
     }
 
     @GetMapping("profile")
     public String getProfile(Model model, @AuthenticationPrincipal User user){
+        System.out.println(user);
         model.addAttribute("username", user.getUsername());
         model.addAttribute("password", user.getPassword());
         model.addAttribute("filename", user.getFilename());
@@ -59,13 +65,13 @@ public class UserController {
         return "profile";
     }
 
-    @PostMapping("profile/saveData")
-    @ResponseBody
+    @PostMapping("profile")
     public String updatePersonalData(@AuthenticationPrincipal User user,
+                                @RequestParam String username,
                                 @RequestParam String password
                                 ) {
         try {
-            boolean result = userService.updatePersonalData(user, password);
+            boolean result = userService.updatePersonalData(user, username, password);
 
         } catch (IOException e) {
 

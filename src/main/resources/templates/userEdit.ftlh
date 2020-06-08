@@ -4,7 +4,7 @@
 <#include "parts/navbar.ftlh">
 <div class="container">
     <div class="row d-flex justify-content-center">
-        <form action="/user" method="post" class="user-edit-form mt-5" id="userEditFrom">
+        <form method="post" class="user-edit-form mt-5" id="userEditFrom">
             <div class="form_grup">
                 <input type="text" name="username" value="${user.username}" class="form_input">
                 <label class="form_label">Username</label>
@@ -17,7 +17,7 @@
         </#list>
         <input type="hidden" value = "${user.id}" name = "userId">
         <input type="hidden" value = "${_csrf.token}" name = "_csrf">
-        <button type = "submit" class="save" id="saveEditUser">Save</button>
+        <button type = "submit" class="saver" id="saveEditUser">Save</button>
         </form>
     </div>
 </div>

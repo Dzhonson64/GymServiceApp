@@ -26,7 +26,7 @@ public class DiscountService {
     @Autowired
     private PricesRepo pricesRepo;
 
-    @Value("${upload.pathBgDiscounts}")
+    @Value("${upload.pathBgDiscount}")
     private String uploadPath;
 
     private List<String> extensionsAvatar = Arrays.asList("jpg", "png");

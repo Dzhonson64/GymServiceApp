@@ -259,7 +259,7 @@ function hiddenRecording(){
     [ Show & Hidden a menu-list profile]*/
 
 $("#profileMenu").click(function () {
-    $("#profileMenuList").toggle("fast");
+    $("#profileMenuList").slideToggle("fast");
 })
 /*==================================================================*/
 
@@ -293,7 +293,10 @@ $(".password-input").click( function(){
 /*==================================================================
     [ Show & Hidden from to select avatar img ]*/
 
+
+
 function showModal(){
+    console.log("GG");
     $("#openModal").removeClass("closeModal");
     $("#openModal").addClass("activeModal");
 }
@@ -302,14 +305,17 @@ function hiddenModal() {
     $("#openModal").removeClass("activeModal");
     $("#openModal").addClass("closeModal");
 }
-
 $("#change-avatar").click(function () {
-    showModal();
+    console.log("BB");
+    $("#openModal").removeClass("closeModal");
+    $("#openModal").addClass("activeModal");
 })
 
 $("#closeModal").click(function () {
-    hiddenModal();
+    $("#openModal").removeClass("activeModal");
+    $("#openModal").addClass("closeModal");
 })
+
 /*==================================================================*/
 
 

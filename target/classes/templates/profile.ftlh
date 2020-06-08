@@ -3,6 +3,7 @@
 <#import "parts/popUp.ftlh" as p>
 
 <@c.page>
+<meta name="_csrf" content="${_csrf.token}" id="csrfUserList">
 <#include "parts/navbar.ftlh">
 <@p.popUpSuccessful />
 <@p.popUpError />
@@ -43,7 +44,7 @@
                             </div>
 
                             <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                            <button type="submit" class="save btn draw-border" id="saveData">Save</button>
+                            <button type="submit" class="saver btn draw-border" id="saveData">Save</button>
                             <p id="success"></p>
                         </div>
                     </form>
@@ -81,7 +82,7 @@
 
                                         </div>
                                         <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                                        <button type="submit" class="save" id="save-avatar">Save</button>
+                                        <button type="submit" class="saver" id="save-avatar">Save</button>
                                         <span class="message" id="suc">${inform?ifExists}</span>
                                     </form>
                                 </div>

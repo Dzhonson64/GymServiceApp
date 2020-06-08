@@ -44,6 +44,14 @@ body{
     border-bottom: 2px solid #150d08;
 
 }
+.mynavbar .loginBlock {
+    width: 100%;
+}
+
+.mynavbar .loginBlock a {
+    padding: 0;
+}
+
 .mynavbar .profileMenu {
     position: relative;
 }
@@ -90,9 +98,25 @@ body{
     position: absolute;
     background-color: white;
     min-width: 150px;
-    bottom: -85px;
     box-shadow: 0 0 3px 0px black;
     border-radius: 10px;
+}
+
+.mynavbar .menu-list::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -5px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    border-bottom: 5px solid #ffffff;
 }
 
 .mynavbar .menu-list a {

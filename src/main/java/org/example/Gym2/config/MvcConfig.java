@@ -37,7 +37,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Value("${upload.path}")
     private String uploadPath;
 
-    @Value("${upload.pathBgDiscounts}")
+    @Value("${upload.pathBgDiscount}")
     private String uploadPathBgDiscounts;
 
     public void addViewControllers(ViewControllerRegistry registry) {

@@ -33,22 +33,7 @@
                             <img src="/uploads/profile/${userActive.filename}" alt="" id="miniAvatarUserMenu">
                             <span class="userNameMenu" id="userNameMenu">${name}</span>
 
-                            <div class="menu-list" id="profileMenuList">
-                                <ul>
-                                    <li>
-                                        <a href="/user/profile">Настройки</a>
-                                    </li>
-                                    <#if isAdmin>
-                                    <li>
-                                        <a href="/listRecording">Записи в клуб</a>
-                                    </li>
-                                    <li>
-                                        <a href="/editDiscounts">Список абонементов</a>
-                                    </li>
-                                </#if>
 
-                                </ul>
-                            </div>
 
                             <#else>
                             <img src="/uploads/profile/account_user.png" alt="" >
@@ -57,10 +42,31 @@
                     </div>
 
 
+
+                </div>
+                <div class="menu-list" id="profileMenuList">
+                    <div class="arrow-up"></div>
+                    <ul>
+                        <li>
+                            <a href="/user/profile">Настройки</a>
+                        </li>
+                        <#if isAdmin>
+                        <li>
+                            <a href="/listRecording">Записи в клуб</a>
+                        </li>
+                        <li>
+                            <a href="/editDiscounts">Список абонементов</a>
+                        </li>
+                    </#if>
+
+                    </ul>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <@l.logout />
+            <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                <div class="loginBlock d-flex justify-content-around align-items-center">
+                    <@l.logout />
+                </div>
+
             </div>
         </div>
 

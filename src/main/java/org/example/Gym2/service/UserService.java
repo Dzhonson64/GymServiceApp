@@ -64,14 +64,14 @@ public class UserService implements UserDetailsService {
                 user.getRoles().add(Role.valueOf(key));
             }
         }
-        user.setFilename("account_user.png");
         userRepo.save(user);
     }
 
-    public boolean updatePersonalData(User user, String password) throws IOException {
+    public boolean updatePersonalData(User user, String username, String password) throws IOException {
 
         if (password != null){
             user.setPassword(password);
+            user.setUsername(username);
         }else {
             return false;
         }
