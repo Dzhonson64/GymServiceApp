@@ -119,6 +119,10 @@ body{
     border-bottom: 5px solid #ffffff;
 }
 
+.mynavbar .userBlock {
+    cursor: pointer;
+}
+
 .mynavbar .menu-list a {
     color: #000000;
     padding: 0;
@@ -128,6 +132,9 @@ body{
 
 .mynavbar .menu-list ul {
     padding: 0;
+}
+.mynavbar form{
+    margin-bottom: 0;
 }
 
 .mynavbar .menu-list ul li:first-child{

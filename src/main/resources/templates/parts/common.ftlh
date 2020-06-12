@@ -35,6 +35,7 @@
 <script src="/scripts/script.js"></script>
 <script src="/scripts/ajax.js"></script>
 <script src="/scripts/editDiscount.js"></script>
+<script src="/scripts/buyDiscount.js"></script>
 
 </body>
 </html>

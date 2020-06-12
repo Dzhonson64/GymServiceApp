@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
-//    @Autowired
-//    DiscountService discountService;
+    @Autowired
+    DiscountService discountService;
 
     @GetMapping("/")
     private String greeting(Model model){
-       // model.addAttribute("discounts", discountService.findAll());
+        model.addAttribute("discounts", discountService.findAll());
         return "greeting";
     }
 

@@ -117,23 +117,6 @@ $(".rounded p").click(function () {
 
 
 
-/*==================================================================
-    [ Show & Hidden a recording form ]*/
-
-
-$(".buy").click(function () {
-    let checkedDiscount = $(this).siblings(".card__price").children('.inputGroup').children('input[name="radio"]:checked');
-    // $("#recording").removeClass("closeRecording");
-    // $("#recording").addClass("activeRecording");
-
-})
-//
-// $("buy").click(function () {
-//     $("#recording").removeClass("activeRecording");
-//     $("#recording").addClass("closeRecording");
-//
-// })
-/*==================================================================*/
 
 
 
