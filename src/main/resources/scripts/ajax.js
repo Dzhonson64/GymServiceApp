@@ -14,19 +14,12 @@ $(document).ready(function() {
     $(".profile #save-avatar").click(function(event) {
 
         event.preventDefault();
-        console.log("TT");
 
         requestSaveAvatar();
 
     });
 
-    $(".discounts #save-bgImg").click(function(event) {
 
-        event.preventDefault();
-
-        requestSaveBgImgDiscount(parseInt(idDiscount.val()));
-
-    });
 
     // $("#saveEditUser").click(function(event) {
     //
@@ -50,16 +43,21 @@ $(document).ready(function() {
 function deleteRecordingCard(btnDeleteCard, removeBlock) {
 
     let id = btnDeleteCard.siblings(".idRecording").val();
-    let csrfToken = $("#csrfUserList").attr("content");
+
     console.log(id)
     console.log(csrfToken)
 
-    let data = new FormData();
+
+
 
     data.append("id", id);
-    data.append("_csrf", csrfToken);
     console.log(data.get("id"))
     // $("#btnSendRecording").prop("disabled", false);
+
+
+    let data = new FormData();
+    let csrfToken = $("#csrfUserList").attr("content");
+    data.append("_csrf", csrfToken);
     $.ajax({
         type: "DELETE",
         url: "/listRecording/delete",
@@ -89,6 +87,9 @@ function deleteRecordingCard(btnDeleteCard, removeBlock) {
 
         }
     });
+
+
+
 }
 
 function addCommentRecordingCard(text, btnAddComment){
@@ -134,42 +135,7 @@ function addCommentRecordingCard(text, btnAddComment){
     });
 }
 
-function requestSaveDiscount(dataMapField) {
-    let data = new FormData();
-    // console.log(dataMapField);
-    let prices = [];
-    for (let pair of dataMapField.entries()) {
-        data.append(pair[0], pair[1])
-        console.log(pair[0], pair[1])
 
-    }
-    let csrfToken = $("#csrfUserList").attr("content");
-    data.append("_csrf", csrfToken);
-    data.append("id", id);
-
-    $.ajax({
-        type: "POST",
-        url: "/editDiscounts/change",
-        data: data,
-
-
-        // prevent jQuery from automatically transforming the data into a query string
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 1000000,
-        success: function(data, textStatus, jqXHR) {
-            console.log("SUCCESS : ", data);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-
-            console.log(jqXHR.status);
-            console.log(textStatus);
-            console.log(errorThrown);
-
-        }
-    });
-}
 
 function sendRecording() {
 
@@ -257,56 +223,7 @@ function requestSavePersonalData() {
 
 }
 
-function requestSaveBgImgDiscount(idDiscount) {
 
-    // Get form
-    let form = $('#change-avatar-form')[0];
-console.log(idDiscount);
-    let data = new FormData(form);
-    data.append("discountId", idDiscount);
-    $("#save-avatar").prop("disabled", true);
-    console.log(data.get("discountId"));
-    $.ajax({
-        type: "POST",
-        url: "editDiscounts/changeBgImgDiscount",
-        data: data,
-
-
-        // prevent jQuery from automatically transforming the data into a query string
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 1000000,
-        success: function(data, textStatus, jqXHR) {
-            console.log("SUCCESS : ", data);
-            $("#save-avatar").prop("disabled", false);
-            // $("#avatar-img").attr('src', '/uploads/profile/' + data);
-            // showPopUpSuccessful();
-            // $("#resultResponsePopUp").text("Ваш аватар был успешно обновлен!");
-            // console.log($('#miniAvatarUserMenu'));
-            // $('#miniAvatarUserMenu').attr('src', '/uploads/profile/' + data);
-            //$('#avatar-img')[0].reset();
-            $("#suc").prop("disabled", false);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-
-            // $("#result").html(jqXHR.responseText);
-            if (jqXHR.status === 403 || jqXHR.status === 0){
-                showPopUpError("<h5>Неправильный формат</h5>" +
-                    "<p>Пожалуйста, выберите правильный формат фото для аватара: <i>jpg, png</i>" +
-                    "<br>Размер файла не должен превышать 5МБ!</p>"
-
-                );
-            }
-            console.log(jqXHR.status);
-            console.log(textStatus);
-            console.log(errorThrown);
-            $("#save-avatar").prop("disabled", false);
-            $("#suc").prop("disabled", false);
-
-        }
-    });
-}
 
 function requestSaveAvatar() {
 

@@ -58,42 +58,7 @@ $("#closeRecording").click(function () {
 
 
 
-/*==================================================================
-    [ save changes discount (AJAX)]*/
 
-
-$(".save").click(function (e) {
-    e.preventDefault();
-    let nameDiscount = $(this).siblings("ol").children("li").children("p");
-    let idDiscount = $(this).siblings(".idDiscount");
-    let pricesDiscount = nameDiscount.siblings("ol").children("li").children("p").children(".prices-duration");
-    let pricesPrices = nameDiscount.siblings("ol").children("li").children("p").children(".prices-price");
-    let pricesId = nameDiscount.siblings("ol").children("li").children(".idPrice");
-console.log("ID ", pricesId);
-
-    let dataMapFiled = new Map();
-
-    dataMapFiled.set("discountName", nameDiscount.text().replace(/\s+/g, ' '));
-    dataMapFiled.set("discountId", parseInt(idDiscount.val()));
-    let discountPrices = [];
-    let discountDurations = [];
-    let discountPricesId = [];
-    for (let i = 0; i < pricesId.length; i++){
-        discountDurations.push(pricesDiscount.eq(i).text().trim());
-        discountPrices.push(parseInt(pricesPrices.eq(i).text().trim()));
-        discountPricesId.push(parseInt(pricesId.eq(i).val()));
-    }
-    dataMapFiled.set("pricesPrice", discountPrices);
-    dataMapFiled.set("pricesDuration", discountDurations);
-    dataMapFiled.set("pricesId", discountPricesId);
-
-    dataMapFiled.set("_csrf", $("#csrfUserList").attr("content"));
-    // console.log(dataMapFiled);
-    requestSaveDiscount(dataMapFiled)
-
-
-})
-/*==================================================================*/
 
 
 
@@ -146,12 +111,7 @@ $(".rounded p").click(function () {
     [ Show & Hidden a discount list edit ]*/
 
 
-$(".slideToggle").click(function () {
-    let nestedList = $(this).siblings(
-        ".rounded");
-    nestedList.slideToggle();
 
-})
 /*==================================================================*/
 
 
@@ -393,6 +353,10 @@ $(document).ready(function() {
         navigation: true
     });
 });
+
+$(".changeAvatar").click(function () {
+    idDiscount = $(this).siblings(".idDiscount").val()
+})
 
 /*==================================================================
     [ Focus input ]*/

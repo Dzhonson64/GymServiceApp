@@ -34,6 +34,7 @@
 <script src="/scripts/jquery-3.2.1.min.js"></script>
 <script src="/scripts/script.js"></script>
 <script src="/scripts/ajax.js"></script>
+<script src="/scripts/editDiscount.js"></script>
 
 </body>
 </html>

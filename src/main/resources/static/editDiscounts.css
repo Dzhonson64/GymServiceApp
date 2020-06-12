@@ -3,7 +3,31 @@
 }
 
 .discounts ol li{
+    margin-top: 30px;
     position: relative;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #fff;
+}
+.discounts .slideToggle {
+    color: #fff;
+    margin: 5px 0 8px 0px;
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.discounts .rotated {
+
+    -webkit-transform: rotate(180deg);  /* Chrome, Safari 3.1+ */
+    -moz-transform: rotate(180deg);  /* Firefox 3.5-15 */
+    -ms-transform: rotate(180deg);  /* IE 9 */
+    -o-transform: rotate(180deg);  /* Opera 10.50-12.00 */
+    transform: rotate(180deg);  /* Firefox 16+, IE 10+, Opera 12.10+ */
+}
+
+.discounts h1 {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
 }
 
 .discounts ol li i {
@@ -15,21 +39,81 @@
     cursor: pointer;
 }
 
+.discounts .add {
+    font-size: 45px;
+    cursor: pointer;
+}
+
+.discounts .addPrice {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.discounts .deletePrice{
+    color: #fff;
+    cursor: pointer;
+}
+
+.discounts ol select {
+    width: 100%;
+    padding: 5px 10px;
+    background: #DAD2CA;
+    color: #444;
+    cursor: pointer;
+}
+
+.discounts .closeBtn {
+    color:#fff;
+    position: absolute;
+    right: 0;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.discounts ol label {
+    width: 100%;
+    color: #fff;
+    font-size: 13px;
+    margin: 15px 0 5px 0;
+    font-weight: 300;
+}
+
 .discounts .roundedBlock {
     background-color: #150d08;
     border-radius: 10px;
     padding: 10px 15px;
 }
 
+.discounts .nameDiscount {
+    margin-bottom: 10px;
+}
+
 .discounts input {
     display: block;
     padding: .4em .4em .4em 2em;
-    margin: .5em 0;
     background: #DAD2CA;
     color: #444;
     text-decoration: none;
     border-radius: .3em;
     transition: .3s ease-out;
+    width: 100%;
+    margin: 0;
+}
+
+.discounts textarea {
+    width: 100%;
+    background: #DAD2CA;
+    color: #444;
+}
+
+.discounts ol.rounded {
+    margin-top: 30px;
+}
+
+.discounts .pricesBlock {
+
 }
 
 
@@ -38,6 +122,7 @@
 }
 
 .discounts .rounded {
+    position: relative;
     counter-reset: li;
     list-style: none;
     font: 18px "Trebuchet MS", "Lucida Sans";
@@ -55,23 +140,9 @@
     transition: .3s ease-out;
 }
 .discounts .rounded p:hover {background: #E9E4E0;}
-.discounts .rounded li:before {
-    content: counter(li);
-    counter-increment: li;
-    position: absolute;
-    left: -1.3em;
-    top: 63%;
-    margin-top: -1.3em;
-    background: #8FD4C1;
-    height: 2em;
-    width: 2em;
-    z-index: 1;
-    line-height: 2em;
-    border: .3em solid white;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 2em;
-    transition: all .3s ease-out;
+
+.discounts .roundedBlock h5 {
+    color: #fff;
 }
 
 
