@@ -1,5 +1,7 @@
 package org.example.Gym2.controller;
 
+import org.example.Gym2.domain.Discount;
+import org.example.Gym2.domain.Pricies;
 import org.example.Gym2.domain.Role;
 import org.example.Gym2.domain.User;
 import org.example.Gym2.service.UserService;
@@ -17,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.function.EntityResponse;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 
@@ -57,11 +61,15 @@ public class UserController {
 
     @GetMapping("profile")
     public String getProfile(Model model, @AuthenticationPrincipal User user){
-        System.out.println(user);
-        model.addAttribute("username", user.getUsername());
-        model.addAttribute("password", user.getPassword());
-        model.addAttribute("filename", user.getFilename());
+        User userNew= userService.getUserId(user);
+        System.out.println(ChronoUnit.DAYS.between( user.getLocalDateSelectedDiscount(), LocalDate.now() ));
+        model.addAttribute("username", userNew.getUsername());
+        model.addAttribute("remainingTime", ChronoUnit.DAYS.between(userNew.getLocalDateSelectedDiscount(), LocalDate.now()));
+        model.addAttribute("password", userNew.getPassword());
+        model.addAttribute("filename", userNew.getFilename());
+        model.addAttribute("selectedDiscount", userNew.getSelectedDiscount());
 
+        System.out.println(userNew);
         return "profile";
     }
 
@@ -101,6 +109,16 @@ public class UserController {
     public ResponseEntity<String> deleteUserFromList(@PathVariable User user){
         return userService.deleteUserFromList(user.getId());
     }
+
+
+    @PostMapping("/bookDiscount")
+    @ResponseBody
+    public ResponseEntity<String> bookDiscount(@AuthenticationPrincipal User user, @RequestParam("idPrice")Pricies pricies, @RequestParam("idDiscount") Discount discount){
+        System.out.println("T");
+        return userService.bookDiscount(user, discount, pricies);
+    }
+
+
 
 
 }

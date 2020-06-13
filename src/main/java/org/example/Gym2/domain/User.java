@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Set;
 
@@ -18,6 +19,40 @@ public class User implements UserDetails {
     private boolean active;
     private String filename;
     private String discount;
+    private LocalDate localDateSelectedDiscount;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "selectedDicsount_id", referencedColumnName = "id")
+    private Discount selectedDiscount;
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
+
+    public LocalDate getLocalDateSelectedDiscount() {
+        return localDateSelectedDiscount;
+    }
+
+    public void setLocalDateSelectedDiscount(LocalDate localDateSelectedDiscount) {
+        this.localDateSelectedDiscount = localDateSelectedDiscount;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public Discount getSelectedDiscount() {
+        return selectedDiscount;
+    }
+
+    public void setSelectedDiscount(Discount selectedDiscount) {
+        this.selectedDiscount = selectedDiscount;
+    }
 
     public String getFilename() {
         return filename;
@@ -26,11 +61,6 @@ public class User implements UserDetails {
     public void setFilename(String filename) {
         this.filename = filename;
     }
-
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
 
     public Long getId() {
         return id;

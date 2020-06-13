@@ -32,12 +32,14 @@
                             <#if userActive??>
                             <img src="/uploads/profile/${userActive.filename}" alt="" id="miniAvatarUserMenu">
                             <span class="userNameMenu" id="userNameMenu">${name}</span>
+                            <input type="hidden" value="${userActive.id}"  id="idUser">
 
 
 
                             <#else>
                             <img src="/uploads/profile/account_user.png" alt="" >
                             <span class="userNameMenu" >The Guest</span>
+                            <input type="hidden" value="-1" id="idUser">
                         </#if>
                     </div>
 

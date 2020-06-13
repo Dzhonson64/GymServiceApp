@@ -50,6 +50,7 @@ public class DiscountService {
             discount.setName(name);
             discount.setDescription(descriptionDiscount);
 
+
             for (int i = 0; i < pricesId.length; i++){
                 Optional<Pricies> priciesOptional = pricesRepo.findById(pricesId[i]);
                 priciesOptional.get().setPrice(numPrices[i]);
@@ -57,7 +58,7 @@ public class DiscountService {
                 priciesOptional.get().setCountDuration(countPeriodPrices[i]);
                 pricesRepo.save(priciesOptional.get());
             }
-
+            System.out.println(discount.getPricies());
             discountRepo.save(discount);
             return new ResponseEntity<>(HttpStatus.OK);
         }

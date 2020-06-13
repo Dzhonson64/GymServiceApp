@@ -51,6 +51,44 @@
                 </div>
 
             </div>
+            <div class="col-lg-4 align-items-stretch mt-5">
+                <div class="discount content">
+                    <h5>Абонемент</h5>
+                    <h4 class="discountName">${selectedDiscount.name}</h4>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="priceBlock">
+                                <span>Цена</span>
+                                <p>${selectedDiscount.selectedPrice.price}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="countDurationBlock">
+                                <span>Количество раз</span>
+                                <p>${selectedDiscount.selectedPrice.countDuration} ${selectedDiscount.selectedPrice.duration}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="remainingTime">
+                                <span>Осталось раз</span>
+                                <p>${remainingTime}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="discountDescriptionBlock">
+                            <span>Описание</span>
+                            <p>${selectedDiscount.description}</p>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
         </div>
         <div id="openModal" class="modal-from closeModal">
             <div class="modal-dialog-from">

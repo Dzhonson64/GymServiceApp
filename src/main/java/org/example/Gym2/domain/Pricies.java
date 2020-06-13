@@ -1,5 +1,6 @@
 package org.example.Gym2.domain;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
@@ -16,6 +17,19 @@ public class Pricies {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "discount_id")
     private Discount discount;
+
+    @OneToOne(mappedBy = "selectedPrice", fetch = FetchType.EAGER)
+    private Discount discountInto;
+
+
+
+    public Discount getDiscountInto() {
+        return discountInto;
+    }
+
+    public void setDiscountInto(Discount discountInto) {
+        this.discountInto = discountInto;
+    }
 
     public Integer getCountDuration() {
         return countDuration;
@@ -56,4 +70,5 @@ public class Pricies {
     public void setPrice(Integer price) {
         this.price = price;
     }
+
 }

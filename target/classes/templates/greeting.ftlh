@@ -3,6 +3,7 @@
 
 
 <@c.page>
+<meta name="_csrf" content="${_csrf.token}" id="csrfUserList">
 <link rel="stylesheet" type="text/css" href="/static/jquery.fullPage.css">
 <@p.popUpSuccessful />
 <#include "parts/recording.ftlh">
@@ -56,8 +57,8 @@
                                             <#list discount.pricies as price>
                                             <div class="inputGroup">
                                                 <input id="radio${count}" name="radio" type="radio"/>
-                                                <label for="radio${count}">${price.countDuration} ${price.duration} - ${price.price}</label>
-                                                <input type="hidden" value="${price.id}">
+                                                <label for="radio${count}">${price.countDuration} ${price.duration} - ${price.price} рублей</label>
+                                                <input type="hidden" value="${price.id}" class="idPrice">
                                             </div>
                                             <#assign count = count + 1>
                                         </#list>
@@ -70,7 +71,7 @@
                                             Программы направлены на всестороннее развитие детей всех возрастов. Занятия проводятся в студиях групповых программ, в зоне подогреваемого песка и в бассейне
                                         </p>
                                     </div>
-                                    <input type="hidden" name="id" value="" class="idRecording" />
+                                    <input type="hidden" name="id" value="${discount.id}" class="idDiscount" />
                                     <button class="btn draw-border buy">Забронировать</button>
                                 </div>
                             </div>
