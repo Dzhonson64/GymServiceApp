@@ -134,6 +134,13 @@ $(".deleteUserFromList").on("click", function (e) {
 /*==================================================================*/
 
 
+$(".profile .unsubscribeDiscount").on("click", function () {
+    let idDiscountPrice = parseInt($(this).siblings(".idDiscountPrice").val());
+    let noneDiscountBLock = $(this).closest(".discountBlock").siblings(".falseIdDiscountBlock");
+    let DiscountBLock = $(this).closest(".discountBlock")
+    unsubscribeDiscount(idDiscountPrice, DiscountBLock, noneDiscountBLock)
+})
+
 
 
 /*==================================================================

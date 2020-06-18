@@ -6,6 +6,7 @@
 <meta name="_csrf" content="${_csrf.token}" id="csrfUserList">
 <link rel="stylesheet" type="text/css" href="/static/jquery.fullPage.css">
 <@p.popUpSuccessful />
+<@p.popUpError />
 <#include "parts/recording.ftlh">
 <div id="fullpage" class="greeting">
     <div class="section main-img" data-anchor="block1">
@@ -20,7 +21,7 @@
                             <div class="wrap-login-btn">
                                 <div class="login-form-bgbtn"></div>
                                 <button class="login-form-btn" id="sendRecording">
-                                    Записаться
+                                    Записаться <br> на бесплатное <br> пробное занятие
                                 </button>
                             </div>
                         </div>
@@ -54,7 +55,7 @@
 
                                         <p class="card__name">${discount.name}</p>
                                         <div class="card__price">
-                                            <#list discount.pricies as price>
+                                            <#list priceService.getPrices(discount) as price>
                                             <div class="inputGroup">
                                                 <input id="radio${count}" name="radio" type="radio"/>
                                                 <label for="radio${count}">${price.countDuration} ${price.duration} - ${price.price} рублей</label>

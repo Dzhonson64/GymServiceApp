@@ -1,9 +1,6 @@
 package org.example.Gym2.service;
 
-import org.example.Gym2.domain.Discount;
-import org.example.Gym2.domain.Pricies;
-import org.example.Gym2.domain.Role;
-import org.example.Gym2.domain.User;
+import org.example.Gym2.domain.*;
 import org.example.Gym2.repos.DiscountRepo;
 import org.example.Gym2.repos.PricesRepo;
 import org.example.Gym2.repos.UserRepo;
@@ -36,15 +33,23 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PricesRepo pricesRepo;
 
+
+
     @Value("${upload.path}")
     private String uploadPath;
 
     private List<String> extensionsAvatar = Arrays.asList("jpg", "png");
 
-
+    public void save(User user){
+        userRepo.save(user);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepo.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
         return userRepo.findByUsername(username);
     }
 
@@ -140,14 +145,19 @@ public class UserService implements UserDetailsService {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    public ResponseEntity<String> bookDiscount(User user, Discount discount, Pricies pricies){
-        discount.setSelectedPrice(pricies);
-        pricies.setDiscountInto(discount);
-        user.setSelectedDiscount(discount);
-        user.setLocalDateSelectedDiscount(LocalDate.now());
-        discountRepo.save(discount);
-        pricesRepo.save(pricies);
+    public void addDiscountPrice(User user, Discount_AllPrices discount_price){
+//        if (user.getDiscount_users() != null){
+//            discount_allPrices.remove(user, discount_price);
+//        }
+        user.setDiscount_users(discount_price);
+        userRepo.save(user);
+    }
+
+    public ResponseEntity<String> unsubscribeDiscount(User user, Discount_AllPrices discount_allPrices){
+        user.setDiscount_users(null);
         userRepo.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 }

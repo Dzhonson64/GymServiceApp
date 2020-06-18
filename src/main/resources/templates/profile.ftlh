@@ -54,86 +54,99 @@
             <div class="col-lg-4 align-items-stretch mt-5">
                 <div class="discount content">
                     <h5>Абонемент</h5>
-                    <h4 class="discountName">${selectedDiscount.name}</h4>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="priceBlock">
-                                <span>Цена</span>
-                                <p>${selectedDiscount.selectedPrice.price}</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="countDurationBlock">
-                                <span>Количество раз</span>
-                                <p>${selectedDiscount.selectedPrice.countDuration} ${selectedDiscount.selectedPrice.duration}</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="remainingTime">
-                                <span>Осталось раз</span>
-                                <p>${remainingTime}</p>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="discountDescriptionBlock">
-                            <span>Описание</span>
-                            <p>${selectedDiscount.description}</p>
-                        </div>
-                    </div>
-
-
-
-
-
-                </div>
-            </div>
-        </div>
-        <div id="openModal" class="modal-from closeModal">
-            <div class="modal-dialog-from">
-                <div class="modal-content-from">
-                    <div class="container-fluid">
+                    <#if idDiscount??>
+                    <div class="discountBlock">
+                        <h4 class="discountName">${selectedDiscount.name}</h4>
                         <div class="row">
-                            <div class="col-lg-4">
-                                <div class="img">
-                                    <img src="/img/tranferToServer.svg" alt="" class="title-img" >
+                            <div class="col-lg-6">
+                                <div class="priceBlock">
+                                    <span>Цена</span>
+                                    <p>${selectedPrice.price}</p>
                                 </div>
-
                             </div>
-                            <div class="col-lg-8">
-                                <div class="modal-header-form">
-                                    <h3 class="modal-title">Загрузите файл<i class="fa fa-cloud-download pl-2" aria-hidden="true"></i></h3>
-                                    <a title="Close" class="close" id="closeModal">×</a>
+                            <div class="col-lg-6">
+                                <div class="countDurationBlock">
+                                    <span>Количество раз</span>
+                                    <p>${selectedPrice.countDuration} ${selectedPrice.duration}</p>
                                 </div>
-                                <div class="modal-body">
-                                    <form method="post" enctype="multipart/form-data" class="change-avatar-form" id="change-avatar-form">
-
-                                        <div class="field__wrapper">
-
-                                            <input name="file" type="file" name="file" id="field__file-2" class="field field__file">
-
-                                            <label class="field__file-wrapper" for="field__file-2">
-                                                <div class="field__file-fake">Файл не выбран</div>
-                                                <div class="field__file-button">Выбрать</div>
-                                            </label>
-
-                                        </div>
-                                        <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                                        <button type="submit" class="saver" id="save-avatar">Save</button>
-                                        <span class="message" id="suc">${inform?ifExists}</span>
-                                    </form>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="remainingTime">
+                                    <span>Осталось раз</span>
+                                    <p>${remainingTime}</p>
                                 </div>
+
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="discountDescriptionBlock">
+                                <span>Описание</span>
+                                <p>${selectedDiscount.description}</p>
+                            </div>
+                        </div>
+                        <input type="hidden" value="${idDiscount.id}" class="idDiscountPrice">
+                        <div class="btn draw-border unsubscribeDiscount">
+                            <a class="change-img">Отписаться</a>
+                        </div>
+                    </div>
+                    <div class="row falseIdDiscountBlock dNone">
+                        <p class="falseIdDiscount">Абонемент не куплен</p>
+                    </div>
+                    <#else>
+
+                    <div class="row">
+                        <p class="falseIdDiscount">Абонемент не куплен</p>
                     </div>
 
 
-                </div>
+                </#if>
             </div>
         </div>
-
     </div>
+    <div id="openModal" class="modal-from closeModal">
+        <div class="modal-dialog-from">
+            <div class="modal-content-from">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="img">
+                                <img src="/img/tranferToServer.svg" alt="" class="title-img" >
+                            </div>
+
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="modal-header-form">
+                                <h3 class="modal-title">Загрузите файл<i class="fa fa-cloud-download pl-2" aria-hidden="true"></i></h3>
+                                <a title="Close" class="close" id="closeModal">×</a>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" enctype="multipart/form-data" class="change-avatar-form" id="change-avatar-form">
+
+                                    <div class="field__wrapper">
+
+                                        <input name="file" type="file" name="file" id="field__file-2" class="field field__file">
+
+                                        <label class="field__file-wrapper" for="field__file-2">
+                                            <div class="field__file-fake">Файл не выбран</div>
+                                            <div class="field__file-button">Выбрать</div>
+                                        </label>
+
+                                    </div>
+                                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                    <button type="submit" class="saver" id="save-avatar">Save</button>
+                                    <span class="message" id="suc">${inform?ifExists}</span>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
 
 </div>
 

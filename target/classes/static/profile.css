@@ -7,13 +7,24 @@
     margin: 20px auto 0;
     display: block;
 }
+.profile {
+    padding-bottom: 50px;
+}
 
-
-
+.profile .falseIdDiscount {
+    width: 100%;
+    font: 22px "Trebuchet MS", "Lucida Sans";
+    text-align: center;
+    color: #fea700;
+}
 
 .profile .settings p{
     text-align: center;
     margin-bottom: 0;
+}
+
+.profile .falseIdDiscountBlock.dNone{
+    display: none;
 }
 
 .profile .settings .userName {
@@ -142,6 +153,7 @@
 }
 
 
+
 .profile .personal-data-content input{
     outline: none;
     width: 100%;
@@ -161,6 +173,50 @@
 
 .profile .personal-data-content label{
     font-weight: 600;
+}
+
+.profile .discount .discountName{
+    color: #fea700;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile .discount .priceBlock span,
+.profile .discount .countDurationBlock span,
+.profile .discount .remainingTime span{
+    width: 100%;
+    color: #fff;
+    margin: 15px 0 5px 0;
+    font-weight: 300;
+    font: 13px "Trebuchet MS", "Lucida Sans";
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+.profile .discount .priceBlock span,
+.profile .discount .countDurationBlock span,
+.profile .discount .remainingTime span,
+.profile .discount .discountDescriptionBlock span{
+    width: 100%;
+    color: #fff;
+    margin: 15px 0 5px 0;
+    font-weight: 300;
+    font: 13px "Trebuchet MS", "Lucida Sans";
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+.profile .discount .priceBlock p,
+.profile .discount .countDurationBlock p,
+.profile .discount .remainingTime p{
+    width: 100%;
+    color: #fff;
+    font: 22px "Trebuchet MS", "Lucida Sans";
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+.profile .discount .discountDescriptionBlock p{
+    font-weight: 300;
+    font: 19px "Trebuchet MS", "Lucida Sans";
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
 }
 
 

@@ -369,3 +369,54 @@ function deleteUserFromList(dataForm) {
         }
     });
 }
+
+function unsubscribeDiscount(idDiscountPrice, DiscountBLock, noneDiscountBLock) {
+
+    let csrfToken = $("#csrfUserList").attr("content");
+
+    let data = new FormData();
+
+    data.append("idDiscountPrice", idDiscountPrice);
+    data.append("_csrf", csrfToken);
+
+    $.ajax({
+        type: "DELETE",
+        url: "/user/unsubscribeDiscount",
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        data: data,
+        // complete: function(xmlHttp) {
+        //     // xmlHttp is a XMLHttpRquest object
+        //     alert(xmlHttp.status);
+        // },
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+            if (textStatus === "success"){
+                showPopUpSuccessful();
+            }
+            DiscountBLock.remove();
+            console.log(noneDiscountBLock);
+            noneDiscountBLock.removeClass("dNone");
+            $("#saveEditUser").prop("disabled", false);
+
+            $("#resultResponsePopUp").text("Вы успешно отписались от абонемента!");
+            //$('#avatar-img')[0].reset();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            // $("#result").html(jqXHR.responseText);
+            showPopUpError("<h5>УПС!!!</h5>" +
+                "<p>Произошла неожиданная ошибка." +
+                "<br>Мы уже ведём работу по её устанению! Извнините за неудобства.</p>"
+
+            );
+
+            console.log("ERROR : ", jqXHR.responseText);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
+}

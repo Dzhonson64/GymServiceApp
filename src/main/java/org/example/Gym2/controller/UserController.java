@@ -1,9 +1,7 @@
 package org.example.Gym2.controller;
 
-import org.example.Gym2.domain.Discount;
-import org.example.Gym2.domain.Pricies;
-import org.example.Gym2.domain.Role;
-import org.example.Gym2.domain.User;
+import org.example.Gym2.domain.*;
+import org.example.Gym2.service.Discount_UserService;
 import org.example.Gym2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +27,9 @@ import java.util.Map;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    Discount_UserService discount_userService;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
@@ -61,15 +62,23 @@ public class UserController {
 
     @GetMapping("profile")
     public String getProfile(Model model, @AuthenticationPrincipal User user){
-        User userNew= userService.getUserId(user);
-        System.out.println(ChronoUnit.DAYS.between( user.getLocalDateSelectedDiscount(), LocalDate.now() ));
+           User userNew = userService.getUserId(user);
+//        discount_userService.getUser();
+        //System.out.println(ChronoUnit.DAYS.between( user.getLocalDateSelectedDiscount(), LocalDate.now() ));
         model.addAttribute("username", userNew.getUsername());
-        model.addAttribute("remainingTime", ChronoUnit.DAYS.between(userNew.getLocalDateSelectedDiscount(), LocalDate.now()));
-        model.addAttribute("password", userNew.getPassword());
+        model.addAttribute("remainingTime", 10/*ChronoUnit.DAYS.between(discount_userService.get(), LocalDate.now())*/);
+         model.addAttribute("password", userNew.getPassword());
         model.addAttribute("filename", userNew.getFilename());
-        model.addAttribute("selectedDiscount", userNew.getSelectedDiscount());
+        model.addAttribute("idDiscount", userNew.getDiscount_users());
 
-        System.out.println(userNew);
+        if (userNew.getDiscount_users() != null){
+            model.addAttribute("selectedDiscount", userNew.getDiscount_users().getDiscount_id_Discount_AllPrices());
+            model.addAttribute("selectedPrice", userNew.getDiscount_users().getPrice_id_Discount_AllPrices());
+        }
+
+
+
+
         return "profile";
     }
 
@@ -110,13 +119,20 @@ public class UserController {
         return userService.deleteUserFromList(user.getId());
     }
 
-
     @PostMapping("/bookDiscount")
     @ResponseBody
-    public ResponseEntity<String> bookDiscount(@AuthenticationPrincipal User user, @RequestParam("idPrice")Pricies pricies, @RequestParam("idDiscount") Discount discount){
-        System.out.println("T");
-        return userService.bookDiscount(user, discount, pricies);
+    public ResponseEntity<String> bookDiscount(@AuthenticationPrincipal User user, @RequestParam("idPrice") Pricies pricies, @RequestParam("idDiscount") Discount discount){
+        return discount_userService.bookDiscount(user, discount, pricies);
     }
+
+    @DeleteMapping("/unsubscribeDiscount")
+    @ResponseBody
+    public ResponseEntity<String> unsubscribeDiscount(@AuthenticationPrincipal User user, @RequestParam("idDiscountPrice") Discount_AllPrices discount_allPrices){
+        return userService.unsubscribeDiscount(user,discount_allPrices);
+    }
+
+
+
 
 
 

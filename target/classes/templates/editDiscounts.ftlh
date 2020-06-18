@@ -18,11 +18,11 @@
                         <input type="text" value="${discount.name}" class="nameDiscount">
                         <ol class="rounded pricesBlock dNone ">
                             <h5>Цены</h5>
-                            <#list discount.pricies as price>
+                            <#list priceService.getPrices(discount) as price>
                             <li class="d-flex justify-content-end align-items-end flex-column">
                                 <i class="fa fa-times-circle deletePrice" aria-hidden="true"></i>
                                 <label>Количество периодов</label>
-                                <input type="number" value="${price.countDuration}" class="countPeriod"/>
+                                <input type="number" value="${price.countDuration?c}" class="countPeriod"/>
                                 <label>Тип периода</label>
                                 <select class="typePeriod" data-placeholder="">
                                     <option value="${price.duration}" hidden>${price.duration}</option>
@@ -32,7 +32,7 @@
                                     <option value="Год">Год</option>
                                 </select>
                                 <label>Цена</label>
-                                <input type="number" class="priceNum" value="${price.price}"/>
+                                <input type="number" class="priceNum" value="${price.price?c}"/>
                                 <input type="text" hidden value="${price.id?c}" class="idPrice">
                             </li>
                         </#list>

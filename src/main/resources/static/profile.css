@@ -7,13 +7,24 @@
     margin: 20px auto 0;
     display: block;
 }
+.profile {
+    padding-bottom: 50px;
+}
 
-
-
+.profile .falseIdDiscount {
+    width: 100%;
+    font: 22px "Trebuchet MS", "Lucida Sans";
+    text-align: center;
+    color: #fea700;
+}
 
 .profile .settings p{
     text-align: center;
     margin-bottom: 0;
+}
+
+.profile .falseIdDiscountBlock.dNone{
+    display: none;
 }
 
 .profile .settings .userName {

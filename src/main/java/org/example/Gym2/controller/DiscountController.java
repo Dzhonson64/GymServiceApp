@@ -5,6 +5,7 @@ import org.example.Gym2.domain.Pricies;
 import org.example.Gym2.domain.User;
 import org.example.Gym2.repos.DiscountRepo;
 import org.example.Gym2.service.DiscountService;
+import org.example.Gym2.service.Discount_allPricesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +16,25 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/editDiscounts")
 public class DiscountController {
     @Autowired
     DiscountService discountService;
+    @Autowired
+    Discount_allPricesService discount_allPricesService;
+
 
     @GetMapping
-    private String getEditDiscont(Model model){
-        model.addAttribute("discounts", discountService.findAll());
+    private String getEditDiscount(Model model){
+        for (Discount d : discount_allPricesService.getDiscounts()){
+            Set<Pricies> s2 = discount_allPricesService.getPrices(d);
+            System.out.println();
+        }
+        model.addAttribute("discounts", discount_allPricesService.getDiscounts());
+        model.addAttribute("priceService", discount_allPricesService);
         return "editDiscounts";
     }
     @PostMapping("change")
@@ -60,7 +66,7 @@ public class DiscountController {
     }
 
     @DeleteMapping("deletePrice")
-    private ResponseEntity<Long> addPrice(@RequestParam("idPrice") Pricies price){
+    private ResponseEntity<Long> deletePrice(@RequestParam("idPrice") Pricies price){
         return discountService.deletePrice(price);
     }
     @PostMapping("changeBgImgDiscount")

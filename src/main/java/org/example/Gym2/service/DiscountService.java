@@ -1,9 +1,6 @@
 package org.example.Gym2.service;
 
-import org.example.Gym2.domain.Discount;
-import org.example.Gym2.domain.Pricies;
-import org.example.Gym2.domain.Recording;
-import org.example.Gym2.domain.User;
+import org.example.Gym2.domain.*;
 import org.example.Gym2.repos.DiscountRepo;
 import org.example.Gym2.repos.PricesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +24,18 @@ public class DiscountService {
     @Autowired
     private PricesRepo pricesRepo;
 
+    @Autowired
+    private Discount_allPricesService discount_allPricesService;
+
     @Value("${upload.pathBgDiscount}")
     private String uploadPath;
 
     private List<String> extensionsAvatar = Arrays.asList("jpg", "png");
 
-    public Set<Discount> findAll(){
+    public Set<Discount> myfindAllDiscounts(){
         return discountRepo.findAll();
     }
+
 
     public ResponseEntity<String>  updateDataDiscount(
             Discount discount,
@@ -58,7 +59,7 @@ public class DiscountService {
                 priciesOptional.get().setCountDuration(countPeriodPrices[i]);
                 pricesRepo.save(priciesOptional.get());
             }
-            System.out.println(discount.getPricies());
+            //System.out.println(discount.getPricies());
             discountRepo.save(discount);
             return new ResponseEntity<>(HttpStatus.OK);
         }
@@ -115,9 +116,10 @@ public class DiscountService {
 
     public ResponseEntity<Long> addPrice(Discount discount){
         Pricies pricies = new Pricies();
-        pricies.setDiscount(discount);
+        //pricies.setDiscount(discount);
         pricesRepo.save(pricies);
         discountRepo.save(discount);
+        discount_allPricesService.addPrice(discount, pricies);
         return new ResponseEntity<>(pricies.getId(), HttpStatus.OK);
     }
 

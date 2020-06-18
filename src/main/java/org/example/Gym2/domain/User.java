@@ -1,11 +1,15 @@
 package org.example.Gym2.domain;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -19,23 +23,32 @@ public class User implements UserDetails {
     private boolean active;
     private String filename;
     private String discount;
-    private LocalDate localDateSelectedDiscount;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "selectedDicsount_id", referencedColumnName = "id")
-    private Discount selectedDiscount;
+
+
+
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "discount_user2",
+            joinColumns = {
+                    @JoinColumn(name = "user_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "discount_price_id")})
+    private Discount_AllPrices discount_users;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    public LocalDate getLocalDateSelectedDiscount() {
-        return localDateSelectedDiscount;
+
+    public Discount_AllPrices getDiscount_users() {
+        return discount_users;
     }
 
-    public void setLocalDateSelectedDiscount(LocalDate localDateSelectedDiscount) {
-        this.localDateSelectedDiscount = localDateSelectedDiscount;
+    public void setDiscount_users(Discount_AllPrices discount_users) {
+        this.discount_users = discount_users;
     }
 
     public String getDiscount() {
@@ -46,13 +59,6 @@ public class User implements UserDetails {
         this.discount = discount;
     }
 
-    public Discount getSelectedDiscount() {
-        return selectedDiscount;
-    }
-
-    public void setSelectedDiscount(Discount selectedDiscount) {
-        this.selectedDiscount = selectedDiscount;
-    }
 
     public String getFilename() {
         return filename;

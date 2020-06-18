@@ -18,7 +18,7 @@
                         <input type="text" value="${discount.name}" class="nameDiscount">
                         <ol class="rounded pricesBlock dNone ">
                             <h5>Цены</h5>
-                            <#list discount.pricies as price>
+                            <#list priceService.getPrices(discount) as price>
                             <li class="d-flex justify-content-end align-items-end flex-column">
                                 <i class="fa fa-times-circle deletePrice" aria-hidden="true"></i>
                                 <label>Количество периодов</label>
