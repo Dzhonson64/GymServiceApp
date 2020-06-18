@@ -57,8 +57,16 @@
                                         <div class="card__price">
                                             <#list priceService.getPrices(discount) as price>
                                             <div class="inputGroup">
+                                                <#if price.id == userSelectedIdPrice>
+                                                <div class="selectedPrice">
+                                                    <input id="radio${count}" name="radio"  type="radio" disabled />
+                                                    <label for="radio${count}">${price.countDuration} ${price.duration} - ${price.price} рублей</label>
+                                                </div>
+                                                <#else>
                                                 <input id="radio${count}" name="radio" type="radio"/>
                                                 <label for="radio${count}">${price.countDuration} ${price.duration} - ${price.price} рублей</label>
+                                                </#if>
+
                                                 <input type="hidden" value="${price.id}" class="idPrice">
                                             </div>
                                             <#assign count = count + 1>
@@ -69,7 +77,7 @@
                                     <div class="description-post">
                                         <span>Описание:</span>
                                         <p class="description-text">
-                                            Программы направлены на всестороннее развитие детей всех возрастов. Занятия проводятся в студиях групповых программ, в зоне подогреваемого песка и в бассейне
+                                            ${discount.description}
                                         </p>
                                     </div>
                                     <input type="hidden" name="id" value="${discount.id}" class="idDiscount" />

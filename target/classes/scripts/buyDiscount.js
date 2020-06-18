@@ -50,7 +50,6 @@ function requestBookDiscount(idPrice, idDiscount) {
         //     alert(xmlHttp.status);
         // },
         success: function(data, textStatus, jqXHR) {
-            console.log("SUCCESS : ", data);
             if (textStatus === "success"){
                 showPopUpSuccessful();
                 $("#resultResponsePopUp").text("Абонемент успешно куплен!");

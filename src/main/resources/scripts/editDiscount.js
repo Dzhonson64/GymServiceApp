@@ -375,13 +375,13 @@ function requestSaveBgImgDiscount(idDiscount) {
         error: function(jqXHR, textStatus, errorThrown) {
 
             // $("#result").html(jqXHR.responseText);
-            if (jqXHR.status === 403 || jqXHR.status === 0){
+            /*if (jqXHR.status === 403 || jqXHR.status === 0){*/
                 showPopUpError("<h5>Неправильный формат</h5>" +
                     "<p>Пожалуйста, выберите правильный формат фото для аватара: <i>jpg, png</i>" +
                     "<br>Размер файла не должен превышать 5МБ!</p>"
 
                 );
-            }
+            /*}*/
             console.log(jqXHR.status);
             console.log(textStatus);
             console.log(errorThrown);

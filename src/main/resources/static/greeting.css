@@ -115,6 +115,7 @@
 .greeting .prices {
     margin-top: 50px;
     font-size: 20px;
+    width: 100%;
 }
 
 .greeting .prices .title img {
@@ -436,6 +437,7 @@
     padding: 0 10px;
     margin-top: 40px;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .greeting .containerCard .description-text{
@@ -486,7 +488,7 @@
     transition: color 200ms ease-in;
     overflow: hidden;
 }
-.greeting .inputGroup label:before {
+.greeting .inputGroup label:before{
     width: 10px;
     height: 10px;
     border-radius: 50%;
@@ -522,15 +524,15 @@
     -webkit-transition: all 200ms ease-in;
     transition: all 200ms ease-in;
 }
-.greeting .inputGroup input:checked ~ label {
+.greeting .inputGroup input:checked ~ label{
     color: #fff;
 }
-.greeting .inputGroup input:checked ~ label:before {
+.greeting .inputGroup input:checked ~ label:before{
     -webkit-transform: translate(-50%, -50%) scale3d(56, 56, 1);
     transform: translate(-50%, -50%) scale3d(56, 56, 1);
     opacity: 1;
 }
-.greeting .inputGroup input:checked ~ label:after {
+.greeting .inputGroup input:checked ~ label:after{
     background-color: #9c4900;
     border-color: #fff;
 }

@@ -3,11 +3,12 @@ package org.example.Gym2.domain;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "discount_allprice")
-public class Discount_AllPrices {
+public class Discount_AllPrices  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

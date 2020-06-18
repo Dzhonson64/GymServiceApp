@@ -54,11 +54,11 @@ public class UserController {
 
     @GetMapping("profile")
     public String getProfile(Model model, @AuthenticationPrincipal User user){
-           User userNew = userService.getUserId(user);
+        User userNew = userService.getUserId(user);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         model.addAttribute("username", userNew.getUsername());
-        model.addAttribute("remainingTime", ChronoUnit.DAYS.between( LocalDate.now(), user.getLocalDateSubscribeDiscount()));
-         model.addAttribute("password", userNew.getPassword());
+        model.addAttribute("remainingTime", ChronoUnit.DAYS.between( LocalDate.now(), userNew.getLocalDateSubscribeDiscount()));
+        model.addAttribute("password", userNew.getPassword());
         model.addAttribute("filename", userNew.getFilename());
         model.addAttribute("idDiscount", userNew.getDiscount_users());
         model.addAttribute("discountResultDate", userNew.getLocalDateSubscribeDiscount().format(formatter));
