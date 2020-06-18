@@ -29,8 +29,11 @@ public class IndexController {
 
     @GetMapping("/")
     private String greeting(@AuthenticationPrincipal User user, Model model){
-        if (user != null &&  user.getDiscount_users() != null){
-            User userNew = userService.getUserId(user);
+        User userNew = user;
+        if (user != null){
+            userNew = userService.getUserId(user);
+        }
+        if (userNew != null && userNew.getDiscount_users() != null){
             model.addAttribute("userSelectedIdPrice", userNew.getDiscount_users().getPrice_id_Discount_AllPrices().getId());
         }else {
             model.addAttribute("userSelectedIdPrice", -1);
