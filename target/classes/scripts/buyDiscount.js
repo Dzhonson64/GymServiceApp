@@ -52,11 +52,17 @@ function requestBookDiscount(idPrice, idDiscount) {
         success: function(data, textStatus, jqXHR) {
             console.log("SUCCESS : ", data);
             if (textStatus === "success"){
+                showPopUpSuccessful();
+                $("#resultResponsePopUp").text("Абонемент успешно куплен!");
             }
             //$('#avatar-img')[0].reset();
         },
         error: function(jqXHR, textStatus, errorThrown) {
+            showPopUpError("<h5>УПС!!!</h5>" +
+                "<p>Произошла неожиданная ошибка." +
+                "<br>Мы уже ведём работу по её устанению! Извнините за неудобства.</p>"
 
+            );
             console.log("ERROR : ", jqXHR.responseText);
 
         }

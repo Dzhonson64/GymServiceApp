@@ -149,6 +149,10 @@ public class UserService implements UserDetailsService {
 //        if (user.getDiscount_users() != null){
 //            discount_allPrices.remove(user, discount_price);
 //        }
+        user.setLocalDateSubscribeDiscount(getResultDate(
+                discount_price.getPrice_id_Discount_AllPrices().getCountDuration(),
+                discount_price.getPrice_id_Discount_AllPrices().getDuration()
+                ));
         user.setDiscount_users(discount_price);
         userRepo.save(user);
     }
@@ -159,5 +163,17 @@ public class UserService implements UserDetailsService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
+    public LocalDate getResultDate(Integer count, String typePeriod ){
+        LocalDate dateNow = LocalDate.now();
+        if (typePeriod.equals("День")){
+            return dateNow.plusDays(count);
+        }else if (typePeriod.equals("Неделя")){
+            return dateNow.plusWeeks(count);
+        }else if (typePeriod.equals("Месяц")){
+            return dateNow.plusMonths(count);
+        }else if (typePeriod.equals("Год")){
+            return dateNow.plusYears(count);
+        }
+        return dateNow;
+    }
 }

@@ -61,21 +61,26 @@
                             <div class="col-lg-6">
                                 <div class="priceBlock">
                                     <span>Цена</span>
-                                    <p>${selectedPrice.price}</p>
+                                    <p>${selectedPrice.price} руб.</p>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="countDurationBlock">
-                                    <span>Количество раз</span>
+                                    <span>Действителен Период</span>
                                     <p>${selectedPrice.countDuration} ${selectedPrice.duration}</p>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="remainingTime">
-                                    <span>Осталось раз</span>
+                                    <span>Осталось посещений</span>
                                     <p>${remainingTime}</p>
                                 </div>
-
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="remainingTime">
+                                    <span>Дата действия абонемента</span>
+                                    <p>${discountResultDate}</p>
+                                </div>
                             </div>
                         </div>
                         <div class="row">

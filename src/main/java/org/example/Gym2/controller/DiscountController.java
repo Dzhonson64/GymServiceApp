@@ -31,7 +31,6 @@ public class DiscountController {
     private String getEditDiscount(Model model){
         for (Discount d : discount_allPricesService.getDiscounts()){
             Set<Pricies> s2 = discount_allPricesService.getPrices(d);
-            System.out.println();
         }
         model.addAttribute("discounts", discount_allPricesService.getDiscounts());
         model.addAttribute("priceService", discount_allPricesService);

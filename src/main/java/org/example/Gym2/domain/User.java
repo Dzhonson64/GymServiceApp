@@ -23,6 +23,7 @@ public class User implements UserDetails {
     private boolean active;
     private String filename;
     private String discount;
+    private LocalDate localDateSubscribeDiscount;
 
 
 
@@ -42,6 +43,14 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
+
+    public LocalDate getLocalDateSubscribeDiscount() {
+        return localDateSubscribeDiscount;
+    }
+
+    public void setLocalDateSubscribeDiscount(LocalDate localDateSubscribeDiscount) {
+        this.localDateSubscribeDiscount = localDateSubscribeDiscount;
+    }
 
     public Discount_AllPrices getDiscount_users() {
         return discount_users;
