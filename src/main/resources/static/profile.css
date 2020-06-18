@@ -27,6 +27,20 @@
     display: none;
 }
 
+.profile .money .coins img{
+    display: block;
+    width: 50px;
+    margin-right: 20px;
+}
+
+.profile .money .coins{
+    font-size: 40px;
+}
+
+.profile .money .coins {
+    height: 100%;
+}
+
 .discountBlock span{
     margin-bottom: 10px;
     display: block;

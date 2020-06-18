@@ -107,49 +107,64 @@
                 </#if>
             </div>
         </div>
+        <div class="col-lg-4 align-items-stretch mt-5">
+            <div class="money content d-flex flex-column">
+                <h5>Лицевой счёт</h5>
+                <div class="coins d-flex justify-content-center align-items-center">
+                    <img src="/img/coins.png" alt="">
+                    <span>0 <i class="fa fa-rub" aria-hidden="true"></i></span>
+                </div>
+                <div class="btn draw-border">
+                    <a class="change-img">Пополнить</a>
+                </div>
+            </div>
+
+
+        </div>
     </div>
-    <div id="openModal" class="modal-from closeModal">
-        <div class="modal-dialog-from">
-            <div class="modal-content-from">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="img">
-                                <img src="/img/tranferToServer.svg" alt="" class="title-img" >
-                            </div>
-
+</div>
+<div id="openModal" class="modal-from closeModal">
+    <div class="modal-dialog-from">
+        <div class="modal-content-from">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="img">
+                            <img src="/img/tranferToServer.svg" alt="" class="title-img" >
                         </div>
-                        <div class="col-lg-8">
-                            <div class="modal-header-form">
-                                <h3 class="modal-title">Загрузите файл<i class="fa fa-cloud-download pl-2" aria-hidden="true"></i></h3>
-                                <a title="Close" class="close" id="closeModal">×</a>
-                            </div>
-                            <div class="modal-body">
-                                <form method="post" enctype="multipart/form-data" class="change-avatar-form" id="change-avatar-form">
 
-                                    <div class="field__wrapper">
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="modal-header-form">
+                            <h3 class="modal-title">Загрузите файл<i class="fa fa-cloud-download pl-2" aria-hidden="true"></i></h3>
+                            <a title="Close" class="close" id="closeModal">×</a>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" enctype="multipart/form-data" class="change-avatar-form" id="change-avatar-form">
 
-                                        <input name="file" type="file" name="file" id="field__file-2" class="field field__file">
+                                <div class="field__wrapper">
 
-                                        <label class="field__file-wrapper" for="field__file-2">
-                                            <div class="field__file-fake">Файл не выбран</div>
-                                            <div class="field__file-button">Выбрать</div>
-                                        </label>
+                                    <input name="file" type="file" name="file" id="field__file-2" class="field field__file">
 
-                                    </div>
-                                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                                    <button type="submit" class="saver" id="save-avatar">Save</button>
-                                    <span class="message" id="suc">${inform?ifExists}</span>
-                                </form>
-                            </div>
+                                    <label class="field__file-wrapper" for="field__file-2">
+                                        <div class="field__file-fake">Файл не выбран</div>
+                                        <div class="field__file-button">Выбрать</div>
+                                    </label>
+
+                                </div>
+                                <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                <button type="submit" class="saver" id="save-avatar">Save</button>
+                                <span class="message" id="suc">${inform?ifExists}</span>
+                            </form>
                         </div>
                     </div>
                 </div>
-
-
             </div>
+
+
         </div>
     </div>
+</div>
 
 </div>
 
