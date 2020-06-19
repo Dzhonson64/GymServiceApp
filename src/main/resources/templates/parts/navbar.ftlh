@@ -14,12 +14,15 @@
                 </li>
                 <#if isAdmin>
                 <li class="col-auto p-0">
-                    <a class="nav-link" href="/user/">Users</a>
+                    <a class="nav-link" href="/user/">Пользователи</a>
                 </li>
             </#if>
+            <li class="col-auto p-0">
+                <a class="nav-link" href="/activities">Занятия</a>
+            </li>
             <#if idActiveUser??>
             <li class="col-auto p-0">
-                <a class="nav-link" href="/user/profile">Profile</a>
+                <a class="nav-link" href="/user/profile">Профиль</a>
             </li>
         </#if>
 

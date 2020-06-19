@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -154,12 +155,15 @@ public class UserService implements UserDetailsService {
                 discount_price.getPrice_id_Discount_AllPrices().getCountDuration(),
                 discount_price.getPrice_id_Discount_AllPrices().getDuration()
                 ));
+        user.setCountVisit((int) ChronoUnit.DAYS.between( LocalDate.now(), user.getLocalDateSubscribeDiscount()));
         user.setDiscount_users(discount_price);
         user.setIdDiscount(UUID.randomUUID().toString());
         userRepo.save(user);
     }
 
     public ResponseEntity<String> unsubscribeDiscount(User user, Discount_AllPrices discount_allPrices){
+        user.setLocalDateSubscribeDiscount(null);
+        user.setIdDiscount(null);
         user.setDiscount_users(null);
         userRepo.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -181,5 +185,11 @@ public class UserService implements UserDetailsService {
 
     public void mySave(User user){
         userRepo.save(user);
+    }
+
+    public ResponseEntity<String> noteVisit(User user){
+        user.setCountVisit(user.getCountVisit()-1);
+        userRepo.save(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

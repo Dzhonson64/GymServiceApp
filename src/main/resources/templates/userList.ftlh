@@ -4,6 +4,7 @@
 <@c.page>
 <#include "parts/navbar.ftlh">
 <@p.popUpSuccessful />
+<@p.popUpError />
 <meta name="_csrf" content="${_csrf.token}" id="csrfUserList">
 <div class="container mt-5">
     <table class="userList">
@@ -17,6 +18,7 @@
             <td>Age</td>
             <td>Password</td>
             <td>Role</td>
+            <td></td>
             <td></td>
         </tr>
         </thead>
@@ -64,6 +66,13 @@
                         <span class="role">${role}</span><#sep> ,
                 </#if>
                 </#list>
+            </td>
+            <td>
+                <#if u.discount_users??>
+                    <div class="note-btn">
+                        Отметить посещение
+                    </div>
+                </#if>
             </td>
             <td>
 

@@ -13,10 +13,8 @@
 .userList .deleteUserFromList {
     font-size: 25px;
     color: #4466fb;
-    margin-left: 10px;
     cursor: pointer;
     position: relative;
-    top: 5px;
 
 }
 .userList thead tr {color: #ffffff; font-weight: bold; background: #6bb5fb;}
@@ -38,6 +36,17 @@
     position: relative;
     margin: 10px 0;
     color: #ffffff;
+}
+
+.userList .note-btn {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #4466fb;
+    box-shadow: 2px 2px 2px 0px #1d47ff;
+    position: relative;
+    margin: 10px 0;
+    color: #ffffff;
+    cursor: pointer;
 }
 
 

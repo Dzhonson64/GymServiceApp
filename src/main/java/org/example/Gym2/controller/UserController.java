@@ -56,7 +56,7 @@ public class UserController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         model.addAttribute("user", userNew);
         if (userNew.getLocalDateSubscribeDiscount() != null){
-            model.addAttribute("remainingTime", ChronoUnit.DAYS.between( LocalDate.now(), userNew.getLocalDateSubscribeDiscount()));
+            model.addAttribute("remainingTime", userNew.getCountVisit());
             model.addAttribute("discountResultDate", userNew.getLocalDateSubscribeDiscount().format(formatter));
         }
         model.addAttribute("filename", userNew.getFilename());
@@ -108,6 +108,13 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<String> deleteUserFromList(@PathVariable User user){
         return userService.deleteUserFromList(user.getId());
+    }
+
+    @PostMapping("noteVisit")
+    @ResponseBody
+    public String noteVisit(@RequestParam("idUser")User user){
+        userService.noteVisit(user);
+        return user.getSurname() + " " +  user.getName() + " " + user.getPatronymic();
     }
 
     @PostMapping("/bookDiscount")

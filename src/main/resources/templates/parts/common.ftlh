@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/static/recording.css">
     <link rel="stylesheet" href="/static/listRecording.css">
     <link rel="stylesheet" href="/static/editDiscounts.css">
+    <link rel="stylesheet" href="/static/activities.css">
 
     <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 
@@ -36,6 +37,7 @@
 <script src="/scripts/ajax.js"></script>
 <script src="/scripts/editDiscount.js"></script>
 <script src="/scripts/buyDiscount.js"></script>
+<script src="/scripts/noteVisit.js"></script>
 
 </body>
 </html>

@@ -29,7 +29,10 @@ public class User implements UserDetails {
     private String gender;
     private Integer age;
     private String idDiscount;
+    private Integer countVisit;
 
+    @OneToMany(mappedBy = "user")
+    Set<ClubVisits> clubVisits;
 
 
 
@@ -48,6 +51,22 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+    public Integer getCountVisit() {
+        return countVisit;
+    }
+
+    public void setCountVisit(Integer countVisit) {
+        this.countVisit = countVisit;
+    }
+
+    public Set<ClubVisits> getClubVisits() {
+        return clubVisits;
+    }
+
+    public void setClubVisits(Set<ClubVisits> clubVisits) {
+        this.clubVisits = clubVisits;
+    }
 
     public Integer getAge() {
         return age;
