@@ -22,8 +22,14 @@ public class User implements UserDetails {
     private String password;
     private boolean active;
     private String filename;
-    private String discount;
     private LocalDate localDateSubscribeDiscount;
+    private String name;
+    private String surname;
+    private String patronymic;
+    private String gender;
+    private Integer age;
+    private String idDiscount;
+
 
 
 
@@ -43,6 +49,21 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getIdDiscount() {
+        return idDiscount;
+    }
+
+    public void setIdDiscount(String idDiscount) {
+        this.idDiscount = idDiscount;
+    }
 
     public LocalDate getLocalDateSubscribeDiscount() {
         return localDateSubscribeDiscount;
@@ -60,14 +81,38 @@ public class User implements UserDetails {
         this.discount_users = discount_users;
     }
 
-    public String getDiscount() {
-        return discount;
+
+    public String getName() {
+        return name;
     }
 
-    public void setDiscount(String discount) {
-        this.discount = discount;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     public String getFilename() {
         return filename;
@@ -154,7 +199,6 @@ public class User implements UserDetails {
                 ", password='" + password + '\'' +
                 ", active=" + active +
                 ", filename='" + filename + '\'' +
-                ", discount='" + discount + '\'' +
                 ", roles=" + roles +
                 '}';
     }

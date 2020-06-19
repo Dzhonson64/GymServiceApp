@@ -41,6 +41,21 @@
     height: 100%;
 }
 
+.profile .ageField {
+    width: 100px;
+}
+
+.profile .genderField .selectGender{
+    width: 150px;
+    font-size: 16px;
+    border: 1px solid #fea700;
+    border-radius: 6px;
+    padding: 8px 5px;
+    transition: all 0.4s ease;
+    color: #fea700;
+    background: #150d08;
+}
+
 .discountBlock span{
     margin-bottom: 10px;
     display: block;

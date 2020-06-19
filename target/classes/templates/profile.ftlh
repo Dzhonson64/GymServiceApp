@@ -15,7 +15,7 @@
             <div class="col-lg-4 align-items-stretch mt-5">
                 <div class="settings content">
                     <h5>Настройки</h5>
-                    <p class="userName">${username}</p>
+                    <p class="userName">${user.username}</p>
                     <img src="/uploads/profile/${filename}" alt="user" id="avatar-img">
                     <div class="btn draw-border changeAvatar" id="change-avatar">
                         <a class="change-img">сменить аватарку</a>
@@ -28,20 +28,68 @@
                     <h5>Личный данные</h5>
                     <form method="post" id="personalData">
                         <div class="personal-data-content ">
-                            <div class="col-md-12">
-                                <div class="personal-data-block">
-                                    <label>Username</label>
-                                    <input type="text" name = "username" value="${username}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="personal-data-block">
+                                        <label>Логин</label>
+                                        <input type="text" name = "username" value="${user.username}">
+                                    </div>
                                 </div>
-                                <div class="personal-data-block">
-                                    <label>Password</label>
-                                    <div class="passwordBlock">
-                                        <input type="password" name = "password" value="${password}">
-                                        <i class="fa fa-eye-slash password-input" aria-hidden="true" ></i>
+                                <div class="col-md-6">
+                                    <div class="personal-data-block">
+                                        <label>Пароль</label>
+                                        <div class="passwordBlock">
+                                            <input type="password" name = "password" value="${user.password}">
+                                            <i class="fa fa-eye-slash password-input" aria-hidden="true" ></i>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="personal-data-block">
+                                        <label>Имя</label>
+                                        <input type="text" name = "name" value="${user.name}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="personal-data-block">
+                                        <label>Фамилия</label>
+                                        <input type="text" name = "surname" value="${user.surname}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="personal-data-block">
+                                        <label>Отчество</label>
+                                        <input type="text" name = "patronymic" value="${user.patronymic}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="personal-data-block genderField">
+                                        <label>Пол</label>
+                                        <select name="gender" class="selectGender">
+
+                                            <option hidden>${user.gender}</option>
+                                            <option>Мужской</option>
+                                            <option>Женский</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="personal-data-block ageField">
+                                        <label>Возраст</label>
+                                        <input type="number" name = "age" value="${user.age?c}">
                                     </div>
 
                                 </div>
                             </div>
+
+
 
                             <input type="hidden" name="_csrf" value="${_csrf.token}" />
                             <button type="submit" class="saver btn draw-border" id="saveData">Save</button>
@@ -57,6 +105,7 @@
                     <#if idDiscount??>
                     <div class="discountBlock">
                         <h4 class="discountName">${selectedDiscount.name}</h4>
+
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="priceBlock">
@@ -153,7 +202,7 @@
 
                                 </div>
                                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                                <button type="submit" class="saver" id="save-avatar">Save</button>
+                                <button type="submit" class="saver" id="saveAvatar">Save</button>
                                 <span class="message" id="suc">${inform?ifExists}</span>
                             </form>
                         </div>

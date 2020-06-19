@@ -20,7 +20,10 @@
 
 }
 .userList thead tr {color: #ffffff; font-weight: bold; background: #6bb5fb;}
-.userList tr td {border-right: 1px solid #dfdfdf;}
+.userList tr td {
+    border-right: 1px solid #dfdfdf;
+    padding: 0 20px
+}
 .userList tr td:last-child {border-right: 0;}
 .userList tbody tr:nth-child(1n) {background: #f6f6f6;}
 .userList tbody tr:nth-child(2n) {background: #e6e6e6;}
@@ -48,8 +51,9 @@
     font-weight: 900;
 }
 .userList .password i{
-    position: relative;
-    left: -30px;
+    position: absolute;
+    right: 25px;
+    top: 4px;
     cursor: pointer;
 }
 .userList .password input {

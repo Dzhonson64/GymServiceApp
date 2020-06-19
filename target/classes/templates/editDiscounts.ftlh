@@ -1,7 +1,9 @@
 <#import "parts/common.ftlh" as c>
+<#import "parts/popUp.ftlh" as p>
 <meta name="_csrf" content="${_csrf.token}" id="csrfUserList">
 <@c.page>
 <#include "parts/navbar.ftlh">
+<@p.popUpSuccessful />
 <div class="discounts">
     <div class="container">
         <div class="row">

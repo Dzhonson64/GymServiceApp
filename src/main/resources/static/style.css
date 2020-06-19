@@ -416,7 +416,11 @@ body{
     color: linear-gradient(left, #21d4fd, #b721ff);
 }
 
-
+.selectField {
+    width: 30px;
+    font-size: 20px;
+    cursor: pointer;
+}
 
 
 

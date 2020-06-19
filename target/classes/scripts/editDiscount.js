@@ -210,9 +210,15 @@ function requestSaveDiscount(dataMapField) {
         timeout: 1000000,
         success: function(textStatus, jqXHR) {
             console.log("SUCCESS");
+            showPopUpSuccessful();
+            $("#resultResponsePopUp").text("Абонемент успешно обновлён!");
         },
         error: function(jqXHR, textStatus, errorThrown) {
+            showPopUpError("<h5>УПС!!!</h5>" +
+                "<p>Произошла неожиданная ошибка." +
+                "<br>Мы уже ведём работу по её устанению! Извнините за неудобства.</p>"
 
+            );
             console.log(jqXHR.status);
             console.log(textStatus);
             console.log(errorThrown);

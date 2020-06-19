@@ -3,7 +3,7 @@
 
 <@c.page>
 <#include "parts/navbar.ftlh">
-<div class="container p-0">
+<div class="container-fluid p-0">
     <div class="login-block">
         <div class="wrap-logo">
             <div class="logo-form">

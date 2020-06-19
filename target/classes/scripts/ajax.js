@@ -11,10 +11,10 @@ $(document).ready(function() {
     //
     // });
 
-    $(".profile #save-avatar").click(function(event) {
+
+    $("#saveAvatar").click(function(event) {
 
         event.preventDefault();
-
         requestSaveAvatar();
 
     });
@@ -229,7 +229,6 @@ function requestSaveAvatar() {
 
     // Get form
     let form = $('#change-avatar-form')[0];
-
     let data = new FormData(form);
 
     $("#save-avatar").prop("disabled", true);

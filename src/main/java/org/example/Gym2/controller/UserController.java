@@ -45,10 +45,8 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("{user}")
-    public String save(@RequestParam String username, @RequestParam Map<String, String> form, @PathVariable User user, @AuthenticationPrincipal User u){
-                userService.saveUser(user, username, form);
-        userService.saveUser(u, username, form);
-        u = user;
+    public String save(User usr){
+        userService.mySave(usr);
         return "redirect:/user";
     }
 
@@ -56,12 +54,14 @@ public class UserController {
     public String getProfile(Model model, @AuthenticationPrincipal User user){
         User userNew = userService.getUserId(user);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        model.addAttribute("username", userNew.getUsername());
-        model.addAttribute("remainingTime", ChronoUnit.DAYS.between( LocalDate.now(), userNew.getLocalDateSubscribeDiscount()));
-        model.addAttribute("password", userNew.getPassword());
+        model.addAttribute("user", userNew);
+        if (userNew.getLocalDateSubscribeDiscount() != null){
+            model.addAttribute("remainingTime", ChronoUnit.DAYS.between( LocalDate.now(), userNew.getLocalDateSubscribeDiscount()));
+            model.addAttribute("discountResultDate", userNew.getLocalDateSubscribeDiscount().format(formatter));
+        }
         model.addAttribute("filename", userNew.getFilename());
         model.addAttribute("idDiscount", userNew.getDiscount_users());
-        model.addAttribute("discountResultDate", userNew.getLocalDateSubscribeDiscount().format(formatter));
+
 
         if (userNew.getDiscount_users() != null){
             model.addAttribute("selectedDiscount", userNew.getDiscount_users().getDiscount_id_Discount_AllPrices());
@@ -76,11 +76,10 @@ public class UserController {
 
     @PostMapping("profile")
     public String updatePersonalData(@AuthenticationPrincipal User user,
-                                @RequestParam String username,
-                                @RequestParam String password
+                                @RequestParam Map<String, String> data
                                 ) {
         try {
-            boolean result = userService.updatePersonalData(user, username, password);
+            boolean result = userService.updatePersonalData(user, data);
 
         } catch (IOException e) {
 

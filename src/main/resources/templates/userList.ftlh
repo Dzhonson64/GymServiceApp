@@ -10,7 +10,11 @@
         <thead>
         <tr>
             <td>Id</td>
-            <td>Name</td>
+            <td>Username</td>
+            <td>id активного абонемента</td>
+            <td>ФИО</td>
+            <td>Gender</td>
+            <td>Age</td>
             <td>Password</td>
             <td>Role</td>
             <td></td>
@@ -24,14 +28,31 @@
                 <span>${u.username}</span>
                 <#if idActiveUser == u.id>
                 <span class="you">(You)</span>
-                </#if>
+            </#if>
+            </td>
+            <td>
+                <#if u.idDiscount??>
+                <span>${u.idDiscount}</span>
+                <#else>
+                <span>-</span>
+            </#if>
+            </td>
+
+
+            <td>
+                <span>${u.surname} ${u.name} ${u.patronymic}</span>
+            </td>
+            <td>
+                <span>${u.gender}</span>
+            </td>
+            <td>
+                <span>${u.age}</span>
             </td>
             <td>
                 <div class="password">
                     <input type="password" value="${u.password}" disabled>
                     <i class="fa fa-eye-slash password-input" aria-hidden="true" ></i>
                 </div>
-
             </td>
 
 

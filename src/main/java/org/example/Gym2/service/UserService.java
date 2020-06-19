@@ -87,14 +87,15 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
     }
 
-    public boolean updatePersonalData(User user, String username, String password) throws IOException {
+    public boolean updatePersonalData(User user, Map<String, String> data) throws IOException {
 
-        if (password != null){
-            user.setPassword(password);
-            user.setUsername(username);
-        }else {
-            return false;
-        }
+        user.setUsername(data.get("username"));
+        user.setPassword(data.get("password"));
+        user.setName(data.get("name"));
+        user.setSurname(data.get("surname"));
+        user.setPatronymic(data.get("patronymic"));
+        user.setAge(Integer.parseInt(data.get("age")));
+        user.setGender(data.get("gender"));
 
         userRepo.save(user);
         return true;
@@ -154,6 +155,7 @@ public class UserService implements UserDetailsService {
                 discount_price.getPrice_id_Discount_AllPrices().getDuration()
                 ));
         user.setDiscount_users(discount_price);
+        user.setIdDiscount(UUID.randomUUID().toString());
         userRepo.save(user);
     }
 
@@ -175,5 +177,9 @@ public class UserService implements UserDetailsService {
             return dateNow.plusYears(count);
         }
         return dateNow;
+    }
+
+    public void mySave(User user){
+        userRepo.save(user);
     }
 }
