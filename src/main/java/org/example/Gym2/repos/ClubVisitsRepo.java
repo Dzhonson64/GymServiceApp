@@ -9,5 +9,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Set;
 
 public interface ClubVisitsRepo  extends CrudRepository<ClubVisits, Long> {
-    Page<ClubVisits> findAllBy(Pageable pageable);
+    Page<ClubVisits> findByUser(User user, Pageable pageable);
 }

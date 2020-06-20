@@ -10,7 +10,6 @@
         <div class="activities">
             <div class="row">
                 <h2 class="mt-5">Cписок занятий</h2>
-
             </div>
             <div class="row">
                 <#list page.content as clubVisit>

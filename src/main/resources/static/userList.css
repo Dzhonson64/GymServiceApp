@@ -17,6 +17,19 @@
     position: relative;
 
 }
+
+.userList .userActivities{
+    display: inline-block;
+    padding: 5px 10px;
+    background: #4466fb;
+    box-shadow: 2px 2px 2px 0px #1d47ff;
+    position: relative;
+    margin: 10px 0;
+    color: #ffffff;
+    cursor: pointer;
+    outline: navajowhite;
+    border: navajowhite;
+}
 .userList thead tr {color: #ffffff; font-weight: bold; background: #6bb5fb;}
 .userList tr td {
     border-right: 1px solid #dfdfdf;

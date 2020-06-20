@@ -4,6 +4,7 @@ import org.example.Gym2.domain.*;
 import org.example.Gym2.service.Discount_UserService;
 import org.example.Gym2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -135,6 +136,8 @@ public class UserController {
     public ResponseEntity<String> unsubscribeDiscount(@AuthenticationPrincipal User user, @RequestParam("idDiscountPrice") Discount_AllPrices discount_allPrices){
         return userService.unsubscribeDiscount(user,discount_allPrices);
     }
+
+
 
 
 

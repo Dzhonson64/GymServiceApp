@@ -6,7 +6,7 @@
 <@p.popUpSuccessful />
 <@p.popUpError />
 <meta name="_csrf" content="${_csrf.token}" id="csrfUserList">
-<div class="container mt-5">
+<div class="container-fluid mt-5">
     <table class="userList">
         <thead>
         <tr>
@@ -18,8 +18,6 @@
             <td>Age</td>
             <td>Password</td>
             <td>Role</td>
-            <td></td>
-            <td></td>
         </tr>
         </thead>
 
@@ -80,6 +78,12 @@
                 </div>
             </#if>
         </#if>
+        </td>
+        <td>
+            <form method="get" action="/UserActivities">
+                <input type="hidden" value="${u.id}" name="usr">
+                <button type="submit" class="userActivities">Посмотреть занятия</button>
+            </form>
         </td>
         <td>
 
