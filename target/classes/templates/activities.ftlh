@@ -13,19 +13,28 @@
 
             </div>
             <div class="row">
-                <#list clubVisits as clubVisit>
+                <#list page.content as clubVisit>
                 <div class="col-lg-4">
                     <div class="club-visit">
                         ${clubVisit.localDateTime} -
                         <#if clubVisit.localTimeLeft??>
                         ${clubVisit.localTimeLeft}
-                    <#else>
-                        ...
-                    </#if>
+                        <#else>
+                            ...
+                        </#if>
                     </div>
                 </div>
             </#list>
             </div>
+    <div class="row d-flex justify-content-center mt-5 mb-5">
+        <#if page.getSize() < page.getTotalElements()>
+        <a href="${url}?size=${page.getTotalElements()}">
+            <div class="btn-moreClubVisit">
+                Посмотреть всё
+            </div>
+        </a>
+    </#if>
+    </div>
         </div>
 
     </div>

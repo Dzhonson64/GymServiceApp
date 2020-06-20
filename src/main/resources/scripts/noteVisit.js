@@ -7,9 +7,8 @@ $(".userList .come").on("click", function (event) {
 
 $(".userList .left").on("click", function (event) {
     let idUser = $(this).closest("tr").find(".userId").text();
-    let comeBlock = $(this).closest("tr").find(".come");
-    console.log(comeBlock);
-    noteLeft(parseInt(idUser),  comeBlock);
+    let parent = $(this).closest("td");
+    noteLeft(parseInt(idUser), $(this), parent);
 })
 
 
@@ -52,7 +51,7 @@ function noteCome(id, comeBlock, parent) {
             $("#btnSendRecording").prop("disabled", false);
 
             showPopUpSuccessful();
-            $("#resultResponsePopUp").html("Посещение пользователя <i>" + data + "</i> было успешно отмечено!" );
+            $("#resultResponsePopUp").html("Посещение клиента <i>" + data + "</i> было успешно отмечено!" );
             //$('#avatar-img')[0].reset();
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -95,7 +94,7 @@ function noteLeft(id, leftBlock, parent) {
             $("#btnSendRecording").prop("disabled", false);
             //
             showPopUpSuccessful();
-            $("#resultResponsePopUp").html("Посещение пользователя <i>" + data + "</i> было успешно отмечено!" );
+            $("#resultResponsePopUp").html("Посещение клиента <i>" + data + "</i> было успешно отмечено!" );
             //$('#avatar-img')[0].reset();
         },
         error: function(jqXHR, textStatus, errorThrown) {
