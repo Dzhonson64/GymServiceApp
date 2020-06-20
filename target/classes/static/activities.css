@@ -6,3 +6,15 @@
     margin: 0 auto;
     text-align: center;
 }
+
+.activities .club-visit {
+    color: #fea700;
+    font-weight: 500;
+    display: block;
+    margin: 30px 0 0 0;
+    padding: 25px 20px;
+    background: #150d08;
+    box-shadow: 3px 4px 20px 0 rgba(0,0,0,0.15);
+    border-radius: 10px;
+    text-align: center;
+}

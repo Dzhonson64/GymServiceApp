@@ -1,20 +1,21 @@
 package org.example.Gym2.domain;
 
+import javafx.collections.transformation.SortedList;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "usr")
-public class User implements UserDetails {
+public class User implements UserDetails, Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -30,9 +31,10 @@ public class User implements UserDetails {
     private Integer age;
     private String idDiscount;
     private Integer countVisit;
+    private boolean isInGym = false;
 
-    @OneToMany(mappedBy = "user")
-    Set<ClubVisits> clubVisits;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    List<ClubVisits> clubVisits = new LinkedList<>();
 
 
 
@@ -60,11 +62,23 @@ public class User implements UserDetails {
         this.countVisit = countVisit;
     }
 
-    public Set<ClubVisits> getClubVisits() {
+    public List<ClubVisits> getClubVisits() {
         return clubVisits;
     }
 
-    public void setClubVisits(Set<ClubVisits> clubVisits) {
+    public boolean isInGym() {
+        return isInGym;
+    }
+
+    public void setInGym(boolean inGym) {
+        isInGym = inGym;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public void setClubVisits(List<ClubVisits> clubVisits) {
         this.clubVisits = clubVisits;
     }
 

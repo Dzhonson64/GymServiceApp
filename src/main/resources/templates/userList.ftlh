@@ -69,21 +69,28 @@
             </td>
             <td>
                 <#if u.discount_users??>
-                    <div class="note-btn">
-                        Отметить посещение
-                    </div>
-                </#if>
-            </td>
-            <td>
 
-                <a href="/user/${u.id}">
-                    <div class="edit-btn">edit
-                    </div>
-                </a>
-                <i class="fa fa-times-circle deleteUserFromList" aria-hidden="true"></i>
+                <#if u.isInGym()>
+                <div class="note-btn left">
+                    Ушёл
+                </div>
+                <#else>
+                <div class="note-btn come">
+                    Пришёл
+                </div>
+            </#if>
+        </#if>
+        </td>
+        <td>
+
+            <a href="/user/${u.id}">
+                <div class="edit-btn">edit
+                </div>
+            </a>
+            <i class="fa fa-times-circle deleteUserFromList" aria-hidden="true"></i>
 
 
-            </td>
+        </td>
 
         </tr>
     </#list>

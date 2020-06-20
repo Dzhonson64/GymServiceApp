@@ -1,6 +1,7 @@
 package org.example.Gym2.service;
 
 import org.example.Gym2.domain.*;
+import org.example.Gym2.repos.ClubVisitsRepo;
 import org.example.Gym2.repos.DiscountRepo;
 import org.example.Gym2.repos.PricesRepo;
 import org.example.Gym2.repos.UserRepo;
@@ -12,13 +13,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,6 +29,8 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private ClubVisitsRepo clubVisitsRepo;
 
     @Autowired
     private DiscountRepo discountRepo;
@@ -148,9 +152,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void addDiscountPrice(User user, Discount_AllPrices discount_price){
-//        if (user.getDiscount_users() != null){
-//            discount_allPrices.remove(user, discount_price);
-//        }
+
         user.setLocalDateSubscribeDiscount(getResultDate(
                 discount_price.getPrice_id_Discount_AllPrices().getCountDuration(),
                 discount_price.getPrice_id_Discount_AllPrices().getDuration()
@@ -187,8 +189,23 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
     }
 
-    public ResponseEntity<String> noteVisit(User user){
+    public ResponseEntity<String> noteCome(User user){
+
         user.setCountVisit(user.getCountVisit()-1);
+        user.setInGym(true);
+        ClubVisits clubVisits = new ClubVisits();
+        clubVisits.setLocalDateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm")));
+        clubVisits.setUser(user);
+        clubVisitsRepo.save(clubVisits);
+        userRepo.save(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> noteLeft(User user){
+        user.setInGym(false);
+        ClubVisits clubVisits = user.getClubVisits().get(user.getClubVisits().size()-1);
+        clubVisits.setLocalTimeLeft(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        clubVisitsRepo.save(clubVisits);
         userRepo.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -3,22 +3,25 @@ package org.example.Gym2.domain;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.Date;
 
 @Entity
 @Table(name = "clubVisits")
-public class ClubVisits {
+public class ClubVisits implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    private static final long serialVersionUID = 1L;
+
+    @ManyToOne()
     @JoinColumn(name="user_id", nullable=false)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private User user;
-    private Calendar localDateTime;
+    private String localDateTime;
+    private String localTimeLeft;
 
     public User getUser() {
         return user;
@@ -36,11 +39,19 @@ public class ClubVisits {
         this.id = id;
     }
 
-    public Calendar getLocalDateTime() {
+    public String getLocalDateTime() {
         return localDateTime;
     }
 
-    public void setLocalDateTime(Calendar localDateTime) {
+    public void setLocalDateTime(String localDateTime) {
         this.localDateTime = localDateTime;
+    }
+
+    public String getLocalTimeLeft() {
+        return localTimeLeft;
+    }
+
+    public void setLocalTimeLeft(String localTimeLeft) {
+        this.localTimeLeft = localTimeLeft;
     }
 }

@@ -29,7 +29,7 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
-    public String userList(Model model){
+    public String userList(@AuthenticationPrincipal User u, Model model){
         model.addAttribute("users", userService.findAll());
         return "userList";
     }
@@ -110,10 +110,17 @@ public class UserController {
         return userService.deleteUserFromList(user.getId());
     }
 
-    @PostMapping("noteVisit")
+    @PostMapping("noteCome")
     @ResponseBody
-    public String noteVisit(@RequestParam("idUser")User user){
-        userService.noteVisit(user);
+    public String noteCome(@RequestParam("idUser")User user){
+        userService.noteCome(user);
+        return user.getSurname() + " " +  user.getName() + " " + user.getPatronymic();
+    }
+
+    @PostMapping("noteLeft")
+    @ResponseBody
+    public String noteLeft(@RequestParam("idUser")User user){
+        userService.noteLeft(user);
         return user.getSurname() + " " +  user.getName() + " " + user.getPatronymic();
     }
 
