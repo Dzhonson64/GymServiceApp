@@ -20,7 +20,10 @@
 
             <#if idActiveUser??>
             <li class="col-auto p-0">
-                <a class="nav-link" href="/activities">Занятия</a>
+                <a class="nav-link" href="/activities">Посещения</a>
+            </li>
+            <li class="col-auto p-0">
+                <a class="nav-link" href="/schedule">Расписание</a>
             </li>
             <li class="col-auto p-0">
                 <a class="nav-link" href="/user/profile">Профиль</a>

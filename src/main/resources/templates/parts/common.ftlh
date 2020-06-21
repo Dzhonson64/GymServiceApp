@@ -8,8 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/changeCellSchedule.css">
+    <link rel="stylesheet" href="/static/schedule.css">
+    <link rel="stylesheet" href="/static/slider.css">
     <link rel="stylesheet" href="/static/style.css">
-
     <link rel="stylesheet" href="/static/greeting.css">
     <link rel="stylesheet" href="/static/profile.css">
     <link rel="stylesheet" href="/static/userList.css">
@@ -38,6 +40,9 @@
 <script src="/scripts/editDiscount.js"></script>
 <script src="/scripts/buyDiscount.js"></script>
 <script src="/scripts/noteVisit.js"></script>
+<script src="/scripts/slider.js"></script>
+<script src="/scripts/schedule.js"></script>
+<script src="/scripts/changeCellSchedule.js"></script>
 
 </body>
 </html>

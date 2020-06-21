@@ -3,6 +3,7 @@ package org.example.Gym2.domain;
 import javafx.collections.transformation.SortedList;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,7 +16,7 @@ import java.util.*;
 @Table(name = "usr")
 public class User implements UserDetails, Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -35,6 +36,10 @@ public class User implements UserDetails, Serializable {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     List<ClubVisits> clubVisits = new LinkedList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    Set<Schedule> schedules = new HashSet<>();
 
 
 
@@ -64,6 +69,14 @@ public class User implements UserDetails, Serializable {
 
     public List<ClubVisits> getClubVisits() {
         return clubVisits;
+    }
+
+    public Set<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<Schedule> schedules) {
+        this.schedules = schedules;
     }
 
     public boolean isInGym() {

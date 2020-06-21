@@ -1,0 +1,135 @@
+
+.changeCellSchedule{
+    position: fixed;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    opacity: 1;
+    -webkit-transition: opacity 200ms ease-in;
+    -moz-transition: opacity 200ms ease-in;
+    transition: opacity 200ms ease-in;
+    margin: 0;
+    padding: 0
+}
+
+.changeCellSchedule .changeCellSchedule-form {
+    width: 470px;
+    background-color: #000000;
+    position: relative;
+    border-radius: 30px;
+
+}
+
+
+.changeCellSchedule .changeCellSchedule-form .close {
+    position: absolute;
+    right: 25px;
+    top: 15px;
+    cursor: pointer;
+}
+.changeCellSchedule .changeCellSchedule-form .close {
+    color: white;
+}
+
+.changeCellSchedule .changeCellSchedule-header-form {
+    color: white;
+}
+
+.changeCellSchedule .changeCellSchedule-header-form h3 {
+    margin-left: 10px;
+}
+
+.changeCellSchedule .changeCellSchedule-content-from {
+    padding: 50px 20px;
+    position: relative;
+}
+
+.changeCellSchedule .changeCellSchedule-content-from input {
+    width: 100%;
+    padding: 5px 14px;
+}
+
+.changeCellSchedule .changeCellSchedule-content-from button{
+    width: 100%;
+    background-color: #ff3a3a;
+    font-family: "Oswald", Sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-style: solid;
+    border-width: 0px 0px 4px 0px;
+    padding: 15px 30px;
+    color: #ffffff;
+}
+
+.changeCellSchedule .from-changeCellSchedule {
+    width: 100%;
+}
+
+.changeCellSchedule .changeCellSchedule-form .changeCellSchedule-header-form{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eceeef;
+}
+.changeCellSchedule .changeCellSchedule-form .changeCellSchedule-header-form .changeCellSchedule-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+}
+.changeCellSchedule .changeCellSchedule-form .changeCellSchedule-header-form i.fa-check-square{
+    font-size: 21px;
+    color: darkgreen;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+.changeCellSchedule .changeCellSchedule-form .changeCellSchedule-header-form i.fa-window-close{
+    font-size: 21px;
+    color: darkred;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+.changeCellSchedule .changeCellSchedule-form .changeCellSchedule-body {
+    padding: 15px 20px;
+}
+
+.changeCellSchedule .changeCellSchedule-form .changeCellSchedule-body .selectGender{
+    background: transparent;
+    width: 200px;
+    padding: 5px 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    color: white;
+}
+.changeCellSchedule .changeCellSchedule-form .changeCellSchedule-body .selectGender option{
+    background: #4a4a4a;
+    color: white;
+    padding: 10px 15px;
+}
+
+.changeCellSchedule.closeRecording {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0s linear 0.3s;
+}
+
+.changeCellSchedule.activeRecording{
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+}
