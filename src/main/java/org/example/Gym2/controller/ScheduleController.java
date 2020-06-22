@@ -32,7 +32,7 @@ public class ScheduleController {
 
         List<Date> dates = scheduleService.getDaysOfWeek(1);
         model.addAttribute("dates", dates);
-        Map<String, List<Schedule>> m = scheduleService.getCorrectData(dates);
+        Map<String, List<Schedule>> m = scheduleService.getCorrectData(dates, 1);
         model.addAttribute("entry", m);
         return "schedule";
     }

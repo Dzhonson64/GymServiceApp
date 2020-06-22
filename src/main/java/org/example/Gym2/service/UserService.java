@@ -151,8 +151,8 @@ public class UserService implements UserDetailsService {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    public void addDiscountPrice(User user, Discount_AllPrices discount_price){
-
+    public void addDiscountPrice(User u, Discount_AllPrices discount_price){
+        User user = userRepo.findById(u.getId()).get();
         user.setLocalDateSubscribeDiscount(getResultDate(
                 discount_price.getPrice_id_Discount_AllPrices().getCountDuration(),
                 discount_price.getPrice_id_Discount_AllPrices().getDuration()

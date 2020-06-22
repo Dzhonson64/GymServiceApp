@@ -38,7 +38,6 @@ public class User implements UserDetails, Serializable {
     List<ClubVisits> clubVisits = new LinkedList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     Set<Schedule> schedules = new HashSet<>();
 
 

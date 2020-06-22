@@ -23,7 +23,7 @@ public class Schedule implements Serializable {
     private String type;
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private User user;

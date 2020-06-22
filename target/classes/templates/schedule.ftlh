@@ -29,7 +29,7 @@
                             <td class="data" data-date = "${value.dateStart.getTime()?string('dd-MM-yyyy')}" data-time = "${key}">
                                 <div class="content-td d-flex flex-column">
                                     <div class="tag">
-                                        Онлайн
+                                        ${value.type}
                                     </div>
                                     <div class="time">
                                         <span class="start">${value.dateStart.getTime()?string('HH:mm')}</span> - <span class="end">${value.dateEnd.getTime()?string('HH:mm')}</span>
@@ -42,6 +42,7 @@
                                     <div class="coach">${value.user.surname} ${value.user.name} ${value.user.patronymic}</div>
                                     <div class="count-empty-places-block">Cвободно: <span class="count-empty-places">${value.countEmptyPlaces}</span></div>
                                 </div>
+                                <div hidden class="idCell">${value.id}</div>
                             </td>
                             <#else>
                             <td class="data" data-date = "${value.dateStart.getTime()?string('dd-MM-yyyy')}" data-time = "${key}">

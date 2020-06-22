@@ -87,7 +87,7 @@ public class ScheduleService {
         schedule.setType(type);
         schedule.setCountEmptyPlaces(countEmptyPlaces);
         DateTimeFormatter parser = DateTimeFormatter.ofPattern("HH:mm:ss");
-        schedule.setDuration(LocalTime.parse("00:" + duration.toString() + ":00", parser));
+        schedule.setDuration(LocalTime.parse("00:" + toCorrectDuration(duration) + ":00", parser));
 
         scheduleRepo.save(schedule);
 
@@ -97,20 +97,21 @@ public class ScheduleService {
         return scheduleRepo.findAll();
     }
 
-    public Map<String, List<Schedule>> getCorrectData(List<Date> date){
+    public Map<String, List<Schedule>> getCorrectData(List<Date> date, int countWeeks){
         Set<Schedule> data = findAll();
         String[] time = {"10:00", "11:00", "12:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"};
 
         Map<String,  List<Schedule>> result = initDataSchedule(time);
-        List<Date> dates = getDaysOfWeek(1);
+        List<Date> dates = getDaysOfWeek(countWeeks);
+        clear(dates.get(0));
         DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         for (List<Schedule> list : result.values()){
-            refillingList(list, date);
+            refillingList(list, date, countWeeks*7);
         }
         for (Schedule s : data){
+            for (int i = 0; i < dates.size(); i++){
+                for (int indTime = 0; indTime < time.length; indTime++){
 
-            for (int indTime = 0; indTime < time.length; indTime++){
-                for (int i = 0; i < dates.size(); i++){
                     if (isCorrect(s, indTime, i, dates, time)){
                         List<Schedule> scheduleList = result.get(time[indTime]);
                         scheduleList.set(i, s);
@@ -133,8 +134,8 @@ public class ScheduleService {
         return result;
     }
 
-    private void refillingList(List<Schedule> list, List<Date> date){
-        for (int i = 0; i < 7; i++){
+    private void refillingList(List<Schedule> list, List<Date> date, int countDays){
+        for (int i = 0; i < countDays; i++){
             Schedule sc = new Schedule();
             Calendar calendarDate = new GregorianCalendar();
             calendarDate.setTime(date.get(i));
@@ -144,9 +145,10 @@ public class ScheduleService {
     }
 
     private boolean isCorrect(Schedule s, int indTime, int i, List<Date> dates, String[] time){
+
         DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
         if (indTime+1 < time.length){
-            if (s.getDateStart().getTime().getDay() == dates.get(i).getDay() &&
+            if (s.getDateStart().getTime().getDate() == dates.get(i).getDate() &&
                     s.getDateStart().getTime().getMonth() == dates.get(i).getMonth() &&
                     (LocalDateTime.ofInstant(s.getDateStart().toInstant(), ZoneId.systemDefault()).toLocalTime().isAfter(LocalTime.parse(time[indTime], formatterTime)) &&
                             LocalDateTime.ofInstant(s.getDateStart().toInstant(), ZoneId.systemDefault()).toLocalTime().isBefore(LocalTime.parse(time[indTime+1], formatterTime))||
@@ -155,7 +157,7 @@ public class ScheduleService {
                 return true;
             }
         }else{
-            if (s.getDateStart().getTime().getDay() == dates.get(i).getDay() &&
+            if (s.getDateStart().getTime().getDate() == dates.get(i).getDate() &&
                     s.getDateStart().getTime().getMonth() == dates.get(i).getMonth() &&
                     (LocalDateTime.ofInstant(s.getDateStart().toInstant(), ZoneId.systemDefault()).toLocalTime().isAfter(LocalTime.parse(time[indTime], formatterTime))||
                             LocalDateTime.ofInstant(s.getDateStart().toInstant(), ZoneId.systemDefault()).toLocalTime().equals(LocalTime.parse(time[indTime], formatterTime)))
@@ -165,6 +167,26 @@ public class ScheduleService {
             }
         }
         return false;
+    }
+
+    private void clear(Date startNewDate){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startNewDate);
+        System.out.println(startNewDate.getDate());
+        Set<Schedule> scheduleSet = scheduleRepo.findByDateStartLessThan(calendar);
+        for (Schedule schedule : scheduleSet){
+            if (schedule.getDateStart().getTime().getDate() < startNewDate.getDate()){
+                scheduleRepo.delete(schedule);
+            }
+
+        }
+    }
+
+    private String toCorrectDuration(int duration){
+        if (duration < 10){
+            return "0" + duration;
+        }
+        return Integer.toString(duration);
     }
 
 
