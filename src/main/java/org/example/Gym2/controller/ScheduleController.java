@@ -1,6 +1,7 @@
 package org.example.Gym2.controller;
 
 import org.example.Gym2.domain.Schedule;
+import org.example.Gym2.domain.SlideScheduleData;
 import org.example.Gym2.domain.User;
 import org.example.Gym2.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.xml.crypto.Data;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.TextStyle;
 import java.util.*;
@@ -24,16 +28,8 @@ public class ScheduleController {
     ScheduleService scheduleService;
 
     @GetMapping("schedule")
-    private String getSchedule(Model model){
-//        scheduleService.add();
-
-        Locale localeRu = new Locale("ru", "RU");
-        //System.out.println(scheduleService.findById(281).getDateEnd().getTime());
-
-        List<Date> dates = scheduleService.getDaysOfWeek(1);
-        model.addAttribute("dates", dates);
-        Map<String, List<Schedule>> m = scheduleService.getCorrectData(dates, 1);
-        model.addAttribute("entry", m);
+    private String getSchedule(Model model) throws ParseException {
+        model.addAttribute("slideScheduleData", scheduleService.getListSlideScheduleData(2));
         return "schedule";
     }
 

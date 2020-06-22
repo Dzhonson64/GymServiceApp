@@ -1,6 +1,7 @@
 package org.example.Gym2.service;
 
 import org.example.Gym2.domain.Schedule;
+import org.example.Gym2.domain.SlideScheduleData;
 import org.example.Gym2.domain.User;
 import org.example.Gym2.repos.ScheduleRepo;
 import org.example.Gym2.repos.UserRepo;
@@ -33,30 +34,27 @@ public class ScheduleService {
         return  scheduleRepo.findById(id).get();
     }
 
-    public List<Date> getDaysOfWeek(int countWeeks){
+    public List<Date> getDaysOfWeek(Date date){
         Calendar c = Calendar.getInstance();
         List<Date> dates = new ArrayList<>();
-        Date date = new Date();
-        for(int i = 0; i < countWeeks; i++){
-            c.setTime(date);
-            c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-            dates.add(c.getTime());
-            c.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
-            dates.add(c.getTime());
-            c.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
-            dates.add(c.getTime());
-            c.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
-            dates.add(c.getTime());
-            c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
-            dates.add(c.getTime());
-            c.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-            dates.add(c.getTime());
-            c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-            dates.add(c.getTime());
-            LocalDate ds = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(7);
-            date = Date.from( ds.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            c.setTime(date);
-        }
+        c.setTime(date);
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        dates.add(c.getTime());
+        c.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
+        dates.add(c.getTime());
+        c.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+        dates.add(c.getTime());
+        c.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
+        dates.add(c.getTime());
+        c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+        dates.add(c.getTime());
+        c.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+        dates.add(c.getTime());
+        c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        dates.add(c.getTime());
+        LocalDate ds = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(7);
+        date = Date.from( ds.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        c.setTime(date);
         return dates;
     }
 
@@ -97,16 +95,16 @@ public class ScheduleService {
         return scheduleRepo.findAll();
     }
 
-    public Map<String, List<Schedule>> getCorrectData(List<Date> date, int countWeeks){
+    public Map<String, List<Schedule>> getCorrectData(Date startDate, List<Date> date){
         Set<Schedule> data = findAll();
         String[] time = {"10:00", "11:00", "12:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"};
 
         Map<String,  List<Schedule>> result = initDataSchedule(time);
-        List<Date> dates = getDaysOfWeek(countWeeks);
-        clear(dates.get(0));
+        List<Date> dates = getDaysOfWeek(startDate);
+
         DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         for (List<Schedule> list : result.values()){
-            refillingList(list, date, countWeeks*7);
+            refillingList(list, date);
         }
         for (Schedule s : data){
             for (int i = 0; i < dates.size(); i++){
@@ -134,8 +132,8 @@ public class ScheduleService {
         return result;
     }
 
-    private void refillingList(List<Schedule> list, List<Date> date, int countDays){
-        for (int i = 0; i < countDays; i++){
+    private void refillingList(List<Schedule> list, List<Date> date){
+        for (int i = 0; i < 7; i++){
             Schedule sc = new Schedule();
             Calendar calendarDate = new GregorianCalendar();
             calendarDate.setTime(date.get(i));
@@ -169,10 +167,9 @@ public class ScheduleService {
         return false;
     }
 
-    private void clear(Date startNewDate){
+    private void clearOldNotesInSchedule(Date startNewDate){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(startNewDate);
-        System.out.println(startNewDate.getDate());
         Set<Schedule> scheduleSet = scheduleRepo.findByDateStartLessThan(calendar);
         for (Schedule schedule : scheduleSet){
             if (schedule.getDateStart().getTime().getDate() < startNewDate.getDate()){
@@ -187,6 +184,31 @@ public class ScheduleService {
             return "0" + duration;
         }
         return Integer.toString(duration);
+    }
+
+    public List<SlideScheduleData> getListSlideScheduleData(int countWeeks){
+
+        Calendar c = Calendar.getInstance();
+        Date date = new Date();
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        Date monday = c.getTime();
+        clearOldNotesInSchedule(monday);
+
+
+
+        List<SlideScheduleData> slideScheduleData = new LinkedList<>();
+
+
+        for (int i = 0; i < countWeeks; i++){
+            List<Date> dates = getDaysOfWeek(date);
+            Map<String, List<Schedule>> data = getCorrectData(date, dates);
+
+            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(7);
+            date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+            slideScheduleData.add(new SlideScheduleData(dates, data));
+        }
+        return slideScheduleData;
     }
 
 

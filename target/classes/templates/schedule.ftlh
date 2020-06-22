@@ -9,22 +9,23 @@
 <div class="schedule">
     <div class="slider">
         <div class="slider__wrapper">
+            <#list slideScheduleData as slide>
             <div class="slider__item">
                 <div class="content">
                     <table class="scheduleContent">
                         <tr>
                             <th></th>
-                            <#list dates as date>
+                            <#list slide.dates as date>
                             <th>
                                 ${date?string('dd MMMM')}
                             </th>
                         </#list>
                         <th></th>
                         </tr>
-                        <#list entry?keys as key>
+                        <#list slide.entry?keys as key>
                         <tr>
                             <td>${key}</td>
-                            <#list entry[key] as value>
+                            <#list slide.entry[key] as value>
                             <#if value.id??>
                             <td class="data" data-date = "${value.dateStart.getTime()?string('dd-MM-yyyy')}" data-time = "${key}">
                                 <div class="content-td d-flex flex-column">
@@ -63,15 +64,7 @@
             </div>
 
         </div>
-        <div class="slider__item">
-            <div style="background: green;" class="content">2</div>
-        </div>
-        <div class="slider__item">
-            <div style="background: violet;" class="content">3</div>
-        </div>
-        <div class="slider__item">
-            <div style="background: coral;" class="content">4</div>
-        </div>
+    </#list>
     </div>
     <a class="slider__control slider__control_left" href="#" role="button"></a>
     <a class="slider__control slider__control_right slider__control_show" href="#" role="button"></a>
