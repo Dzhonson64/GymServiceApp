@@ -95,50 +95,65 @@ public class ScheduleService {
         return scheduleRepo.findAll();
     }
 
-    public Map<String, List<Schedule>> getCorrectData(Date startDate, List<Date> date){
+    public Map<String,  List<Set<Schedule>>> getCorrectData(Date startDate, List<Date> date){
         Set<Schedule> data = findAll();
         String[] time = {"10:00", "11:00", "12:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"};
-
-        Map<String,  List<Schedule>> result = initDataSchedule(time);
         List<Date> dates = getDaysOfWeek(startDate);
+        Map<String,  List<Set<Schedule>>> result = initDataSchedule(time, dates);
+
 
         DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        for (List<Schedule> list : result.values()){
-            refillingList(list, date);
-        }
         for (Schedule s : data){
             for (int i = 0; i < dates.size(); i++){
                 for (int indTime = 0; indTime < time.length; indTime++){
 
                     if (isCorrect(s, indTime, i, dates, time)){
-                        List<Schedule> scheduleList = result.get(time[indTime]);
-                        scheduleList.set(i, s);
+                        List<Set<Schedule>> scheduleList = result.get(time[indTime]);
+                        Set<Schedule> sublist;
+                        if (scheduleList.get(i) == null){
+                            sublist = new HashSet<>();
+                        }
+                        sublist = scheduleList.get(i);
+                        sublist.add(s);
+                        scheduleList.set(i, sublist);
                         result.put(time[indTime], scheduleList);
                     }
 
                 }
             }
         }
-
+        refillingSchedule(result, dates);
         return  result;
     }
 
-    private  Map<String, List<Schedule>> initDataSchedule(String[] time){
-        Map<String,  List<Schedule>> result = new LinkedHashMap<>();
+    private  Map<String,  List<Set<Schedule>>> initDataSchedule(String[] time, List<Date> date){
+        Map<String,  List<Set<Schedule>>> result = new LinkedHashMap<>();
         for (int i = 0; i < time.length; i++){
-            List<Schedule> list = new ArrayList<>();
+            List<Set<Schedule>> list = new ArrayList<>();
+            for (int j = 0; j < 7; j++){
+                Schedule sc = new Schedule();
+                Set<Schedule> sublist = new HashSet<>();
+                Calendar calendarDate = new GregorianCalendar();
+                calendarDate.setTime(date.get(j));
+                sc.setDateStart(calendarDate);
+                list.add(sublist);
+            }
             result.put(time[i], list);
         }
         return result;
     }
 
-    private void refillingList(List<Schedule> list, List<Date> date){
-        for (int i = 0; i < 7; i++){
-            Schedule sc = new Schedule();
-            Calendar calendarDate = new GregorianCalendar();
-            calendarDate.setTime(date.get(i));
-            sc.setDateStart(calendarDate);
-            list.add(sc);
+    private void refillingSchedule(Map<String,  List<Set<Schedule>>> data, List<Date> date){
+        for (List<Set<Schedule>> list: data.values()){
+            for (int i = 0 ; i < 7; i++){
+                if (list.get(i).size() == 0){
+                    Schedule sc = new Schedule();
+                    Calendar calendarDate = new GregorianCalendar();
+                    calendarDate.setTime(date.get(i));
+                    sc.setDateStart(calendarDate);
+                    list.get(i).add(sc);
+                }
+            }
         }
     }
 
@@ -201,7 +216,7 @@ public class ScheduleService {
 
         for (int i = 0; i < countWeeks; i++){
             List<Date> dates = getDaysOfWeek(date);
-            Map<String, List<Schedule>> data = getCorrectData(date, dates);
+            Map<String, List<Set<Schedule>>> data = getCorrectData(date, dates);
 
             LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(7);
             date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());

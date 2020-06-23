@@ -77,7 +77,7 @@
     color: #999;
 }
 
-.schedule .scheduleContent .changeCell .bntChange{
+.schedule .scheduleContent .changeCell .bntChange, .schedule .scheduleContent .changeMultiCell .bntChange{
     background-color: #469dd3;
     color: #fff;
     width: 100px;
@@ -85,6 +85,9 @@
     border-radius: 5px;
     padding: 5px 0;
     cursor: pointer;
+}
+.schedule .scheduleContent .changeMultiCell .bntChange {
+    margin: 0 auto 10px;
 }
 .schedule .scheduleContent .changeCell{
     position: absolute;
@@ -94,7 +97,19 @@
     display: none;
     background-color: white;
 }
-
-.schedule .scheduleContent .changeCell.active {
+.schedule .scheduleContent .changeCell.active{
     display: flex;
+}
+
+.schedule .btn-more {
+    background-color: #469dd3;
+    color: #fff;
+    width: 120px;
+    margin: 0 auto 10px;
+    border-radius: 5px;
+    padding: 5px 0;
+    cursor: pointer;
+}
+.schedule .dataCell.dNone {
+    display: none;
 }

@@ -3,13 +3,23 @@ package org.example.Gym2.domain;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class SlideScheduleData {
     List<Date> dates;
-    Map<String, List<Schedule>> entry;
+    Map<String, List<Set<Schedule>>> entry;
 
-    public SlideScheduleData(List<Date> dates, Map<String, List<Schedule>> entry) {
+
+    public SlideScheduleData(List<Date> dates, Map<String, List<Set<Schedule>>> entry) {
         this.dates = dates;
+        this.entry = entry;
+    }
+
+    public Map<String, List<Set<Schedule>>> getEntry() {
+        return entry;
+    }
+
+    public void setEntry(Map<String, List<Set<Schedule>>> entry) {
         this.entry = entry;
     }
 
@@ -21,11 +31,5 @@ public class SlideScheduleData {
         this.dates = dates;
     }
 
-    public Map<String, List<Schedule>> getEntry() {
-        return entry;
-    }
 
-    public void setEntry(Map<String, List<Schedule>> entry) {
-        this.entry = entry;
-    }
 }

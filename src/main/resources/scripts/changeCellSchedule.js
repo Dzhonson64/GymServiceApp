@@ -1,5 +1,5 @@
 let timeCell, dateCell;
-$(".bntChange").on("click", function () {
+$(".addNoteSchedule").on("click", function () {
     $("#changeCellSchedule").removeClass("closeRecording");
     $("#changeCellSchedule").addClass("activeRecording");
     dateCell = $(this).closest("td").attr("data-date");

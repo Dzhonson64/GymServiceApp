@@ -25,49 +25,98 @@
                         <#list slide.entry?keys as key>
                         <tr>
                             <td>${key}</td>
-                            <#list slide.entry[key] as value>
-                            <#if value.id??>
-                            <td class="data" data-date = "${value.dateStart.getTime()?string('dd-MM-yyyy')}" data-time = "${key}">
-                                <div class="content-td d-flex flex-column">
-                                    <div class="tag">
-                                        ${value.type}
-                                    </div>
-                                    <div class="time">
-                                        <span class="start">${value.dateStart.getTime()?string('HH:mm')}</span> - <span class="end">${value.dateEnd.getTime()?string('HH:mm')}</span>
 
-                                    </div>
-                                    <div class="durationBlock">
-                                        <i class="fa fa-clock-o" aria-hidden="true"></i> <span class="duration">${value.duration.getMinute()} мин</span>
-                                    </div>
-                                    <div class="name">${value.name}</div>
-                                    <div class="coach">${value.user.surname} ${value.user.name} ${value.user.patronymic}</div>
-                                    <div class="count-empty-places-block">Cвободно: <span class="count-empty-places">${value.countEmptyPlaces}</span></div>
-                                </div>
-                                <div hidden class="idCell">${value.id}</div>
-                            </td>
-                            <#else>
-                            <td class="data" data-date = "${value.dateStart.getTime()?string('dd-MM-yyyy')}" data-time = "${key}">
-                                <div class="changeCell justify-content-center align-items-center">
+                            <#list (slide.entry[key])! as val>
+                            <#if (val?size >= 1) && val[0].id??>
+
+                            <td class="multiCell" data-date = "${val[0].dateStart.getTime()?string('dd-MM-yyyy')}" data-time = "${key}">
+                                <#if (val?size > 1)>
+                                <div class="changeMultiCell addNoteSchedule justify-content-center align-items-center">
                                     <div class="bntChange">
                                         Добавить
                                     </div>
-
                                 </div>
-                            </td>
-                            </#if>
+                                <div class="btn-more">Показать все</div>
+                                <div class="dataCell dNone">
+                                    <#list val as value>
 
-                    </#list>
-                    <td>${key}</td>
-                    </tr>
+                                    <div class="data" data-id="${value.id}">
+                                        <div class="content-td d-flex flex-column">
+                                            <div class="tag">
+                                                ${value.type}
+                                            </div>
+                                            <div class="time">
+                                                <span class="start">${value.dateStart.getTime()?string('HH:mm')}</span> - <span class="end">${value.dateEnd.getTime()?string('HH:mm')}</span>
+
+                                            </div>
+                                            <div class="durationBlock">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i> <span class="duration">${value.duration.getMinute()} мин</span>
+                                            </div>
+                                            <div class="name">${value.name}</div>
+                                            <div class="coach">${value.user.surname} ${value.user.name} ${value.user.patronymic}</div>
+                                            <div class="count-empty-places-block">Cвободно: <span class="count-empty-places">${value.countEmptyPlaces}</span></div>
+                                        </div>
+                                        <div hidden class="idCell">${value.id}</div>
+                                    </div>
+                                </#list>
+                </div>
+                <#else>
+                <div class="changeMultiCell addNoteSchedule justify-content-center align-items-center">
+                    <div class="bntChange">
+                        Добавить
+                    </div>
+                </div>
+                <div class="dataCell">
+                    <#list val as value>
+
+                    <div class="data" data-date = "${value.dateStart.getTime()?string('dd-MM-yyyy')}" data-time = "${key}" data-id="${value.id}">
+                        <div class="content-td d-flex flex-column">
+                            <div class="tag">
+                                ${value.type}
+                            </div>
+                            <div class="time">
+                                <span class="start">${value.dateStart.getTime()?string('HH:mm')}</span> - <span class="end">${value.dateEnd.getTime()?string('HH:mm')}</span>
+
+                            </div>
+                            <div class="durationBlock">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i> <span class="duration">${value.duration.getMinute()} мин</span>
+                            </div>
+                            <div class="name">${value.name}</div>
+                            <div class="coach">${value.user.surname} ${value.user.name} ${value.user.patronymic}</div>
+                            <div class="count-empty-places-block">Cвободно: <span class="count-empty-places">${value.countEmptyPlaces}</span></div>
+                        </div>
+                        <div hidden class="idCell">${value.id}</div>
+                    </div>
                 </#list>
-                </table>
-            </div>
+            </#if>
 
-        </div>
-    </#list>
-    </div>
-    <a class="slider__control slider__control_left" href="#" role="button"></a>
-    <a class="slider__control slider__control_right slider__control_show" href="#" role="button"></a>
+
+            </td>
+
+            <#else>
+            <#list val as value>
+            <td class="data" data-date = "${value.dateStart.getTime()?string('dd-MM-yyyy')}" data-time = "${key}">
+                <div class="changeCell addNoteSchedule justify-content-center align-items-center">
+                    <div class="bntChange">
+                        Добавить
+                    </div>
+                </div>
+            </td>
+        </#list>
+    </#if>
+
+</#list>
+<td>${key}</td>
+</tr>
+</#list>
+</table>
+</div>
+
+</div>
+</#list>
+</div>
+<a class="slider__control slider__control_left" href="#" role="button"></a>
+<a class="slider__control slider__control_right slider__control_show" href="#" role="button"></a>
 </div>
 </div>
 
