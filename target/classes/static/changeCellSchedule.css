@@ -134,3 +134,9 @@
     visibility: visible;
     transition-delay: 0s;
 }
+
+#changeCellSchedule2 label, #changeCellSchedule label{
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+}

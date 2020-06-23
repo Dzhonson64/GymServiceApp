@@ -37,8 +37,11 @@ public class User implements UserDetails, Serializable {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     List<ClubVisits> clubVisits = new LinkedList<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "usr", fetch = FetchType.EAGER)
     Set<Schedule> schedules = new HashSet<>();
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    Set<Schedule> schedulesClient = new HashSet<>();
 
 
 
@@ -57,6 +60,14 @@ public class User implements UserDetails, Serializable {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+    public Set<Schedule> getSchedulesClient() {
+        return schedulesClient;
+    }
+
+    public void setSchedulesClient(Set<Schedule> schedulesClient) {
+        this.schedulesClient = schedulesClient;
+    }
 
     public Integer getCountVisit() {
         return countVisit;

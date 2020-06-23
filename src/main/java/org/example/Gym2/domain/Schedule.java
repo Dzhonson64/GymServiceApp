@@ -18,26 +18,43 @@ public class Schedule implements Serializable {
 
     private Calendar dateStart;
     private Calendar dateEnd;
-    private int countEmptyPlaces;
     private LocalTime duration;
     private String type;
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="coach_id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private User user;
+    private User usr;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="usr_id")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private User client;
+
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public User getClient() {
+        return client;
+    }
+
+    public void setClient(User client) {
+        this.client = client;
+    }
 
     public Long getId() {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public User getUsr() {
+        return usr;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsr(User usr) {
+        this.usr = usr;
     }
 
     public void setId(Long id) {
@@ -62,13 +79,6 @@ public class Schedule implements Serializable {
 
 
 
-    public int getCountEmptyPlaces() {
-        return countEmptyPlaces;
-    }
-
-    public void setCountEmptyPlaces(int countEmptyPlaces) {
-        this.countEmptyPlaces = countEmptyPlaces;
-    }
 
     public LocalTime getDuration() {
         return duration;

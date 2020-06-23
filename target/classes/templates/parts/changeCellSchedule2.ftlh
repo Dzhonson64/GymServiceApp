@@ -1,19 +1,20 @@
-<#macro changeCellSchedule clients>
-<div class="changeCellSchedule closeRecording" id="changeCellSchedule">
+<#macro changeCellSchedule2 clients>
+<div class="changeCellSchedule closeRecording" id="changeCellSchedule2">
     <div class="changeCellSchedule-form">
         <div class="changeCellSchedule-content-from">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="changeCellSchedule-header-form" >
+
                             <i class="fa fa-paper-plane" aria-hidden="true"></i>
                             <h3 class="changeCellSchedule-title">
-                                Добавить запись
+                                Изменить запись
                             </h3>
                             <a title="Close" class="close" id="closeRecording"><i class="fa fa-times" aria-hidden="true"></i></a>
                         </div>
                         <div class="changeCellSchedule-body">
-                            <form class="from-changeCellSchedule  d-flex justify-content-center flex-column" method="POST" id="formRecording">
+                            <form class="from-changeCellSchedule  d-flex justify-content-center flex-column" method="POST" id="formRecording"  data-cellDataId = "" data-coachId="">
                                 <div class="row mb-3">
                                     <label>Название</label>
                                     <input type="text" placeholder="Название" name="name" class="topic">
@@ -34,8 +35,8 @@
                                     <label>Клиенты</label>
                                     <select name="client" class="selectClient">
                                         <#list clients as client>
-                                        <option value="${client.id}">${client.surname} ${client.name} ${client.patronymic} (${client.username})</option>
-                                    </#list>
+                                            <option value="${client.id}">${client.surname} ${client.name} ${client.patronymic} (${client.username})</option>
+                                        </#list>
                                     </select>
                                 </div>
                                 <input type="hidden" name="_csrf" value="${_csrf.token}" />

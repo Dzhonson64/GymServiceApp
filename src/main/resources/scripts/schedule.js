@@ -1,11 +1,17 @@
 $( document ).ready(function() {
-    $("td.data").hover(function () {
-        $(this).find(".changeCell").addClass("active");
+    $("td.none-data").hover(function () {
+        $(this).find(".addNoteCell").addClass("active");
     }, function(){
-        $(this).find(".changeCell").removeClass("active");
+        $(this).find(".addNoteCell").removeClass("active");
     })
 
     $(".btn-more").on("click", function () {
         $(this).siblings(".dataCell").slideToggle();
+    })
+
+    $(".data").hover(function () {
+        $(this).find(".changeNoteSchedule").addClass("active");
+    }, function(){
+        $(this).find(".changeNoteSchedule").removeClass("active");
     })
 })

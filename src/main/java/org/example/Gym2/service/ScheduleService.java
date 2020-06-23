@@ -6,6 +6,8 @@ import org.example.Gym2.domain.User;
 import org.example.Gym2.repos.ScheduleRepo;
 import org.example.Gym2.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,7 +26,6 @@ public class ScheduleService {
     UserRepo userRepo;
     public void add(){
         Schedule schedule = new Schedule();
-        schedule.setCountEmptyPlaces(0);
         schedule.setDateStart(new GregorianCalendar());
         schedule.setDateEnd(new GregorianCalendar());
         scheduleRepo.save(schedule);
@@ -58,7 +59,44 @@ public class ScheduleService {
         return dates;
     }
 
+    public ResponseEntity<String> updateActivitySchedule(User user,
+                                                         User client,
+                                                         String name,
+                                                         String type,
+                                                         Integer duration,
+                                                         String startTime,
+                                                         String StartDate,
+                                                         Schedule cellData) throws ParseException {
+        cellData.setName(name);
+        cellData.setType(type);
+        cellData.setClient(client);
+        String duratinonStr = duration.toString();
+        if (duration <  10){
+            duratinonStr = "0" + duration;
+        }
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        cal.setTime(sdf.parse(StartDate + " " + startTime));// all done
+
+        cellData.setDuration(LocalTime.parse("00:" + duratinonStr + ":00"));
+        cellData.setDateStart(cal);
+
+
+        Calendar calendarEndDate = new GregorianCalendar();
+        Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(StartDate + " " + startTime);
+        LocalDateTime localDateTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusMinutes(duration);
+        calendarEndDate.set(localDateTime.getYear(), localDateTime.getMonthValue(), localDateTime.getDayOfMonth(), localDateTime.getHour(), localDateTime.getMinute(), localDateTime.getSecond());
+        cellData.setDateEnd(calendarEndDate);
+
+        scheduleRepo.save(cellData);
+
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
     public void setActivitiesInSchedule(User user,
+                                        User client,
                                         String name,
                                         String type,
                                         Integer duration,
@@ -81,9 +119,9 @@ public class ScheduleService {
         schedule.setDateEnd(calendarEndDate);
 
         schedule.setName(name);
-        schedule.setUser(user);
+        schedule.setUsr(user);
         schedule.setType(type);
-        schedule.setCountEmptyPlaces(countEmptyPlaces);
+        schedule.setClient(client);
         DateTimeFormatter parser = DateTimeFormatter.ofPattern("HH:mm:ss");
         schedule.setDuration(LocalTime.parse("00:" + toCorrectDuration(duration) + ":00", parser));
 
@@ -224,6 +262,11 @@ public class ScheduleService {
             slideScheduleData.add(new SlideScheduleData(dates, data));
         }
         return slideScheduleData;
+    }
+
+    public ResponseEntity<String> deleteActivitySchedule(Schedule schedule){
+        scheduleRepo.delete(schedule);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

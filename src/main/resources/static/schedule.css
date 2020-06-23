@@ -64,7 +64,7 @@
 
 .schedule .scheduleContent .content-td .name {
     margin-top: 7px;
-    margin-bottom: 4px;
+    margin-bottom: 7px;
     font-size: 15px;
     font-family: 'Roboto',sans-serif;
     font-weight: 700;
@@ -77,7 +77,10 @@
     color: #999;
 }
 
-.schedule .scheduleContent .changeCell .bntChange, .schedule .scheduleContent .changeMultiCell .bntChange{
+.schedule .scheduleContent .addNoteCell .bntAdd,
+.schedule .scheduleContent .changeMultiCell .bntAdd,
+.schedule .changeNoteSchedule .bntChange,
+.schedule .changeNoteSchedule .bntDelete{
     background-color: #469dd3;
     color: #fff;
     width: 100px;
@@ -86,19 +89,23 @@
     padding: 5px 0;
     cursor: pointer;
 }
-.schedule .scheduleContent .changeMultiCell .bntChange {
-    margin: 0 auto 10px;
+.schedule .scheduleContent .changeMultiCell .bntAdd,
+.schedule .changeNoteSchedule .bntDelete{
+    margin: 10px auto 10px;
 }
-.schedule .scheduleContent .changeCell{
+.schedule .scheduleContent .addNoteCell,
+.schedule .changeNoteSchedule{
     position: absolute;
     top: 0;
     width: 100%;
     height: 100%;
     display: none;
     background-color: white;
+    z-index: 1;
 }
-.schedule .scheduleContent .changeCell.active{
+.schedule .scheduleContent .addNoteCell.active, .schedule .scheduleContent .changeNoteSchedule.active{
     display: flex;
+    flex-direction: column;
 }
 
 .schedule .btn-more {
@@ -112,4 +119,12 @@
 }
 .schedule .dataCell.dNone {
     display: none;
+}
+
+.schedule .data {
+    position: relative;
+}
+
+.schedule .labelCell {
+    color: #999;
 }

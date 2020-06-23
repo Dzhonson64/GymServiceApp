@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepo userRepo;
+
     @Autowired
     private ClubVisitsRepo clubVisitsRepo;
 
@@ -208,5 +209,16 @@ public class UserService implements UserDetailsService {
         clubVisitsRepo.save(clubVisits);
         userRepo.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public Set<User> getClients(){
+        List<User> users = userRepo.findAll();
+        Set<User> clients = new HashSet<>();
+        for (User u : users){
+            if (!u.getRoles().contains(Role.ADMIN)){
+                clients.add(u);
+            }
+        }
+        return clients;
     }
 }
