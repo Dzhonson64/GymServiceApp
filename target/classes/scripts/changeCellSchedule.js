@@ -1,10 +1,41 @@
-let timeCell, dateCell;
+let timeCell, dateCell, fieldTo;
 $(".addNoteSchedule").on("click", function () {
     $("#changeCellSchedule").removeClass("closeRecording");
     $("#changeCellSchedule").addClass("activeRecording");
     dateCell = $(this).closest("td").attr("data-date");
     timeCell = $(this).closest("td").attr("data-time");
+    fieldTo = $(this)
 })
+
+function changeCellData(){
+    $("#changeCellSchedule2").removeClass("closeRecording");
+    $("#changeCellSchedule2").addClass("activeRecording");
+
+    let cellData = $(this).closest(".data");
+    let cellDataId = parseInt(cellData.attr("data-id"));
+    let tag = cellData.find(".tag").text().trim();
+    let timeStart = cellData.find(".time .start").text().trim();
+    let topic = cellData.find(".name").text().trim();
+    let duration = parseInt(cellData.find(".duration").text());
+    let coachId = parseInt(cellData.find(".coach").attr("data-coachId"));
+
+    $("#changeCellSchedule2").find(".topic").val(topic);
+    $("#changeCellSchedule2").find(".tag").val(tag);
+    $("#changeCellSchedule2").find(".startTime").val(timeStart);
+    $("#changeCellSchedule2").find(".duration").val(duration);
+    $("#changeCellSchedule2").find(".duration").val(duration);
+    $("#changeCellSchedule2").find("form").attr("data-coachId", coachId);
+    $("#changeCellSchedule2").find("form").attr("data-cellDataId", cellDataId);
+
+    dateCell = $(this).closest(".data").attr("data-date");
+    timeCell = $(this).closest(".data").attr("data-time");
+}
+
+function deleteCellData(){
+    let cellData = $(this).closest(".data");
+    let idCellData = parseInt(cellData.attr("data-id"));
+    sendDeleteNoteSchedule(idCellData, cellData)
+}
 
 $(".bntDelete").on("click", function () {
     let cellData = $(this).closest(".data");
@@ -23,7 +54,6 @@ $(".bntChange").on("click", function () {
     let topic = cellData.find(".name").text().trim();
     let duration = parseInt(cellData.find(".duration").text());
     let coachId = parseInt(cellData.find(".coach").attr("data-coachId"));
-    console.log(coachId);
 
     $("#changeCellSchedule2").find(".topic").val(topic);
     $("#changeCellSchedule2").find(".tag").val(tag);
@@ -35,6 +65,7 @@ $(".bntChange").on("click", function () {
 
     dateCell = $(this).closest(".data").attr("data-date");
     timeCell = $(this).closest(".data").attr("data-time");
+    fieldTo = $(this);
 })
 
 $("#changeCellSchedule #closeRecording").on("click", function () {
@@ -50,25 +81,24 @@ $("#changeCellSchedule #btnSendChangeSchedule").click(function(event) {
     event.preventDefault();
     let formBlock = $(this).closest("form");
     let clientId = parseInt($("#changeCellSchedule").find(".selectClient option:selected").val());
-    sendAddNoteSchedule(formBlock, dateCell, clientId);
+    sendAddNoteSchedule(formBlock, dateCell, clientId, fieldTo);
 });
 
 $("#changeCellSchedule2 #btnSendChangeSchedule").click(function(event) {
     event.preventDefault();
     let clientId = parseInt($("#changeCellSchedule2").find(".selectClient option:selected").val());
     let formBlock = $(this).closest("form");
-    sendChangeNoteSchedule(formBlock, dateCell, clientId);
+    sendChangeNoteSchedule(formBlock, dateCell, clientId, fieldTo);
 });
 
 
-function sendAddNoteSchedule(formBlock, dateCell, clientId) {
-
+function sendAddNoteSchedule(formBlock, dateCell, clientId, fieldTo) {
     var form = formBlock[0];
     var data = new FormData(form);
     data.append("dateCell", dateCell)
     data.append("clientId", clientId)
-    console.log(data.get("name"));
     $("#btnSendRecording").prop("disabled", false);
+
     $.ajax({
         type: "PUT",
         url: "/putActivitySchedule",
@@ -85,9 +115,53 @@ function sendAddNoteSchedule(formBlock, dateCell, clientId) {
         success: function(data, textStatus, jqXHR) {
             console.log("SUCCESS : ", data);
             if (textStatus === "success"){
-                hiddenRecording();
-                showPopUpSuccessful();
-                showPopUpSuccessful();
+                $('<div class="dataCell">').append(
+                    '            <div class="data" data-date = "" data-time = "" data-id="">\n' +
+                    '                <div class="changeNoteSchedule justify-content-center align-items-center">\n' +
+                    '                    <div class="bntChange">\n' +
+                    '                        Изменить\n' +
+                    '                    </div>\n' +
+                    '                    <div class="bntDelete">\n' +
+                    '                        Удалить\n' +
+                    '                    </div>\n' +
+                    '                </div>\n' +
+                    '            <div class="content-td d-flex flex-column">\n' +
+                    '                <div class="tag">\n' +
+                    '                </div>\n' +
+                    '                <div class="time">\n' +
+                    '                    <span class="start"></span> - <span class="end"></span>\n' +
+                    '\n' +
+                    '                </div>\n' +
+                    '                <div class="durationBlock">\n' +
+                    '                    <i class="fa fa-clock-o" aria-hidden="true"></i> <span class="duration"></span> мин\n' +
+                    '                </div>\n' +
+                    '                <div class="name"></div>\n' +
+                    '                <span class="labelCell">Тренер: </span>\n' +
+                    '                <div class="coach" data-coachId = ""></div>\n' +
+                    '                <span class="labelCell">Клиент: </span>\n' +
+                    '                <div class="client" data-clientId = ""></div>\n' +
+                    '            </div>\n').appendTo(fieldTo.parent());
+                fieldTo.removeClass("addNoteCell");
+                fieldTo.removeClass("addNoteSchedule");
+                fieldTo.addClass("changeMultiCell ");
+                let newElem = fieldTo.parent().find(".data").last();
+                newElem.on("mouseenter", hoverOnCellSchedule)
+                newElem.on("mouseleave", hoverOffCellSchedule)
+                newElem.find(".bntChange").on("click", changeCellData)
+                newElem.find(".bntDelete").on("click", deleteCellData)
+
+                newElem.attr("data-date", data["startDate"]);
+                newElem.attr("data-time", data["startTime"]);
+                newElem.attr("data-id", parseInt(data["idCellData"]));
+                newElem.find(".tag").text(data["type"]);
+                newElem.find(".start").text(data["startTime"]);
+                newElem.find(".duration").text(data["duration"]);
+                newElem.find(".end").text(data["endTime"]);
+                newElem.find(".name").text(data["name"]);
+                newElem.find(".coach").text(data["coach"]);
+                newElem.find(".coach").attr("data-coachId", parseInt(data["coachId"]));
+                newElem.find(".client").attr("data-clientId", parseInt((data["client"].id)));
+                newElem.find(".client").text(data["client"].surname + " " + data["client"].name + " " + data["client"].patronymic + " (" + data["client"].username + ")");
             }
             $("#btnSendRecording").prop("disabled", false);
             //
@@ -105,10 +179,9 @@ function sendAddNoteSchedule(formBlock, dateCell, clientId) {
         }
     });
 }
-function sendChangeNoteSchedule(formBlock, dateCell, clientId) {
+function sendChangeNoteSchedule(formBlock, dateCell, clientId, newElem) {
 
     var form = formBlock[0];
-    console.log(formBlock.attr("data-coachId"));
     var data = new FormData(form);
     data.append("dateCell", dateCell)
     data.append("clientId", clientId)
@@ -130,9 +203,19 @@ function sendChangeNoteSchedule(formBlock, dateCell, clientId) {
         success: function(data, textStatus, jqXHR) {
             console.log("SUCCESS : ", data);
             if (textStatus === "success"){
-                hiddenRecording();
-                showPopUpSuccessful();
-                showPopUpSuccessful();
+                let newElem = fieldTo.closest("td").find(".data").last();
+                newElem.attr("data-date", data["startDate"]);
+                newElem.attr("data-time", data["startTime"]);
+                newElem.attr("data-id", parseInt(data["idCellData"]));
+                newElem.find(".tag").text(data["type"]);
+                newElem.find(".start").text(data["startTime"]);
+                newElem.find(".duration").text(data["duration"]);
+                newElem.find(".end").text(data["endTime"]);
+                newElem.find(".name").text(data["name"]);
+                newElem.find(".coach").text(data["coach"]);
+                newElem.find(".coach").attr("data-coachId", parseInt(data["coachId"]));
+                newElem.find(".client").attr("data-clientId", parseInt((data["client"].id)));
+                newElem.find(".client").text(data["client"].surname + " " + data["client"].name + " " + data["client"].patronymic + " (" + data["client"].username + ")");
             }
             $("#btnSendRecording").prop("disabled", false);
             //

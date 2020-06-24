@@ -43,6 +43,7 @@
                                 </div>
                                 <div class="btn-more">Показать все</div>
                                 <div class="dataCell dNone">
+                                    
                                     <#list val as value>
 
                                     <div class="data" data-id="${value.id}">
@@ -78,6 +79,7 @@
                                     </div>
                 </div>
             </#list>
+
         </div>
         <#else>
         <div class="changeMultiCell addNoteSchedule justify-content-center align-items-center">
@@ -118,8 +120,9 @@
                 <div class="client" data-clientId = "${value.client.id}">${value.client.surname} ${value.client.name} ${value.client.patronymic}</div>
             </#if>
             </div>
+    </#list>
     </div>
-</#list>
+
 </#if>
 
 

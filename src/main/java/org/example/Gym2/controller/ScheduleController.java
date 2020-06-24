@@ -7,6 +7,7 @@ import org.example.Gym2.repos.UserRepo;
 import org.example.Gym2.service.ScheduleService;
 import org.example.Gym2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -31,31 +32,32 @@ public class ScheduleController {
     UserService userService;
 
     @GetMapping("schedule")
-    private String getSchedule(Model model) throws ParseException {
-        model.addAttribute("slideScheduleData", scheduleService.getListSlideScheduleData(2));
-        Set<User> c = userService.getClients();
+    private String getSchedule(@AuthenticationPrincipal User user, Model model) throws ParseException {
+        model.addAttribute("slideScheduleData", scheduleService.getListSlideScheduleData(3));
+        Set<Schedule> s = scheduleService.findByClient(user);
         model.addAttribute("clients", userService.getClients());
+        model.addAttribute("clients", userService.getClients());
+
         return "schedule";
     }
 
     @PutMapping("putActivitySchedule")
     @ResponseBody
-    private String putActivitySchedule(@AuthenticationPrincipal User user,
+    private  ResponseEntity<Map<String, Object>> putActivitySchedule(@AuthenticationPrincipal User user,
                                        @RequestParam("name") String name,
                                        @RequestParam("tag") String type,
                                        @RequestParam("duration") Integer duration,
-                                       @RequestParam("countEmptyPlaces") Integer countEmptyPlaces,
                                        @RequestParam("startTime") String startTime,
                                        @RequestParam("dateCell") String dateCell,
                                        @RequestParam("clientId") User client
                                        ) throws ParseException {
-        scheduleService.setActivitiesInSchedule(user, client, name, type, duration, countEmptyPlaces, startTime, dateCell);
-        return "schedule";
+
+        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.setActivitiesInSchedule(user, client, name, type, duration, startTime, dateCell));
     }
 
     @PutMapping("updateActivitySchedule")
     @ResponseBody
-    private ResponseEntity<String> updateActivitySchedule(@AuthenticationPrincipal User user,
+    private ResponseEntity<Map<String, Object>> updateActivitySchedule(@AuthenticationPrincipal User user,
                                                           @RequestParam("name") String name,
                                                           @RequestParam("tag") String type,
                                                           @RequestParam("duration") Integer duration,
@@ -66,7 +68,7 @@ public class ScheduleController {
 
 
     ) throws ParseException {
-        return  scheduleService.updateActivitySchedule(user, client, name, type, duration, startTime, dateCell, idCellData);
+        return  ResponseEntity.status(HttpStatus.OK).body(scheduleService.updateActivitySchedule(user, client, name, type, duration, startTime, dateCell, idCellData));
     }
 
 

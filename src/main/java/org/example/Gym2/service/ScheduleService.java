@@ -59,7 +59,7 @@ public class ScheduleService {
         return dates;
     }
 
-    public ResponseEntity<String> updateActivitySchedule(User user,
+    public Map<String, Object> updateActivitySchedule(User user,
                                                          User client,
                                                          String name,
                                                          String type,
@@ -90,17 +90,29 @@ public class ScheduleService {
 
         scheduleRepo.save(cellData);
 
+        Map<String, Object> resultData =  new HashMap<>();
+        DateTimeFormatter parser2 = DateTimeFormatter.ofPattern("HH:mm");
+        resultData.put("name", name);
+        resultData.put("type", type);
+        resultData.put("client", client);
+        resultData.put("startDate", StartDate);
+        resultData.put("startTime", startTime);
+        resultData.put("endTime", localDateTime.format(parser2));
+        resultData.put("duration", duration);
+        resultData.put("idCellData", cellData.getId());
+        resultData.put("coach", user.getSurname() + " " + user.getName() + " " + user.getPatronymic());
+        resultData.put("coachId", user.getId());
 
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        return resultData;
 
     }
 
-    public void setActivitiesInSchedule(User user,
+    public  Map<String, Object> setActivitiesInSchedule(User user,
                                         User client,
                                         String name,
                                         String type,
                                         Integer duration,
-                                        Integer countEmptyPlaces,
                                         String startTime,
                                         String StartDate) throws ParseException {
         user = userRepo.findById(user.getId()).get();
@@ -127,6 +139,19 @@ public class ScheduleService {
 
         scheduleRepo.save(schedule);
 
+        Map<String, Object> resultData =  new HashMap<>();
+        DateTimeFormatter parser2 = DateTimeFormatter.ofPattern("HH:mm");
+        resultData.put("name", name);
+        resultData.put("type", type);
+        resultData.put("client", client);
+        resultData.put("startDate", StartDate);
+        resultData.put("startTime", startTime);
+        resultData.put("endTime", localDateTime.format(parser2));
+        resultData.put("duration", duration);
+        resultData.put("idCellData", schedule.getId());
+        resultData.put("coach", user.getSurname() + " " + user.getName() + " " + user.getPatronymic());
+        resultData.put("coachId", user.getId());
+        return resultData;
     }
 
     public Set<Schedule> findAll(){
@@ -267,6 +292,10 @@ public class ScheduleService {
     public ResponseEntity<String> deleteActivitySchedule(Schedule schedule){
         scheduleRepo.delete(schedule);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public Set<Schedule> findByClient(User client){
+        return scheduleRepo.findByClient(client);
     }
 
 

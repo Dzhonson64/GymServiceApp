@@ -1,6 +1,7 @@
 package org.example.Gym2.repos;
 
 import org.example.Gym2.domain.Schedule;
+import org.example.Gym2.domain.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Calendar;
@@ -10,4 +11,6 @@ public interface ScheduleRepo  extends CrudRepository<Schedule, Long> {
     Set<Schedule> findAll();
 
     Set<Schedule> findByDateStartLessThan(Calendar startNewDate);
+
+    Set<Schedule> findByClient(User client);
 }

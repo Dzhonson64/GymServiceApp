@@ -15,3 +15,10 @@ $( document ).ready(function() {
         $(this).find(".changeNoteSchedule").removeClass("active");
     })
 })
+
+function hoverOnCellSchedule() {
+    $(this).find(".changeNoteSchedule").addClass("active");
+}
+function hoverOffCellSchedule() {
+    $(this).find(".changeNoteSchedule").removeClass("active");
+}
