@@ -33,7 +33,7 @@
 
                             <#list (slide.entry[key])! as val>
                             <#if (val?size >= 1) && val[0].id??>
-
+<#if isAdmin>
                             <td class="multiCell" data-date = "${val[0].dateStart.getTime()?string('dd-MM-yyyy')}" data-time = "${key}">
                                 <#if (val?size > 1)>
                                 <div class="changeMultiCell addNoteSchedule justify-content-center align-items-center">
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="btn-more">Показать все</div>
                                 <div class="dataCell dNone">
-                                    
+
                                     <#list val as value>
 
                                     <div class="data" data-id="${value.id}">
@@ -126,16 +126,82 @@
 </#if>
 
 
-</td>
 
 <#else>
+    <td class="multiCell" data-date = "${val[0].dateStart.getTime()?string('dd-MM-yyyy')}" data-time = "${key}">
+        <#if (val?size > 1)>
+        <div class="btn-more">Показать всё</div>
+        <div class="dataCell dNone">
+
+            <#list val as value>
+
+            <div class="data" data-id="${value.id}">
+                <#if value.usr.id == userActive.id>
+
+            </#if>
+            <div class="content-td d-flex flex-column">
+                <div class="tag">
+                    ${value.type}
+                </div>
+                <div class="time">
+                    <span class="start">${value.dateStart.getTime()?string('HH:mm')}</span> - <span class="end">${value.dateEnd.getTime()?string('HH:mm')}</span>
+
+                </div>
+                <div class="durationBlock">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i> <span class="duration">${value.duration.getMinute()}</span> мин
+                </div>
+                <div class="name">${value.name}</div>
+                <span class="labelCell">Тренер: </span>
+                <div class="coach" data-coachId = "${value.usr.id}">${value.usr.surname} ${value.usr.name} ${value.usr.patronymic}</div>
+        </div>
+        </div>
+    </#list>
+
+    </div>
+    <#else>
+    <div class="changeMultiCell addNoteSchedule justify-content-center align-items-center">
+
+    </div>
+    <div class="dataCell">
+        <#list val as value>
+
+        <div class="data" data-date = "${value.dateStart.getTime()?string('dd-MM-yyyy')}" data-time = "${key}" data-id="${value.id}">
+
+        <div class="content-td d-flex flex-column">
+            <div class="tag">
+                ${value.type}
+            </div>
+            <div class="time">
+                <span class="start">${value.dateStart.getTime()?string('HH:mm')}</span> - <span class="end">${value.dateEnd.getTime()?string('HH:mm')}</span>
+
+            </div>
+            <div class="durationBlock">
+                <i class="fa fa-clock-o" aria-hidden="true"></i> <span class="duration">${value.duration.getMinute()}</span> мин
+            </div>
+            <div class="name">${value.name}</div>
+            <span class="labelCell">Тренер: </span>
+            <div class="coach" data-coachId = "${value.usr.id}">${value.usr.surname} ${value.usr.name} ${value.usr.patronymic}</div>
+    </div>
+    </#list>
+    </div>
+
+    </#if>
+
+
+
+</td>
+</#if>
+<#else>
+
 <#list val as value>
 <td class="none-data" data-date = "${value.dateStart.getTime()?string('dd-MM-yyyy')}" data-time = "${key}">
+    <#if isAdmin>
     <div class="addNoteCell addNoteSchedule justify-content-center align-items-center">
         <div class="bntAdd">
             Добавить
         </div>
     </div>
+</#if>
 </td>
 </#list>
 </#if>

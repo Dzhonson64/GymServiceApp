@@ -1,5 +1,6 @@
 package org.example.Gym2.service;
 
+import org.example.Gym2.domain.Role;
 import org.example.Gym2.domain.Schedule;
 import org.example.Gym2.domain.SlideScheduleData;
 import org.example.Gym2.domain.User;
@@ -158,8 +159,14 @@ public class ScheduleService {
         return scheduleRepo.findAll();
     }
 
-    public Map<String,  List<Set<Schedule>>> getCorrectData(Date startDate, List<Date> date){
-        Set<Schedule> data = findAll();
+    public Map<String,  List<Set<Schedule>>> getCorrectData(User user, Date startDate, List<Date> date){
+        Set<Schedule> data = null;
+        if (user.getRoles().contains(Role.ADMIN)){
+            data = findAll();
+        }else{
+            data = findByClient(user);
+        }
+
         String[] time = {"10:00", "11:00", "12:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"};
         List<Date> dates = getDaysOfWeek(startDate);
         Map<String,  List<Set<Schedule>>> result = initDataSchedule(time, dates);
@@ -264,7 +271,7 @@ public class ScheduleService {
         return Integer.toString(duration);
     }
 
-    public List<SlideScheduleData> getListSlideScheduleData(int countWeeks){
+    public List<SlideScheduleData> getListSlideScheduleData(User user, int countWeeks){
 
         Calendar c = Calendar.getInstance();
         Date date = new Date();
@@ -279,7 +286,7 @@ public class ScheduleService {
 
         for (int i = 0; i < countWeeks; i++){
             List<Date> dates = getDaysOfWeek(date);
-            Map<String, List<Set<Schedule>>> data = getCorrectData(date, dates);
+            Map<String, List<Set<Schedule>>> data = getCorrectData(user, date, dates);
 
             LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(7);
             date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());

@@ -1,5 +1,6 @@
 package org.example.Gym2.controller;
 
+import org.example.Gym2.domain.Role;
 import org.example.Gym2.domain.Schedule;
 import org.example.Gym2.domain.SlideScheduleData;
 import org.example.Gym2.domain.User;
@@ -33,9 +34,9 @@ public class ScheduleController {
 
     @GetMapping("schedule")
     private String getSchedule(@AuthenticationPrincipal User user, Model model) throws ParseException {
-        model.addAttribute("slideScheduleData", scheduleService.getListSlideScheduleData(3));
+        model.addAttribute("slideScheduleData", scheduleService.getListSlideScheduleData(user, 3));
+        Set<User> c = userService.getClients();
         Set<Schedule> s = scheduleService.findByClient(user);
-        model.addAttribute("clients", userService.getClients());
         model.addAttribute("clients", userService.getClients());
 
         return "schedule";
