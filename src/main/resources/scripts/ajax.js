@@ -348,8 +348,37 @@ function deleteUserFromList(dataForm, selfId) {
             console.log("SUCCESS : ", data);
             console.log(parseInt(selfId))
             console.log(parseInt(id))
+
+
             if (parseInt(selfId) === parseInt(id)){
-                window.open('http://localhost:8080/logout');
+                let csrfToken = $("#csrfUserList").attr("content");
+                let data2 = new FormData();
+                console.log(csrfToken);
+                data2.append("_csrf", csrfToken);
+                $.ajax({
+                    type: "POST",
+                    url: "/logout",
+                    // prevent jQuery from automatically transforming the data into a query string
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 1000000,
+                    data: data2,
+                    success: function(data, textStatus, jqXHR) {
+                        console.log("SUCCESS : ", data);
+
+                        window.location.href = "http://localhost:8080/login"
+                        //$('#avatar-img')[0].reset();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+
+                        // $("#result").html(jqXHR.responseText);
+
+                        console.log("ERROR : ", jqXHR.responseText);
+                        $("#suc").prop("disabled", false);
+
+                    }
+                });
             }
             if (textStatus === "success"){
                 rowTableDataForm.remove();
@@ -429,9 +458,9 @@ $("#saveEditUser").on("click", function (e) {
     console.log("f");
     let form = $(this).closest("form");
     let userid = $("#userId").attr("content")
-    deleteUserList(form, parseInt(userid))
+    saveUserList(form, parseInt(userid))
 })
-function deleteUserList(form, userId) {
+function saveUserList(form, userId) {
 
     let csrfToken = $("#csrfUserList").attr("content");
 
@@ -454,6 +483,7 @@ function deleteUserList(form, userId) {
         // },
         success: function(data, textStatus, jqXHR) {
             console.log("SUCCESS : ", data);
+
             window.location.href = 'http://localhost:8080/user';
         },
         error: function(jqXHR, textStatus, errorThrown) {

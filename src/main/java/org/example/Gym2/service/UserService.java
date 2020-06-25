@@ -148,6 +148,7 @@ public class UserService implements UserDetailsService {
             scheduleRepo.delete(s);
         }
        userRepo.delete(user.get());
+       userRepo.delete(usr);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

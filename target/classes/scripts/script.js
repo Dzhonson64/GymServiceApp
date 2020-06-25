@@ -127,7 +127,7 @@ $(".rounded p").click(function () {
 $(".deleteUserFromList").on("click", function (e) {
     let form = $(this);
     form.closest("tr.c").fadeOut(1000);
-    let selfId = $("#idAuthUser").val()
+    let selfId = $("#idAuthUser").attr("content")
     setTimeout(function (){
         deleteUserFromList(form, selfId)
     }, 1000);
