@@ -35,11 +35,14 @@ public class ScheduleController {
     @GetMapping("schedule")
     private String getSchedule(@AuthenticationPrincipal User user, Model model) throws ParseException {
         model.addAttribute("slideScheduleData", scheduleService.getListSlideScheduleData(user, 3));
-        Set<User> c = userService.getClients();
-        Set<Schedule> s = scheduleService.findByClient(user);
-        model.addAttribute("clients", userService.getClients());
-
+        getCommonElms(user, model);
         return "schedule";
+    }
+    private void getCommonElms(User user, Model model){
+        model.addAttribute("clients", userService.getClients());
+        model.addAttribute("admins", userService.getAdmins());
+        model.addAttribute("workTimes", scheduleService.getWorkTime());
+        model.addAttribute("workDays", scheduleService.getWorkDays(3));
     }
 
     @PutMapping("putActivitySchedule")
@@ -79,6 +82,20 @@ public class ScheduleController {
 
     ) {
         return  scheduleService.deleteActivitySchedule(schedule);
+    }
+
+    @GetMapping("schedule/groupBy")
+    private String getGroupBy(@AuthenticationPrincipal User user,
+                              Model model,
+                              @RequestParam(value = "coaches", required = false) User[] coaches,
+                              @RequestParam(value = "time", required = false) String[] time,
+                              @RequestParam(value = "days", required = false) String[] date,
+                              @RequestParam(value = "clients", required = false) User[] clients
+    ){
+        model.addAttribute("slideScheduleData", scheduleService.getListSlideScheduleDataGroupBy(user,coaches, clients, time, date, 3));
+
+        getCommonElms(user, model);
+        return "schedule";
     }
 
 }

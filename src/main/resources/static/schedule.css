@@ -128,3 +128,95 @@
 .schedule .labelCell {
     color: #999;
 }
+
+
+
+.schedule  select {
+    -webkit-appearance: none;
+    padding: 0;
+    /* стили вашего ползунка */
+}
+.schedule  select::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    box-sizing: content-box;
+    background: red;
+    /* стили вашего бегунка */
+}
+.schedule  select::-moz-range-thumb {
+    /* снова стили вашего бегунка */
+}
+.schedule  select::-ms-thumb { /* должен следовать после -webkit- */
+    /* снова стили вашего бегунка */
+    /* могут потребоваться разные отступы */
+}
+.schedule  select::-webkit-slider-runnable-track {
+    /* стили вашей дорожки*/
+}
+.schedule  select::-moz-range-track {
+    /* снова стили вашей дорожки */
+}
+.schedule  select::-ms-track { /* должен следовать после -webkit- */
+    border-color: transparent;
+    color: transparent;
+    /* снова стили вашей дорожки */
+}
+
+.schedule .groupBy {
+    margin-bottom: 50px;
+    margin-top: 30px;
+}
+
+.schedule .groupBy h4{
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.schedule .groupBy button {
+    font-family: Poppins-Medium, sans-serif;
+    border-radius: 6px;
+    font-size: 15px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+    background: #4466fb;
+    border: none;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 30px auto 0;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 200px;
+    height: 50px;
+}
+
+.schedule .group {
+    margin: 0 20px;
+}
+
+.schedule .groupBy select{
+    min-width: 225px;
+    text-align: center;
+    width: 140px;
+    padding: 4px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 8px #999;
+    background: #eee;
+    border: none;
+    outline: none;
+    display: inline-block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+.schedule .groupBy select option:selecte
+
+.schedule .groupBy select option {
+    padding: 5px 10px;
+    cursor: pointer;
+}

@@ -9,9 +9,6 @@
                 <li class="col-auto p-0">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="col-auto p-0">
-                    <a class="nav-link" href="/main">Messages</a>
-                </li>
                 <#if isAdmin>
                 <li class="col-auto p-0">
                     <a class="nav-link" href="/user/">Пользователи</a>

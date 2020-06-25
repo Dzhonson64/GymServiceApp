@@ -45,17 +45,16 @@ function deleteRecordingCard(btnDeleteCard, removeBlock) {
     let id = btnDeleteCard.siblings(".idRecording").val();
 
     console.log(id)
-    console.log(csrfToken)
 
 
 
-
+    let data = new FormData();
     data.append("id", id);
     console.log(data.get("id"))
     // $("#btnSendRecording").prop("disabled", false);
 
 
-    let data = new FormData();
+
     let csrfToken = $("#csrfUserList").attr("content");
     data.append("_csrf", csrfToken);
     $.ajax({
@@ -99,6 +98,7 @@ function addCommentRecordingCard(text, btnAddComment){
     data.append("comment", text);
     data.append("id", id);
     data.append("_csrf", csrfToken);
+    console.log(btnAddComment)
 
     $.ajax({
         type: "PUT",
@@ -118,6 +118,7 @@ function addCommentRecordingCard(text, btnAddComment){
             if (textStatus === "success"){
                 // rowTableDataForm.remove();
                 // showPopUpSuccessful();
+                btnAddComment.siblings(".comment-post").find(".comment-text").val(data);
             }
             $("#saveEditUser").prop("disabled", false);
 
@@ -322,7 +323,7 @@ function requestSaveEditUser() {
 
 }
 
-function deleteUserFromList(dataForm) {
+function deleteUserFromList(dataForm, selfId) {
 
     // $("#saveEditUser").prop("disabled", true);
     let rowTableDataForm = dataForm.closest("tr.c");
@@ -343,15 +344,17 @@ function deleteUserFromList(dataForm) {
         cache: false,
         timeout: 1000000,
         data: data,
-        // complete: function(xmlHttp) {
-        //     // xmlHttp is a XMLHttpRquest object
-        //     alert(xmlHttp.status);
-        // },
         success: function(data, textStatus, jqXHR) {
             console.log("SUCCESS : ", data);
+            console.log(parseInt(selfId))
+            console.log(parseInt(id))
+            if (parseInt(selfId) === parseInt(id)){
+                window.open('http://localhost:8080/logout');
+            }
             if (textStatus === "success"){
                 rowTableDataForm.remove();
                 showPopUpSuccessful();
+
             }
             $("#saveEditUser").prop("disabled", false);
 
@@ -412,6 +415,57 @@ function unsubscribeDiscount(idDiscountPrice, DiscountBLock, noneDiscountBLock) 
                 "<br>Мы уже ведём работу по её устанению! Извнините за неудобства.</p>"
 
             );
+
+            console.log("ERROR : ", jqXHR.responseText);
+            $("#suc").prop("disabled", false);
+
+        }
+    });
+}
+
+
+$("#saveEditUser").on("click", function (e) {
+    e.preventDefault();
+    console.log("f");
+    let form = $(this).closest("form");
+    let userid = $("#userId").attr("content")
+    deleteUserList(form, parseInt(userid))
+})
+function deleteUserList(form, userId) {
+
+    let csrfToken = $("#csrfUserList").attr("content");
+
+    let data = new FormData(form[0]);
+
+    data.append("_csrf", csrfToken);
+
+    $.ajax({
+        type: "POST",
+        url: "/user/" + userId,
+        // prevent jQuery from automatically transforming the data into a query string
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        data: data,
+        // complete: function(xmlHttp) {
+        //     // xmlHttp is a XMLHttpRquest object
+        //     alert(xmlHttp.status);
+        // },
+        success: function(data, textStatus, jqXHR) {
+            console.log("SUCCESS : ", data);
+            window.location.href = 'http://localhost:8080/user';
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            let errorField = form.find(".errorsUserEdit");
+            let errorText = JSON.parse(jqXHR.responseText);
+            console.log(errorText);
+            console.log(errorField);
+            errorField.empty();
+            for(let i = 0; i < errorText.length; i++){
+                $('<p>' + errorText[i] + '</p>').appendTo(errorField);
+
+            }
 
             console.log("ERROR : ", jqXHR.responseText);
             $("#suc").prop("disabled", false);

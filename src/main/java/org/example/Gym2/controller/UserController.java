@@ -1,6 +1,7 @@
 package org.example.Gym2.controller;
 
 import org.example.Gym2.domain.*;
+import org.example.Gym2.repos.UserRepo;
 import org.example.Gym2.service.Discount_UserService;
 import org.example.Gym2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,20 +11,26 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserRepo userRepo;
 
     @Autowired
     Discount_UserService discount_userService;
@@ -46,9 +53,13 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("{user}")
-    public String save(User usr){
-        userService.mySave(usr);
-        return "redirect:/user";
+    @ResponseBody
+    public ResponseEntity save( @AuthenticationPrincipal User authUser, @PathVariable User user,  @Valid @ModelAttribute("user") User u, BindingResult bindingResult, @RequestParam Map<String, String> form){
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(ControllerUtils.getListErrors(bindingResult));
+        }
+        userService.mySave(user, authUser, form);
+        return ResponseEntity.accepted().body("");
     }
 
     @GetMapping("profile")
@@ -76,15 +87,17 @@ public class UserController {
     }
 
     @PostMapping("profile")
-    public String updatePersonalData(@AuthenticationPrincipal User user,
+    public String updatePersonalData(@AuthenticationPrincipal User usr,
                                 @RequestParam Map<String, String> data
                                 ) {
+        Optional<User> user = userRepo.findById(usr.getId());
         try {
-            boolean result = userService.updatePersonalData(user, data);
+            boolean result = userService.updatePersonalData(user.get(), usr, data);
 
         } catch (IOException e) {
 
         }
+        usr = user.get();
 
         return "redirect:/user/profile";
     }
@@ -108,7 +121,7 @@ public class UserController {
     @DeleteMapping("/{user}/deleteFromList")
     @ResponseBody
     public ResponseEntity<String> deleteUserFromList(@PathVariable User user){
-        return userService.deleteUserFromList(user.getId());
+        return userService.deleteUserFromList(user);
     }
 
     @PostMapping("noteCome")

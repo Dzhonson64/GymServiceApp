@@ -26,13 +26,11 @@ public class Schedule implements Serializable {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="coach_id")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private User usr;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="usr_id")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private User client;
 
 

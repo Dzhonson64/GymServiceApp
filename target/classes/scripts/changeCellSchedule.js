@@ -5,6 +5,7 @@ $(".addNoteSchedule").on("click", function () {
     dateCell = $(this).closest("td").attr("data-date");
     timeCell = $(this).closest("td").attr("data-time");
     fieldTo = $(this)
+    $("#changeCellSchedule").find(".startTime").attr("value", timeCell);
 })
 
 function changeCellData(){
@@ -81,14 +82,31 @@ $("#changeCellSchedule #btnSendChangeSchedule").click(function(event) {
     event.preventDefault();
     let formBlock = $(this).closest("form");
     let clientId = parseInt($("#changeCellSchedule").find(".selectClient option:selected").val());
-    sendAddNoteSchedule(formBlock, dateCell, clientId, fieldTo);
+    if (checkFieldsToSchedule(formBlock, timeCell) === true){
+        sendAddNoteSchedule(formBlock, dateCell, clientId, fieldTo);
+    }else{
+        showPopUpError("<h5>Ошибка запроса!</h5>" +
+            "<p>Пожалуйста, проверьте правильно вводимых полей</p>"
+
+        );
+        console.log("ERROR : ", jqXHR.responseText);
+    }
 });
 
 $("#changeCellSchedule2 #btnSendChangeSchedule").click(function(event) {
     event.preventDefault();
     let clientId = parseInt($("#changeCellSchedule2").find(".selectClient option:selected").val());
     let formBlock = $(this).closest("form");
-    sendChangeNoteSchedule(formBlock, dateCell, clientId, fieldTo);
+    if (checkFieldsToSchedule(formBlock, timeCell) === true){
+        sendChangeNoteSchedule(formBlock, dateCell, clientId, fieldTo);
+    }else{
+        showPopUpError("<h5>Ошибка запроса!</h5>" +
+            "<p>Пожалуйста, проверьте правильно вводимых полей</p>"
+
+        );
+        console.log("ERROR : ", jqXHR.responseText);
+    }
+
 });
 
 
@@ -274,4 +292,53 @@ function sendDeleteNoteSchedule(idCellData, thisField) {
 
         }
     });
+}
+
+
+function checkFieldsToSchedule(form, timeCell) {
+    let topic = form.find(".topic").val();
+    let duration = parseInt(form.find(".duration").val());
+    let startTime = form.find(".startTime").val().split(":");
+    let startTimeForm = timeCell.split(":");
+    if (topic === "" || duration === "" || startTime === "" || duration > 59 || !isNumber(parseInt(startTime[0])) || !isNumber(parseInt(startTime[1]))) {
+        return false;
+    }
+
+    let timeDate = new Date();
+
+    let timeStartDate = new Date();
+    let rightBorderTimeDate = new Date();
+    let leftBorderTimeDate = new Date();
+
+
+    timeStartDate.setHours(parseInt(startTime[0]))
+    timeStartDate.setMinutes(parseInt(startTime[1]))
+    timeStartDate.setSeconds(0)
+
+    timeDate.setHours(parseInt(startTime[0]))
+    timeDate.setMinutes(parseInt(startTime[1]) + duration)
+    timeDate.setSeconds(0)
+
+    rightBorderTimeDate.setHours(parseInt(startTimeForm[0]) + 1)
+    rightBorderTimeDate.setMinutes(parseInt(startTimeForm[1]))
+    rightBorderTimeDate.setSeconds(0)
+
+    leftBorderTimeDate.setHours(parseInt(startTimeForm[0]))
+    leftBorderTimeDate.setMinutes(parseInt(startTimeForm[1]))
+    leftBorderTimeDate.setSeconds(0)
+
+
+    if (timeStartDate < leftBorderTimeDate || timeStartDate > rightBorderTimeDate &&
+        timeDate < leftBorderTimeDate || timeDate > rightBorderTimeDate
+    ){
+        return false;
+    }
+
+
+    return true;
+
+}
+
+function isNumber(num) {
+    return typeof num === 'number' && !isNaN(num);
 }

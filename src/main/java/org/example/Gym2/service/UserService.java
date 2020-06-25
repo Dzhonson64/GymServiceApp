@@ -1,10 +1,7 @@
 package org.example.Gym2.service;
 
 import org.example.Gym2.domain.*;
-import org.example.Gym2.repos.ClubVisitsRepo;
-import org.example.Gym2.repos.DiscountRepo;
-import org.example.Gym2.repos.PricesRepo;
-import org.example.Gym2.repos.UserRepo;
+import org.example.Gym2.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -38,6 +35,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PricesRepo pricesRepo;
+
+    @Autowired
+    private ScheduleRepo scheduleRepo;
 
 
 
@@ -93,16 +93,16 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
     }
 
-    public boolean updatePersonalData(User user, Map<String, String> data) throws IOException {
+    public boolean updatePersonalData(User user, User authUser, Map<String, String> data) throws IOException {
 
         user.setUsername(data.get("username"));
+        authUser.setUsername(data.get("username"));
         user.setPassword(data.get("password"));
         user.setName(data.get("name"));
         user.setSurname(data.get("surname"));
         user.setPatronymic(data.get("patronymic"));
         user.setAge(Integer.parseInt(data.get("age")));
         user.setGender(data.get("gender"));
-
         userRepo.save(user);
         return true;
     }
@@ -141,15 +141,14 @@ public class UserService implements UserDetailsService {
         else return "";
     }
 
-    public ResponseEntity<String> deleteUserFromList(Long userId){
-        Optional<User> user = userRepo.findById(userId);
-        if (user.isPresent()) {
-            userRepo.delete(user.get());
-            return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> deleteUserFromList(User usr){
+        Optional<User> user = userRepo.findById(usr.getId());
+        Set<Schedule> scheduleClientSet = scheduleRepo.findByClient(user.get());
+        for (Schedule s: scheduleClientSet){
+            scheduleRepo.delete(s);
         }
-
-
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       userRepo.delete(user.get());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public void addDiscountPrice(User u, Discount_AllPrices discount_price){
@@ -186,7 +185,25 @@ public class UserService implements UserDetailsService {
         return dateNow;
     }
 
-    public void mySave(User user){
+    public void mySave(User usr, User auth, Map<String, String> form){
+        User user = userRepo.findById(usr.getId()).get();
+        user.setName(form.get("name"));
+        if (auth.getId().equals(usr.getId())){
+            auth.setUsername(form.get("username"));
+        }
+        user.setSurname(form.get("surname"));
+        user.setPatronymic(form.get("patronymic"));
+        user.setUsername(form.get("username"));
+
+        user.setGender(form.get("gender"));
+        user.setAge(Integer.parseInt(form.get("age")));
+        user.getRoles().clear();
+        List<String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toList());
+        for (String key : form.keySet()){
+            if (roles.contains(key)){
+                user.getRoles().add(Role.valueOf(key));
+            }
+        }
         userRepo.save(user);
     }
 
@@ -220,5 +237,37 @@ public class UserService implements UserDetailsService {
             }
         }
         return clients;
+    }
+
+    public Set<User> getAdmins(){
+        List<User> users = userRepo.findAll();
+        Set<User> admins = new HashSet<>();
+        for (User u : users){
+            if (u.getRoles().contains(Role.ADMIN)){
+                admins.add(u);
+            }
+        }
+        return admins;
+    }
+
+    public boolean checkRegForm(Map<String, String> form){
+        if (
+                form.get("surname").equals("") ||
+                form.get("name").equals("") ||
+                form.get("patronymic").equals("") ||
+                form.get("age").equals("") ||
+                form.get("username").equals("") ||
+                form.get("password").equals("")
+
+        ){
+            return false;
+        }
+
+        try {
+            Integer.parseInt(form.get("age"));
+        } catch (NumberFormatException ex){
+            return false;
+        }
+        return true;
     }
 }

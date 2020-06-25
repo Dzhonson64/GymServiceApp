@@ -127,8 +127,9 @@ $(".rounded p").click(function () {
 $(".deleteUserFromList").on("click", function (e) {
     let form = $(this);
     form.closest("tr.c").fadeOut(1000);
+    let selfId = $("#idAuthUser").val()
     setTimeout(function (){
-        deleteUserFromList(form)
+        deleteUserFromList(form, selfId)
     }, 1000);
 })
 /*==================================================================*/
@@ -334,7 +335,7 @@ Array.prototype.forEach.call(fields, function (input) {
 
 $(document).ready(function() {
     $('#fullpage').fullpage({
-        anchors: ['block1', 'block2', 'block3', 'block4', 'block5', 'block6', 'block7'],
+        anchors: ['block1', 'block2', 'block3', 'block4', 'block5', 'block6'],
         css3: true,
         scrollingSpeed: 1000,
         scrollOverflow: true,

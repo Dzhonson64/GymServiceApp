@@ -200,18 +200,7 @@
         </div>
     </div>
 </div>
-<div class="section" data-anchor="block6">
-    <div class="container">
-        <div class="row">
-            <h2>Фотогалерея</h2>
-        </div>
-        <div class="row">
-            some photos
-        </div>
-    </div>
-
-</div>
-<div class="section contacts " data-anchor="block7">
+<div class="section contacts " data-anchor="block6">
     <div class="endBlock d-flex justify-content-between flex-column">
         <div class="container">
             <div class="row">

@@ -12,7 +12,9 @@
                     <i class="fa fa-sign-in" aria-hidden="true"></i>
                 </div>
                 <@l.login "/registration" true/>
+                <div class="errors">
 
+                </div>
             </div>
         </div>
     </div>

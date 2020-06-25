@@ -7,6 +7,7 @@ import org.example.Gym2.domain.User;
 import org.example.Gym2.repos.ScheduleRepo;
 import org.example.Gym2.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class ScheduleService {
         return  scheduleRepo.findById(id).get();
     }
 
-    public List<Date> getDaysOfWeek(Date date){
+    private List<Date> getDaysOfWeek(Date date){
         Calendar c = Calendar.getInstance();
         List<Date> dates = new ArrayList<>();
         c.setTime(date);
@@ -159,48 +160,14 @@ public class ScheduleService {
         return scheduleRepo.findAll();
     }
 
-    public Map<String,  List<Set<Schedule>>> getCorrectData(User user, Date startDate, List<Date> date){
-        Set<Schedule> data = null;
-        if (user.getRoles().contains(Role.ADMIN)){
-            data = findAll();
-        }else{
-            data = findByClient(user);
-        }
-
-        String[] time = {"10:00", "11:00", "12:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"};
-        List<Date> dates = getDaysOfWeek(startDate);
-        Map<String,  List<Set<Schedule>>> result = initDataSchedule(time, dates);
 
 
-        DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        for (Schedule s : data){
-            for (int i = 0; i < dates.size(); i++){
-                for (int indTime = 0; indTime < time.length; indTime++){
-
-                    if (isCorrect(s, indTime, i, dates, time)){
-                        List<Set<Schedule>> scheduleList = result.get(time[indTime]);
-                        Set<Schedule> sublist;
-                        if (scheduleList.get(i) == null){
-                            sublist = new HashSet<>();
-                        }
-                        sublist = scheduleList.get(i);
-                        sublist.add(s);
-                        scheduleList.set(i, sublist);
-                        result.put(time[indTime], scheduleList);
-                    }
-
-                }
-            }
-        }
-        refillingSchedule(result, dates);
-        return  result;
-    }
 
     private  Map<String,  List<Set<Schedule>>> initDataSchedule(String[] time, List<Date> date){
         Map<String,  List<Set<Schedule>>> result = new LinkedHashMap<>();
         for (int i = 0; i < time.length; i++){
             List<Set<Schedule>> list = new ArrayList<>();
-            for (int j = 0; j < 7; j++){
+            for (int j = 0; j < date.size(); j++){
                 Schedule sc = new Schedule();
                 Set<Schedule> sublist = new HashSet<>();
                 Calendar calendarDate = new GregorianCalendar();
@@ -215,7 +182,7 @@ public class ScheduleService {
 
     private void refillingSchedule(Map<String,  List<Set<Schedule>>> data, List<Date> date){
         for (List<Set<Schedule>> list: data.values()){
-            for (int i = 0 ; i < 7; i++){
+            for (int i = 0 ; i < date.size(); i++){
                 if (list.get(i).size() == 0){
                     Schedule sc = new Schedule();
                     Calendar calendarDate = new GregorianCalendar();
@@ -286,7 +253,7 @@ public class ScheduleService {
 
         for (int i = 0; i < countWeeks; i++){
             List<Date> dates = getDaysOfWeek(date);
-            Map<String, List<Set<Schedule>>> data = getCorrectData(user, date, dates);
+            Map<String, List<Set<Schedule>>> data = getCorrectData(user, date);
 
             LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(7);
             date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -294,6 +261,103 @@ public class ScheduleService {
             slideScheduleData.add(new SlideScheduleData(dates, data));
         }
         return slideScheduleData;
+    }
+
+    public List<SlideScheduleData> getListSlideScheduleDataGroupBy(User user,
+                                                                   User[] coaches,
+                                                                   User[] clients,
+                                                                   String[] time,
+                                                                   String[] realDate,
+                                                                   int countWeeks){
+
+        Calendar c = Calendar.getInstance();
+        Date date = new Date();
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        Date monday = c.getTime();
+        clearOldNotesInSchedule(monday);
+
+
+
+        List<SlideScheduleData> slideScheduleData = new LinkedList<>();
+        int len;
+        if (realDate == null){
+            for (int i = 0; i < countWeeks; i++){
+                List<Date> dates;
+                if (realDate != null){
+                    dates = getDifferentDays(realDate);
+                }else {
+                    dates = getDaysOfWeek(date);
+                }
+                Map<String, List<Set<Schedule>>> data = getCorrectDataGroupBy(user, date, time,coaches, clients, dates);
+
+                LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(7);
+                date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+                slideScheduleData.add(new SlideScheduleData(dates, data));
+            }
+        }else {
+            List<Date> datesTemp;
+            if (realDate != null){
+                datesTemp = getDifferentDays(realDate);
+            }else {
+                datesTemp = getDaysOfWeek(date);
+            }
+
+            int k = datesTemp.size()/7+1;
+            int endIndex = 0;
+            for (int j = 0; j < k; j++){
+                List<Date> dates = getDates(datesTemp, endIndex, j);
+                endIndex += 7;
+
+                Map<String, List<Set<Schedule>>> data = getCorrectDataGroupBy(user, date, time,coaches, clients, dates);
+
+                LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(7);
+                date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+               slideScheduleData.add(new SlideScheduleData(dates, data));
+            }
+
+        }
+
+
+
+        return slideScheduleData;
+    }
+
+    private Map<String, List<Set<Schedule>>> getCorrectDataGroupBy(User user, Date startDate, String[] time,  User[] coaches, User[] clients, List<Date> realDate){
+        Set<Schedule> data = new HashSet<>();
+        if (coaches != null){
+            for (int i = 0 ; i < coaches.length; i++){
+                Set<Schedule> dataTemp = findByClientAndUsr(user, coaches[i]);
+                moveElemToSet(data, dataTemp);
+            }
+        }else if (clients != null){
+            for (int i = 0 ; i < clients.length; i++){
+                Set<Schedule> dataTemp = findByClientAndUsr(clients[i], user);
+                moveElemToSet(data, dataTemp);
+            }
+        }
+        else{
+            if (user.getRoles().contains(Role.ADMIN)){
+                data = findAll();
+            }else {
+                data = findByClient(user);
+            }
+        }
+        if (time != null || realDate != null){
+            return  getDataOfDifferentTime(data, startDate, time, realDate);
+        }
+
+        return  getDataOfAllDay(data, startDate);
+    }
+    private Map<String, List<Set<Schedule>>> getCorrectData(User user, Date startDate){
+        Set<Schedule> data;
+        if (user.getRoles().contains(Role.ADMIN)){
+            data = findAll();
+        }else{
+            data = findByClient(user);
+        }
+        return  getDataOfAllDay(data, startDate);
     }
 
     public ResponseEntity<String> deleteActivitySchedule(Schedule schedule){
@@ -305,5 +369,136 @@ public class ScheduleService {
         return scheduleRepo.findByClient(client);
     }
 
+    public Set<Schedule> findByClientAndUsr(User client, User coaches){
+        return scheduleRepo.findByClientAndUsr(client, coaches);
+    }
+
+
+    private void moveElemToSet(Set<Schedule> commonSet, Set<Schedule> elems){
+        for (Schedule s: elems){
+            commonSet.add(s);
+        }
+    }
+    private void moveDateToList(List<Date> commonList, List<Date> elems){
+        for (Date s: elems){
+            commonList.add(s);
+        }
+    }
+
+    private Map<String,  List<Set<Schedule>>> getDataOfAllDay(Set<Schedule> data,  Date startDate){
+        String[] time =  getWorkTime();
+        List<Date> dates = getDaysOfWeek(startDate);
+        Map<String,  List<Set<Schedule>>> result = initDataSchedule(time, dates);
+
+        DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        for (Schedule s : data){
+            for (int i = 0; i < dates.size(); i++){
+                for (int indTime = 0; indTime < time.length; indTime++){
+
+                    if (isCorrect(s, indTime, i, dates, time)){
+                        List<Set<Schedule>> scheduleList = result.get(time[indTime]);
+                        Set<Schedule> sublist;
+                        if (scheduleList.get(i) == null){
+                            sublist = new HashSet<>();
+                        }
+                        sublist = scheduleList.get(i);
+                        sublist.add(s);
+                        scheduleList.set(i, sublist);
+                        result.put(time[indTime], scheduleList);
+                    }
+
+                }
+            }
+        }
+        refillingSchedule(result, dates);
+        return result;
+    }
+
+    private Map<String,  List<Set<Schedule>>> getDataOfDifferentTime(Set<Schedule> data,  Date startDate, String[] realTime, List<Date> dates){
+        String[] time =  realTime;
+        if (time == null){
+            time = getWorkTime();
+        }
+
+
+
+        Map<String,  List<Set<Schedule>>> result = initDataSchedule(time, dates);
+
+        DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        for (Schedule s : data){
+            for (int i = 0; i < dates.size(); i++){
+                for (int indTime = 0; indTime < time.length; indTime++){
+
+                    if (isCorrect(s, indTime, i, dates, time)){
+                        List<Set<Schedule>> scheduleList = result.get(time[indTime]);
+                        Set<Schedule> sublist;
+                        if (scheduleList.get(i) == null){
+                            sublist = new HashSet<>();
+                        }
+                        sublist = scheduleList.get(i);
+                        sublist.add(s);
+                        scheduleList.set(i, sublist);
+                        result.put(time[indTime], scheduleList);
+                    }
+
+                }
+            }
+        }
+        refillingSchedule(result, dates);
+        return result;
+    }
+
+    public String[] getWorkTime(){
+        String[] time = {"10:00", "11:00", "12:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"};
+        return time;
+    }
+
+    public List<Date> getWorkDays(int countWeeks){
+        Date date = new Date();
+        List<Date> dates = new ArrayList<>();
+        for (int i = 0; i < countWeeks; i++){
+            moveDateToList(dates, getDaysOfWeek(date));
+            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(7);
+            date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        }
+        return dates;
+    }
+
+    public List<Date> getAllDay(int countWeeks){
+        List<Date> date = new LinkedList<>();
+        for (int i = 0; i < countWeeks; i++){
+            moveDateToList(date, getDaysOfWeek(new Date()));
+        }
+        return date;
+    }
+
+    private List<Date> getDifferentDays(String[] days){
+        List<Date> dates = new LinkedList<>();
+        for (int i = 0; i < days.length; i++){
+            try {
+                Date date = new SimpleDateFormat("dd-MM-yyyy").parse(days[i]);
+                dates.add(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return dates;
+    }
+
+    private List<Date> getDates(List<Date> dates, int endIndex, int k){
+        List<Date> dateList = new ArrayList<>();
+        int count = 0;
+        //int endInd = (dates.size()-(dates.size()%7))/(dates.size()/7);
+        if (dates.size()-endIndex < 7){
+            count = dates.size();
+        }else{
+            count = 7 * (k+1);
+        }
+        for (int i = endIndex; i < count; i++){
+            dateList.add(dates.get(i));
+        }
+        return dateList;
+    }
 
 }

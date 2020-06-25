@@ -30,6 +30,15 @@ body{
     border: 1px solid #797979 !important;
 }
 
+.login-block .errors, .errorsUserEdit {
+    font-size: 18px;
+    color: red;
+    margin-top: 10px;
+    font-family: Poppins-Bold, sans-serif;
+    line-height: 1.2;
+    text-align: center;
+}
+
 .mynavbar{
     display: flex;
     flex-direction: row;

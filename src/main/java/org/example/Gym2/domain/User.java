@@ -8,6 +8,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
@@ -20,15 +23,22 @@ public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotBlank(message = "Необходимо указать логин")
     private String username;
+    @NotBlank(message = "Необходимо указать пароль")
     private String password;
     private boolean active;
     private String filename;
     private LocalDate localDateSubscribeDiscount;
+    @NotBlank(message = "Необходимо указать имя")
     private String name;
+    @NotBlank(message = "Необходимо указать фамилию")
     private String surname;
+    @NotBlank(message = "Необходимо указать отество")
     private String patronymic;
     private String gender;
+    @NotNull(message = "Необходимо указать возраст")
+    @Min(value = 10, message = "Возраст должен быть больше 10")
     private Integer age;
     private String idDiscount;
     private Integer countVisit;

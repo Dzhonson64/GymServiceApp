@@ -2,6 +2,7 @@
 
 <@c.page>
 <#include "parts/navbar.ftlh">
+<meta name="authUser" content="${user.id}" id="userId">
 <div class="container">
     <div class="row d-flex justify-content-center">
         <form method="post" class="user-edit-form mt-5" id="userEditFrom">
@@ -37,13 +38,19 @@
 
             <#list roles as role>
             <div>
-                <label><input type="checkbox" name="${role}" class="option-input checkbox" ${user.roles?seq_contains(role)?string("checked", "")}>${role}</label>
+                <label>
+                    <input type="checkbox" name="${role}" class="option-input checkbox" ${user.roles?seq_contains(role)?string("checked", "")} value="${role}">${role}
+                </label>
             </div>
         </#list>
         <input type="hidden" value = "${user.id}" name = "userId">
         <input type="hidden" value = "${_csrf.token}" name = "_csrf">
         <button type = "submit" class="saver" id="saveEditUser">Save</button>
+            <div class="errorsUserEdit">
+
+            </div>
         </form>
+
     </div>
 </div>
 
